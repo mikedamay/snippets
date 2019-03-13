@@ -1,0 +1,33 @@
+<rules>
+    <exercises>
+        <exercise>
+            <name></name>
+            <snippets>
+                <snippet>
+                    <name></name>
+                    <category></category>
+                    <text></text>
+                </snippet>
+            </snippets>
+            <features>
+                <feature>
+                    <name></name>
+                    <description></description>
+                </feature>
+            </features>
+        </exercise>
+    </exercises>
+    <snippets>
+        <snippet>
+            <name></name>
+            <category></category>
+            <text></text>
+        </snippet>
+    </snippets>
+    <features>
+        <feature>
+            <name></name>
+            <description></description>
+        </feature>
+    </features>
+</rules>
