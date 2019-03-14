@@ -5,7 +5,7 @@ let bob = 2;
 
 // alert(mike + bob);
 
-export function doSomething()
+export function doSomething(text)
 {
-    alert("hello web")
+    alert(text)
 }
