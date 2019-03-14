@@ -20,35 +20,29 @@
 <body>
 
 
-<div class="container" dasblog-authorized>
-    <ul class="navbar-nav mr-auto">
-        <li class="nav-item"><a class="nav-link" href="/post/create">Create Post</a></li>
-        <li class="nav-item"><a class="nav-link" href="/users/myemail@myemail.com">Users</a></li>
-        <li class="nav-item"><a class="nav-link" href="/Activity/ActivityList">Activity</a></li>
-    </ul>
-</div>
 
+<div class="workaround-users-3" role="navigation" style="width: 500px">
 
-<div class="workaround-users-3" role="navigation">
+    <div class="pull-left affix" role="navigation" style="width: 500px">
 
-    <div class="pull-left affix" role="navigation">
+        <div class="form-group row" style="width: 500px">
+            <label class="col-form-label col-6" for="Role">Exercises</label>
+            <select name="Role" type="text" class="form-control col-6" data-val="true"
+                    data-val-required="The Role field is required." id="Role">
+                <option selected="selected" value="0">Admin</option>
+                <option value="1">Contributor</option>
+            </select>
+            <span class="text-danger field-validation-valid" data-valmsg-for="Role"
+                  data-valmsg-replace="true"></span>
+        </div>
 
-
-        <div class="row workaround-users-1 pull-left affix" style="background-colorx: green">
+        <div class="row pull-left affix" style="background-colorx: green" style="width: 500px">
             <div class="">
 
-                <div class="row" style="background-colorx: red">
-                    <div class="col-md-6 text-center h4" style="background-colorx: blue">Users</div>
-                    <div class="col-md-6" style="background-colorx: yellow">
-                        <div class="pull-right">
-                            <form method="get" action="/users/Maintenance/myemail@myemail.com">
-                                <input type="submit" class="btn btn-primary" name="maintenanceMode" value="Create"/>
-                            </form>
-                        </div>
-
-                    </div>
+                <div class="row" style="background-colorx: red" style="width: 500px">
+                    <div class="col-md-12 text-center h4" style="background-colorx: blue">Features</div>
                 </div>
-                <div class="row workaround-users-2">
+                <div class="row workaround-users-2" style="width: 500px">
                     <div class="col-md-12 users-sidebar">
                         <table class="table">
                             <tbody>
@@ -100,6 +94,42 @@
                                         rosa@braintree.com</a>
                                 </td>
                             </tr>
+                            <tr>
+                                <td>
+                                    <a href="javascript:linkToUser(&quot;/users/rosa@braintree.com&quot;,&quot;&quot;)">
+                                        rosa@braintree.com</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="javascript:linkToUser(&quot;/users/rosa@braintree.com&quot;,&quot;&quot;)">
+                                        rosa@braintree.com</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="javascript:linkToUser(&quot;/users/rosa@braintree.com&quot;,&quot;&quot;)">
+                                        rosa@braintree.com</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="javascript:linkToUser(&quot;/users/rosa@braintree.com&quot;,&quot;&quot;)">
+                                        rosa@braintree.com</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="javascript:linkToUser(&quot;/users/rosa@braintree.com&quot;,&quot;&quot;)">
+                                        rosa@braintree.com</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="javascript:linkToUser(&quot;/users/rosa@braintree.com&quot;,&quot;&quot;)">
+                                        rosa@braintree.com</a>
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -114,20 +144,15 @@
 
 
     <form method="get" action="/users/Maintenance/myemail@myemail.com">
-        <input type="submit" class="btn btn-primary btn-default" name="maintenanceMode" value="Edit"/>
-        <input type="submit" class="btn" name="maintenanceMode" value="Delete"/>
+        <input type="submit" class="btn btn-primary btn-default" name="maintenanceMode" value="Copy to Clipboard"/>
     </form>
 
-    <h2>User Maintenance</h2>
+    <h2>Mentor Comments</h2>
 
 
-    <hr/>
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-12">
             <form action="/users/Maintenance/myemail@myemail.com" method="post">
-
-
-                <div id="users-page" class="page-test-id"></div>
 
 
                 <input type="hidden" name="originalEmail" value="myemail@myemail.com"/>
