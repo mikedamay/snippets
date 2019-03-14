@@ -19,7 +19,13 @@
 </head>
 <body>
 
-
+<script>
+var action =    `
+let's have a string here
+as you can see
+`;
+alert(action);
+</script>
 
 <div class="workaround-users-3" role="navigation" style="width: 500px">
 
@@ -29,8 +35,11 @@
             <label class="col-form-label col-6" for="Role">Exercises</label>
             <select name="Role" type="text" class="form-control col-6" data-val="true"
                     data-val-required="The Role field is required." id="Role">
-                <option selected="selected" value="0">Admin</option>
-                <option value="1">Contributor</option>
+                <option value="1">Twofer</option>
+                <option value="2">Leap</option>
+                <option value="3">Gigasecond</option>
+                <option selected="selected" value="4">Resistor Color</option>
+                <option value="5">Space Age</option>
             </select>
             <span class="text-danger field-validation-valid" data-valmsg-for="Role"
                   data-valmsg-replace="true"></span>
@@ -44,94 +53,29 @@
                 </div>
                 <div class="row workaround-users-2" style="width: 500px">
                     <div class="col-md-12 users-sidebar">
-                        <table class="table">
-                            <tbody>
-                            <tr>
-                                <td>
-                                    <a href="javascript:linkToUser(&quot;/users/myemail@myemail.com&quot;,&quot;&quot;)">
-                                        myemail@myemail.com</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="javascript:linkToUser(&quot;/users/donald@TheWhitehouse.com&quot;,&quot;&quot;)">
-                                        donald@TheWhiteho...</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="javascript:linkToUser(&quot;/users/jackson@sukishouse.com&quot;,&quot;&quot;)">
-                                        jackson@sukishous...</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="javascript:linkToUser(&quot;/users/bozza@gb.com&quot;,&quot;&quot;)">
-                                        bozza@gb.com</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="javascript:linkToUser(&quot;/users/shula@TheStables.com&quot;,&quot;&quot;)">
-                                        shula@TheStables.com</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="javascript:linkToUser(&quot;/users/joey@corrupted.com&quot;,&quot;&quot;)">
-                                        joey@corrupted.com</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="javascript:linkToUser(&quot;/users/alun@lehman.com&quot;,&quot;&quot;)">
-                                        alun@lehman.com</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="javascript:linkToUser(&quot;/users/rosa@braintree.com&quot;,&quot;&quot;)">
-                                        rosa@braintree.com</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="javascript:linkToUser(&quot;/users/rosa@braintree.com&quot;,&quot;&quot;)">
-                                        rosa@braintree.com</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="javascript:linkToUser(&quot;/users/rosa@braintree.com&quot;,&quot;&quot;)">
-                                        rosa@braintree.com</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="javascript:linkToUser(&quot;/users/rosa@braintree.com&quot;,&quot;&quot;)">
-                                        rosa@braintree.com</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="javascript:linkToUser(&quot;/users/rosa@braintree.com&quot;,&quot;&quot;)">
-                                        rosa@braintree.com</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="javascript:linkToUser(&quot;/users/rosa@braintree.com&quot;,&quot;&quot;)">
-                                        rosa@braintree.com</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a href="javascript:linkToUser(&quot;/users/rosa@braintree.com&quot;,&quot;&quot;)">
-                                        rosa@braintree.com</a>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                        <form>
+                            <table class="table">
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="form-check row">
+                                            <label class="form-check-label col-10" for="Ask">The solution contains a color array. (ARRAY)</label>
+                                            <input name="Ask" checked type="checkbox" class="form-check-input col-1" disabled
+                                            onchange="alert('hello');"/>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-check row">
+                                            <label class="form-check-label col-10" for="Ask">The solution contains a dictionary (DICTIONARY)</label>
+                                            <input name="Ask" checked type="checkbox" class="form-check-input col-1" disabled/>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -140,7 +84,7 @@
     </div>
 </div>
 
-<div id="page-wrapper">
+<div id="page-wrapper" class="col-md-12">
 
 
     <form method="get" action="/users/Maintenance/myemail@myemail.com">
