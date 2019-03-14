@@ -1,10 +1,230 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Snippets</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>User Maintenance - noter</title>
+
+    <link rel="stylesheet" href="./lib/bootstrap/dist/css/bootstrap.css"/>
+    <link href="./lib/users/font-awesome.css" rel="stylesheet"/>
+    <link href="./lib/users/sb-admin-2.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="./css/site.css"/>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="./lib/users/font-awesome.css" rel="stylesheet"/>
+    <link href="./lib/users/sb-admin-2.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="./css/site.css"/>
+
 </head>
 <body>
+
+
+<div class="container" dasblog-authorized>
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item"><a class="nav-link" href="/post/create">Create Post</a></li>
+        <li class="nav-item"><a class="nav-link" href="/users/myemail@myemail.com">Users</a></li>
+        <li class="nav-item"><a class="nav-link" href="/Activity/ActivityList">Activity</a></li>
+    </ul>
+</div>
+
+
+<div class="workaround-users-3" role="navigation">
+
+    <div class="pull-left affix" role="navigation">
+
+
+        <div class="row workaround-users-1 pull-left affix" style="background-colorx: green">
+            <div class="">
+
+                <div class="row" style="background-colorx: red">
+                    <div class="col-md-6 text-center h4" style="background-colorx: blue">Users</div>
+                    <div class="col-md-6" style="background-colorx: yellow">
+                        <div class="pull-right">
+                            <form method="get" action="/users/Maintenance/myemail@myemail.com">
+                                <input type="submit" class="btn btn-primary" name="maintenanceMode" value="Create"/>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row workaround-users-2">
+                    <div class="col-md-12 users-sidebar">
+                        <table class="table">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <a href="javascript:linkToUser(&quot;/users/myemail@myemail.com&quot;,&quot;&quot;)">
+                                        myemail@myemail.com</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="javascript:linkToUser(&quot;/users/donald@TheWhitehouse.com&quot;,&quot;&quot;)">
+                                        donald@TheWhiteho...</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="javascript:linkToUser(&quot;/users/jackson@sukishouse.com&quot;,&quot;&quot;)">
+                                        jackson@sukishous...</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="javascript:linkToUser(&quot;/users/bozza@gb.com&quot;,&quot;&quot;)">
+                                        bozza@gb.com</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="javascript:linkToUser(&quot;/users/shula@TheStables.com&quot;,&quot;&quot;)">
+                                        shula@TheStables.com</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="javascript:linkToUser(&quot;/users/joey@corrupted.com&quot;,&quot;&quot;)">
+                                        joey@corrupted.com</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="javascript:linkToUser(&quot;/users/alun@lehman.com&quot;,&quot;&quot;)">
+                                        alun@lehman.com</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href="javascript:linkToUser(&quot;/users/rosa@braintree.com&quot;,&quot;&quot;)">
+                                        rosa@braintree.com</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="page-wrapper">
+
+
+    <form method="get" action="/users/Maintenance/myemail@myemail.com">
+        <input type="submit" class="btn btn-primary btn-default" name="maintenanceMode" value="Edit"/>
+        <input type="submit" class="btn" name="maintenanceMode" value="Delete"/>
+    </form>
+
+    <h2>User Maintenance</h2>
+
+
+    <hr/>
+    <div class="row">
+        <div class="col-md-9">
+            <form action="/users/Maintenance/myemail@myemail.com" method="post">
+
+
+                <div id="users-page" class="page-test-id"></div>
+
+
+                <input type="hidden" name="originalEmail" value="myemail@myemail.com"/>
+                <div class="form-group row">
+                    <label class="col-form-label col-2" for="EmailAddress">Email Address</label>
+                    <input name="EmailAddress" value="myemail@myemail.com" type="email" class="form-control col-6"
+                           readonly
+                           data-val-email="The Email field is not a valid e-mail address."
+                           data-val-required="The Email field is required."/>
+                    <span class="text-danger field-validation-valid" data-valmsg-for="EmailAddress"
+                          data-valmsg-replace="true"></span>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-2" for="Role">Role</label>
+                    <select name="Role" type="text" class="form-control col-6" data-val="true"
+                            data-val-required="The Role field is required." id="Role">
+                        <option selected="selected" value="0">Admin</option>
+                        <option value="1">Contributor</option>
+                    </select>
+                    <span class="text-danger field-validation-valid" data-valmsg-for="Role"
+                          data-valmsg-replace="true"></span>
+                </div>
+                <div class="form-check row">
+                    <label class="form-check-label col-2" for="Ask">Ask</label>
+                    <input name="Ask" checked type="checkbox" class="form-check-input col-1" disabled/>
+                    <span class="text-danger field-validation-valid" data-valmsg-for="Ask"
+                          data-valmsg-replace="true"></span>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-2" for="DisplayName">Dipslay Name</label>
+                    <input name="DisplayName" value="Your DisplayName here!" type="text" class="form-control col-6"
+                           readonly/>
+                    <span class="text-danger field-validation-valid" data-valmsg-for="DisplayName"
+                          data-valmsg-replace="true"></span>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-2" for="OpenIDUrl">Open ID Url</label>
+                    <input name="OpenIDUrl" value="http://www.example.com/blog/" type="text" class="form-control col-6"
+                           readonly/>
+                    <span class="text-danger field-validation-valid" data-valmsg-for="OpenIDUrl"
+                          data-valmsg-replace="true"></span>
+                </div>
+                <div class="form-check row">
+                    <label class="form-check-label col-5" for="NotifyOnAllComment">Receive Notifications for All
+                        Comments</label>
+                    <input name="NotifyOnAllComment" checked type="checkbox" class="form-check-input col-1" disabled/>
+                    <span class="text-danger field-validation-valid" data-valmsg-for="NotifyOnAllComment"
+                          data-valmsg-replace="true"></span>
+                </div>
+                <div class="form-check row">
+                    <label class="form-check-label col-5" for="NotifyOnOwnComment">Receive Notifications for Own
+                        Comments</label>
+                    <input name="NotifyOnOwnComment" checked type="checkbox" class="form-check-input col-1" disabled/>
+                    <span class="text-danger field-validation-valid" data-valmsg-for="NotifyOnOwnComment"
+                          data-valmsg-replace="true"></span>
+                </div>
+                <div class="form-check row">
+                    <label class="form-check-label col-5" for="NotifyOnNewPost">Receive Notifications For A New
+                        Post</label>
+                    <input name="NotifyOnNewPost" checked type="checkbox" class="form-check-input col-1" disabled/>
+                    <span class="text-danger field-validation-valid" data-valmsg-for="NotifyOnNewPost"
+                          data-valmsg-replace="true"></span>
+                </div>
+                <div class="form-check row">
+                    <label class="form-check-label col-5" for="Active">Active</label>
+                    <input name="Active" checked type="checkbox" class="form-check-input col-1" disabled/>
+                    <span class="text-danger field-validation-valid" data-valmsg-for="Active"
+                          data-valmsg-replace="true"></span>
+                </div>
+                <div class="form-group row">
+                    <label class="col-form-label col-2" for="Password">Password</label>
+                    <input name="Password" value="" type="password" class="form-control col-6" readonly
+                    />
+                    <span class="text-danger field-validation-valid" data-valmsg-for="Password"
+                          data-valmsg-replace="true"></span>
+                </div>
+
+                <input name="__RequestVerificationToken" type="hidden"
+                       value="CfDJ8L9__IF4x4RIoJg-H5FCWOC79dzLH8eZVzQFKzrBeF73rIAmTEAeCvlmAsFtm4MAH-7NdB5xi4giPKO0Cnd-p7Jv_8MgsnZuq1rbHSW-XfMEbZC8sw3tMT5g-rcf3s_dN0bUZd878XrvDdsQ9DWsPrIKKFB5JdhYq8NH8GjEIeE193VbIf3FfhE-BcmRAGVcfQ"/>
+            </form>
+        </div>
+    </div>
+
+
+</div>
+
+
+<script src="/lib/jquery/dist/jquery.js"></script>
+<script src="/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+<script src="/lib/bootstrap/dist/js/bootstrap.js"></script>
+<script src="/js/site.js?v=HzaErrl-wf4BLE3MRZ-zjWW_SCElet34d7ZaKUdLVWo"></script>
+
+
+<script src="/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
 
 </body>
 </html>
