@@ -7,5 +7,7 @@ let bob = 2;
 
 export function doSomething(text)
 {
-    alert(text)
+    alert(text);
+
+    document.getElementsByClassName('abc').length();
 }
