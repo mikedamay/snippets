@@ -1,4 +1,6 @@
-const mike = 1;
+import {text} from './mentorComments.js';
+
+const mike = text.exercises['twofer']["null-coalescence"].text;
 
 let bob = 2;
 
@@ -7,7 +9,7 @@ let bob = 2;
 
 export function doSomething(text)
 {
-    alert(text);
+    alert(mike);
 
-    document.getElementsByClassName('abc').length();
+    // document.getElementsByClassName('abc').length();
 }
