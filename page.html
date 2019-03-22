@@ -19,9 +19,10 @@
 </head>
 <body>
 <script type="module">
-    import {doSomething} from "./main.js";
+    import {doSomething, showText} from "./main.js";
 
     window.doSomething = doSomething;
+    window.showText = showText;
 </script>
 
 
@@ -58,7 +59,9 @@
                                         <div class="form-check row">
                                             <label class="form-check-label col-10" for="Ask">Good solution. (GOOD)</label>
                                             <input id="good-solution" data-val="good-solution" checked type="checkbox" class="form-check-input col-1"
-                                            onchange="doSomething('good-solution');"/>
+                                            onchange="showText(document.getElementById('exercise')
+                                              .options[document.getElementById('exercise').selectedIndex].value
+                                              , 'good-solution');"/>
                                         </div>
                                     </td>
                                 </tr>
@@ -106,6 +109,7 @@
             <div id="review-point"></div>
             <div>Discussion Points:</div>
             <div id="discussion-point"></div>
+            <div id="end-point"></div>
         </div>
     </div>
 
