@@ -8,6 +8,8 @@ const GENERAL_SNIPPET = "xxx-general";
 const COMMENT_TEXT_ID = "commentText";
 const DATA_VAL_ATTR = "data-val";
 
+const template = document.getElementById(COMMENT_TEXT_ID).value;
+
 export function showText(exerciseName, featureName) {
     const commentTextEl = document.getElementById(COMMENT_TEXT_ID);
     const features = getActiveFeatures();
@@ -17,7 +19,7 @@ export function showText(exerciseName, featureName) {
 }
 
 function addMentorCommentsToPage(commentTextEl, categories, mentorComments) {
-    let commentText = commentTextEl.value;
+    let commentText = template;
     for (var ii = 0; ii < categories.length; ii++ ) {
         commentText = commentText.replace('{{' + categories[ii] + '}}', mentorComments[categories[ii]]);
     }
@@ -56,7 +58,15 @@ function findLocation(category) {
 
 function getActiveFeatures() {
     const features = document.getElementsByClassName(EXERCISM_FEATURE);
-    return features;
+    let activeFeatures = [];
+    let jj = 0;
+    for (var ii = 0; ii < features.length; ii++) {
+        if (features[ii].checked) {
+            activeFeatures[jj] = features[ii];
+            jj++;
+        }
+    }
+    return activeFeatures;
 }
 
 function buildMentorComments(exerciseName, features) {
