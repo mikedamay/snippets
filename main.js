@@ -4,19 +4,19 @@
 import {text} from './mentorComments.js';
 
 const EXERCISM_FEATURE = "exercism-feature";
+const GENERAL_SNIPPET = "xxx-general";
+const COMMENT_TEXT_ID = "commentText";
+const DATA_VAL_ATTR = "data-val";
 
-const mike = text.exercises['twofer']["null-coalescence"].text;
-
-
-export function doSomething(text)
-{
-    alert(mike);
-
-    // document.getElementsByClassName('abc').length();
+export function showText(exerciseName, featureName) {
+    const commentTextEl = document.getElementById(COMMENT_TEXT_ID);
+    const features = getActiveFeatures();
+    const mentorComments = buildMentorComments(exerciseName, features);
+    const categories = getCommentCateogries(commentTextEl);
+    addMentorCommentsToPage(commentTextEl, categories, mentorComments);
 }
 
-function addMentorCommentsToPage(categories, mentorComments) {
-    const commentTextEl = document.getElementById('commentText');
+function addMentorCommentsToPage(commentTextEl, categories, mentorComments) {
     let commentText = commentTextEl.value;
     for (var ii = 0; ii < categories.length; ii++ ) {
         commentText = commentText.replace('{{' + categories[ii] + '}}', mentorComments[categories[ii]]);
@@ -24,22 +24,8 @@ function addMentorCommentsToPage(categories, mentorComments) {
     commentTextEl.value = commentText;
 }
 
-export function showText(exerciseName, featureName) {
-    const features = getActiveFeatures();
-    // show(getSnippet(exerciseName, featureName));
-    const mentorComments = buildMentorComments(exerciseName, features);
-    const categories = getCommentCateogries();
-    addMentorCommentsToPage(categories, mentorComments);
-}
-
-function show(snippet) {
-    const location = findLocation(snippet.category);
-    location.innerHTML = snippet.text;
-}
-
-
 function getSnippet(exerciseName, featureName) {
-    const generalSnippet = lookupSnippet("xxx-general", featureName);
+    const generalSnippet = lookupSnippet(GENERAL_SNIPPET, featureName);
     const exerciseSnippet = lookupSnippet(exerciseName, featureName);
     if (exerciseSnippet === undefined) {
         if (generalSnippet === undefined) {
@@ -78,7 +64,7 @@ function buildMentorComments(exerciseName, features) {
 
     for (var ii = 0; ii < features.length; ii++) {
         const feature = features[ii];
-        const featureName = feature.getAttribute('data-val');
+        const featureName = feature.getAttribute(DATA_VAL_ATTR);
         assert(featureName !== null);
         const snippet = getSnippet(exerciseName, featureName);
         const category = snippet.category;
@@ -92,12 +78,9 @@ function buildMentorComments(exerciseName, features) {
 
 function formatSnippetText(snippet) {
     return snippet.text + '\n\n';
-    // return "<div>" + snippet.text + "</div>";
 }
 
-function getCommentCateogries()
-{
-    const commentTextEl = document.getElementById('commentText');
+function getCommentCateogries(commentTextEl) {
     const commentText = commentTextEl.value;
 
     const categories = commentText.match(/{{[^}^{]*}}/g);
@@ -105,7 +88,8 @@ function getCommentCateogries()
         return [];
     }
     for (var ii = 0; ii < categories.length; ii++) {
-        categories[ii] = categories[ii].replace('{','').replace('}', '').replace('{','').replace('}', '');
+        categories[ii] = categories[ii].replace('{','').replace('}', '')
+          .replace('{','').replace('}', '');
     }
     return categories;
 }
