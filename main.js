@@ -3,6 +3,8 @@
 //
 import {text} from './mentorComments.js';
 
+const EXERCISM_FEATURE = "exercism-feature";
+
 const mike = text.exercises['twofer']["null-coalescence"].text;
 
 let bob = 2;
@@ -17,19 +19,32 @@ export function doSomething(text)
     // document.getElementsByClassName('abc').length();
 }
 
+function addMentorCommentsToPage(categories, mentorComments) {
+    const commentTextEl = document.getElementById('commentText');
+    let commentText = commentTextEl.value;
+    for (var ii = 0; ii < categories.length; ii++ ) {
+        commentText = commentText.replace('{{' + categories[ii] + '}}', mentorComments[categories[ii]]);
+    }
+    commentTextEl.innerText = commentText;
+}
+
 export function showText(exerciseName, featureName) {
-    show(getSnippet(exerciseName, featureName));
+    const features = getActiveFeatures();
+    // show(getSnippet(exerciseName, featureName));
+    const mentorComments = buildMentorComments(exerciseName, features);
+    const categories = getCommentCateogries();
+    addMentorCommentsToPage(categories, mentorComments);
 }
 
 function show(snippet) {
-    var location = findLocation(snippet.category);
+    const location = findLocation(snippet.category);
     location.innerHTML = snippet.text;
 }
 
 
 function getSnippet(exerciseName, featureName) {
-    var generalSnippet = lookupSnippet("xxx-general", featureName);
-    var exerciseSnippet = lookupSnippet(exerciseName, featureName);
+    const generalSnippet = lookupSnippet("xxx-general", featureName);
+    const exerciseSnippet = lookupSnippet(exerciseName, featureName);
     if (exerciseSnippet === undefined) {
         if (generalSnippet === undefined) {
             return "No snippet found for '" + featureName + "' in '" + exerciseName + "'";
@@ -44,7 +59,7 @@ function getSnippet(exerciseName, featureName) {
 }
 
 function lookupSnippet(exerciseName, featureName) {
-    var exercise = text.exercises[exerciseName];
+    const exercise = text.exercises[exerciseName];
     if (exerciseName !== undefined) {
         return exercise[featureName];
     }
@@ -55,4 +70,51 @@ function lookupSnippet(exerciseName, featureName) {
 
 function findLocation(category) {
     return document.getElementById(category);
+}
+
+function getActiveFeatures() {
+    const features = document.getElementsByClassName(EXERCISM_FEATURE);
+    return features;
+}
+
+function buildMentorComments(exerciseName, features) {
+    const comments = {};
+
+    for (var ii = 0; ii < features.length; ii++) {
+        const feature = features[ii];
+        const category = feature.getAttribute('data-val');
+        assert(category !== null);
+        const snippet = getSnippet(exerciseName, feature.getAttribute('data-val'));
+        if (comments[category] === undefined) {
+            comments[category] = "";
+        }
+        comments[category] += formatSnippetText(snippet);
+    }
+    return comments;
+}
+
+function formatSnippetText(snippet) {
+    return snippet.text + '\n\n';
+    // return "<div>" + snippet.text + "</div>";
+}
+
+function getCommentCateogries()
+{
+    const commentTextEl = document.getElementById('commentText');
+    const commentText = commentTextEl.value;
+
+    const categories = commentText.match(/{{[^}^{]*}}/g);
+    if (categories == null) {
+        return [];
+    }
+    for (var ii = 0; ii < categories.length; ii++) {
+        categories[ii] = categories[ii].replace('{','').replace('}', '').replace('{','').replace('}', '');
+    }
+    return categories;
+}
+
+function assert(assertion) {
+    if (!assertion) {
+        throw( "failure");
+    }
 }

@@ -58,7 +58,7 @@
                                     <td>
                                         <div class="form-check row">
                                             <label class="form-check-label col-10" for="Ask">Good solution. (GOOD)</label>
-                                            <input id="good-solution" data-val="good-solution" checked type="checkbox" class="form-check-input col-1"
+                                            <input id="good-solution" data-val="good-solution" checked type="checkbox" class="form-check-input col-1 exercism-feature"
                                             onchange="showText(document.getElementById('exercise')
                                               .options[document.getElementById('exercise').selectedIndex].value
                                               , 'good-solution');"/>
@@ -69,7 +69,7 @@
                                     <td>
                                         <div class="form-check row">
                                             <label class="form-check-label col-10" for="Ask">The solution contains a color array. (ARRAY)</label>
-                                            <input name="Ask" checked type="checkbox" class="form-check-input col-1"
+                                            <input id="color-array" data-val="color-array" checked type="checkbox" class="form-check-input col-1 exercism-feature"
                                             onchange="alert(document.getElementById('exercise').options[4].value);"/>
                                         </div>
                                     </td>
@@ -78,7 +78,7 @@
                                     <td>
                                         <div class="form-check row">
                                             <label class="form-check-label col-10" for="Ask">The solution contains a dictionary (DICTIONARY)</label>
-                                            <input name="Ask" checked type="checkbox" class="form-check-input col-1" disabled/>
+                                            <input id="dictionary"  data-val="dictionary" checked type="checkbox" class="form-check-input col-1 exercism-feature" disabled/>
                                         </div>
                                     </td>
                                 </tr>
@@ -105,11 +105,21 @@
 
     <div class="row">
         <div class="col-md-12">
+            <textarea id="commentText" name="commentText" rows="20" cols="60">
+Review Points:
+{{review-point}}
+
+Discussion Points:
+{{discussion-point}}
+
+            </textarea>
+<!--
             <div>Rerview Points:</div>
             <div id="review-point"></div>
             <div>Discussion Points:</div>
             <div id="discussion-point"></div>
             <div id="end-point"></div>
+-->
         </div>
     </div>
 
