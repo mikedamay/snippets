@@ -28,9 +28,13 @@ export const text = {
 
       },
       'resistor-color' : {
-          'xxx' : {
+          'dictionary' : {
               category : 'discussion-point',
-              text : `yyyy`
+              text : `Another approach is to use an array of colors`
+          },
+          'color-array' : {
+              category : 'discussion-point',
+              text : `Another approach is to use a dictionary`
           }
       },
       'xxx-general' : {

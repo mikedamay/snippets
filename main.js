@@ -7,10 +7,6 @@ const EXERCISM_FEATURE = "exercism-feature";
 
 const mike = text.exercises['twofer']["null-coalescence"].text;
 
-let bob = 2;
-
-
-// alert(mike + bob);
 
 export function doSomething(text)
 {
@@ -25,7 +21,7 @@ function addMentorCommentsToPage(categories, mentorComments) {
     for (var ii = 0; ii < categories.length; ii++ ) {
         commentText = commentText.replace('{{' + categories[ii] + '}}', mentorComments[categories[ii]]);
     }
-    commentTextEl.innerText = commentText;
+    commentTextEl.value = commentText;
 }
 
 export function showText(exerciseName, featureName) {
@@ -82,9 +78,10 @@ function buildMentorComments(exerciseName, features) {
 
     for (var ii = 0; ii < features.length; ii++) {
         const feature = features[ii];
-        const category = feature.getAttribute('data-val');
-        assert(category !== null);
-        const snippet = getSnippet(exerciseName, feature.getAttribute('data-val'));
+        const featureName = feature.getAttribute('data-val');
+        assert(featureName !== null);
+        const snippet = getSnippet(exerciseName, featureName);
+        const category = snippet.category;
         if (comments[category] === undefined) {
             comments[category] = "";
         }
