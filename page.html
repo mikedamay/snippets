@@ -20,8 +20,9 @@
 <body>
 <script type="module">
     import {showText} from "./main.js";
-
     window.showText = showText;
+    import {copyToClipboard} from "./clipboard.js"
+    window.copyToClipboard = copyToClipboard;
 </script>
 
 
@@ -97,8 +98,9 @@
 <div id="page-wrapper" class="col-md-12">
 
 
-    <form method="get" action="/users/Maintenance/myemail@myemail.com">
-        <input type="submit" class="btn btn-primary btn-default" name="maintenanceMode" value="Copy to Clipboard"/>
+    <form method="get">
+        <input type="submit" class="btn btn-primary btn-default" name="maintenanceMode" value="Copy to Clipboard"
+          onclick="copyToClipboard(document.getElementById('commentText'));"/>
     </form>
 
     <h2>Mentor Comments</h2>
