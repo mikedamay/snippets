@@ -7,21 +7,33 @@ const EXERCISM_FEATURE = "exercism-feature";
 const GENERAL_SNIPPET = "xxx-general";
 const COMMENT_TEXT_ID = "commentText";
 const DATA_VAL_ATTR = "data-val";
+const CAT_PLACEHOLDER = /{{[^}^{]*}}/g;
+const CAT_PLACEHOLDER_PREFIX = '{{';
+const CAT_PLACEHOLDER_SUFFIX = '}}';
 
 const template = document.getElementById(COMMENT_TEXT_ID).value;
 
-export function showText(exerciseName, featureName) {
+/**
+ * usage: typically called when a feature is selected or deselected on the page.html
+ * @param exerciseName, e.g. twofer, resistor-color
+ */
+export function showText(exerciseName) {
     const commentTextEl = document.getElementById(COMMENT_TEXT_ID);
     const features = getActiveFeatures();
     const mentorComments = buildMentorComments(exerciseName, features);
-    const categories = getCommentCateogries(commentTextEl);
+    const categories = getCommentCateogries(template);
     addMentorCommentsToPage(commentTextEl, categories, mentorComments);
 }
 
 function addMentorCommentsToPage(commentTextEl, categories, mentorComments) {
     let commentText = template;
     for (var ii = 0; ii < categories.length; ii++ ) {
-        commentText = commentText.replace('{{' + categories[ii] + '}}', mentorComments[categories[ii]]);
+        if (mentorComments[categories[ii]] !== undefined) {
+            commentText = commentText.replace(CAT_PLACEHOLDER_PREFIX + categories[ii] + CAT_PLACEHOLDER_SUFFIX, mentorComments[categories[ii]]);
+        }
+        else {
+            commentText = commentText.replace(CAT_PLACEHOLDER_PREFIX + categories[ii] + CAT_PLACEHOLDER_SUFFIX, '');
+        }
     }
     commentTextEl.value = commentText;
 }
@@ -52,10 +64,6 @@ function lookupSnippet(exerciseName, featureName) {
     }
 }
 
-function findLocation(category) {
-    return document.getElementById(category);
-}
-
 function getActiveFeatures() {
     const features = document.getElementsByClassName(EXERCISM_FEATURE);
     let activeFeatures = [];
@@ -69,6 +77,13 @@ function getActiveFeatures() {
     return activeFeatures;
 }
 
+/**
+ * for each feature in the exercise identified by exerciseName
+ * add the snippet to which it refers to the comment category
+ * @param exerciseName e.g. twofer, resistor-color
+ * @param features an array of DOM elements (typically all those from the current page with a class of exercism-feature
+ *        each feature has a data-val value which corresponds to the name of a snippet.
+ */
 function buildMentorComments(exerciseName, features) {
     const comments = {};
 
@@ -90,16 +105,13 @@ function formatSnippetText(snippet) {
     return snippet.text + '\n\n';
 }
 
-function getCommentCateogries(commentTextEl) {
-    const commentText = commentTextEl.value;
-
-    const categories = commentText.match(/{{[^}^{]*}}/g);
+function getCommentCateogries(commentText) {
+    const categories = commentText.match(CAT_PLACEHOLDER);
     if (categories == null) {
         return [];
     }
     for (var ii = 0; ii < categories.length; ii++) {
-        categories[ii] = categories[ii].replace('{','').replace('}', '')
-          .replace('{','').replace('}', '');
+        categories[ii] = categories[ii].replace('{{','').replace('}}', '');
     }
     return categories;
 }
