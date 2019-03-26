@@ -25,6 +25,12 @@ export function showText(exerciseName) {
     addMentorCommentsToPage(commentTextEl, categories, mentorComments);
 }
 
+/**
+ * snippets appear on page.html
+ * @param commentTextEl - text area for snippets
+ * @param categories - names of all the possible categories in the template
+ * @param mentorComments dictionary of concatenated snippets for each category for which there are active features
+ */
 function addMentorCommentsToPage(commentTextEl, categories, mentorComments) {
     let commentText = template;
     for (var ii = 0; ii < categories.length; ii++ ) {
@@ -38,6 +44,12 @@ function addMentorCommentsToPage(commentTextEl, categories, mentorComments) {
     commentTextEl.value = commentText;
 }
 
+/**
+ *
+ * @param exerciseName e.g. twofer, resitor-color
+ * @param featureName, e.g. good-solution
+ * @returns either a general snippet (where exeriseName is ignored or a specific exercise feature
+ */
 function getSnippet(exerciseName, featureName) {
     const generalSnippet = lookupSnippet(GENERAL_SNIPPET, featureName);
     const exerciseSnippet = lookupSnippet(exerciseName, featureName);
@@ -54,6 +66,12 @@ function getSnippet(exerciseName, featureName) {
     }
 }
 
+/**
+ * internal lookup
+ * @param exerciseName e.g. twofer, resistor-color
+ * @param featureName e.g. good-solution, dictionary, etc.
+ * @returns a snippet with a name of featureName
+ */
 function lookupSnippet(exerciseName, featureName) {
     const exercise = text.exercises[exerciseName];
     if (exerciseName !== undefined) {
@@ -64,6 +82,11 @@ function lookupSnippet(exerciseName, featureName) {
     }
 }
 
+/**
+ *
+ * @returns {Array} elements with a class of exercism-feature
+ * @returns any checked features (DOM elements
+ */
 function getActiveFeatures() {
     const features = document.getElementsByClassName(EXERCISM_FEATURE);
     let activeFeatures = [];
@@ -83,6 +106,7 @@ function getActiveFeatures() {
  * @param exerciseName e.g. twofer, resistor-color
  * @param features an array of DOM elements (typically all those from the current page with a class of exercism-feature
  *        each feature has a data-val value which corresponds to the name of a snippet.
+ * @returns a dictionary mapping category names to concatenated snippets e.g. review-point -> snippet1\n\nsnippet2...
  */
 function buildMentorComments(exerciseName, features) {
     const comments = {};
@@ -90,7 +114,7 @@ function buildMentorComments(exerciseName, features) {
     for (var ii = 0; ii < features.length; ii++) {
         const feature = features[ii];
         const featureName = feature.getAttribute(DATA_VAL_ATTR);
-        assert(featureName !== null);
+        assert(featureName !== null, "featureName cannot be null - missing data-val?");
         const snippet = getSnippet(exerciseName, featureName);
         const category = snippet.category;
         if (comments[category] === undefined) {
@@ -105,19 +129,24 @@ function formatSnippetText(snippet) {
     return snippet.text + '\n\n';
 }
 
-function getCommentCateogries(commentText) {
-    const categories = commentText.match(CAT_PLACEHOLDER);
+/**
+ *
+ * @param commentTemplate - some thing like 'blah blah\n\n{{review-point}}\n\nblah\n\n{discussion-point}....
+ * @returns an array of categories such as 'review-point', 'discussion-point' in the same range as snippet categories
+ */
+function getCommentCateogries(commentTemplate) {
+    const categories = commentTemplate.match(CAT_PLACEHOLDER);
     if (categories == null) {
         return [];
     }
     for (var ii = 0; ii < categories.length; ii++) {
-        categories[ii] = categories[ii].replace('{{','').replace('}}', '');
+        categories[ii] = categories[ii].replace(CAT_PLACEHOLDER_PREFIX,'').replace(CAT_PLACEHOLDER_SUFFIX, '');
     }
     return categories;
 }
 
-function assert(assertion) {
+function assert(assertion, message) {
     if (!assertion) {
-        throw( "failure");
+        throw( message);
     }
 }
