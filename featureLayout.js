@@ -12,7 +12,7 @@ function buildHtml(exercise) {
 
     const itemsHtml = buildItemsHtml(snippets);
     const generalItemsHtml = buildItemsHtml(text.exercises["xxx-general"])
-    return  feature_start + itemsHtml + generalItemsHtml + feature_end;
+    return feature_start + itemsHtml + generalItemsHtml + feature_end;
 }
 
 

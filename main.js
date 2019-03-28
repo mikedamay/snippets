@@ -6,7 +6,8 @@ import {text} from './mentorComments.js';
 const EXERCISM_FEATURE = "exercism-feature";
 const GENERAL_SNIPPET = "xxx-general";
 const COMMENT_TEXT_ID = "commentText";
-const DATA_VAL_ATTR = "data-val";
+export const DATA_VAL_ATTR = "data-val";
+export const EXERCISE_DROPDOWN = "exercise";
 const CAT_PLACEHOLDER = /{{[^}^{]*}}/g;
 const CAT_PLACEHOLDER_PREFIX = '{{';
 const CAT_PLACEHOLDER_SUFFIX = '}}';
@@ -87,8 +88,8 @@ function lookupSnippet(exerciseName, featureName) {
  * @returns {Array} elements with a class of exercism-feature
  * @returns any checked features (DOM elements
  */
-function getActiveFeatures() {
-    const features = document.getElementsByClassName(EXERCISM_FEATURE);
+export function getActiveFeatures() {
+    const features = getFeatureElements();
     let activeFeatures = [];
     let jj = 0;
     for (var ii = 0; ii < features.length; ii++) {
@@ -98,6 +99,10 @@ function getActiveFeatures() {
         }
     }
     return activeFeatures;
+}
+
+export function getFeatureElements() {
+    return document.getElementsByClassName(EXERCISM_FEATURE);
 }
 
 /**
@@ -126,7 +131,7 @@ function buildMentorComments(exerciseName, features) {
 }
 
 function formatSnippetText(snippet) {
-    return snippet.text + '\n\n';
+    return '\n\n' + snippet.text;
 }
 
 /**

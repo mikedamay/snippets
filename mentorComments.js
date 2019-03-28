@@ -170,7 +170,7 @@ Other concerns: ease of debugging, ease of documentation, intuitive - close to m
           },
           'comments' : {
               feature : "Purpose of comments?",
-              category : 'mentor-queston',
+              category : 'mentor-question',
               text : `What do you see as the purpose of your comments?`
           },
 
