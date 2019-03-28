@@ -23,6 +23,8 @@
     window.showText = showText;
     import {copyToClipboard} from "./clipboard.js"
     window.copyToClipboard = copyToClipboard;
+    import {layoutFeatures} from "./featureLayout.js";
+    window.layoutFeatures = layoutFeatures;
 </script>
 
 
@@ -32,7 +34,8 @@
 
         <div class="form-group row" style="width: 500px">
             <label class="col-form-label col-6" for="exercise">Exercises</label>
-            <select id="exercise" name="exercise" type="text" class="form-control col-6">
+            <select id="exercise" name="exercise" type="text" class="form-control col-6"
+                    onchange="layoutFeatures(document.getElementById('exercise').options[document.getElementById('exercise').selectedIndex].value);">
                 <option value="twofer">Twofer</option>
                 <option value="leap">Leap</option>
                 <option value="gigasecond">Gigasecond</option>
