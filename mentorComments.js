@@ -85,6 +85,44 @@ export const text = {
                 category : 'discussion-point',
                 text : 'Using an enum rather than strings for planet names would avoid the possibility of bugs being introduced by typos'
             },
+            'gather-constants' : {
+                feature : 'Suggest that year lengths are more readable in a bunch',
+                category : 'discussion-point',
+                text : `
+Arguably it is helpful to gather the year values 
+together in one place say as a bunch of constants 
+or a dictionary of some sort.  This helps when 
+reasoning about the validity of the values (as 
+they are easy to compare) amongst other things.
+The downside is that you have to make multiple
+code changes when you add or remove a planet.
+                `,
+            },
+          'use-given-numbers' : {
+              feature : 'Advise learner to use numbers from the instructions',
+              category : 'discussion-point',
+              text : 'The instructions provide the number of seconds in an earth year.  If we see the instructions as a sort of stand-in for the business rules then it might make more sense to reflect this back in the code rather than calculate the value'
+          },
+         'rounding-unnecessary' : {
+              feature : 'Rounding is not necessary',
+              category : 'discussion-point',
+              text : 'There is no need to apply the rounding yourself.  The test infrastructure handles that in the comparison.  On balance you are liable to do more damage with premature rounding than without'
+          },
+         'read-only-variables' : {
+              feature : 'The variables can be read only',
+              category : 'review-point',
+              text : 'The variables can be read only.  A "read only" discipline helps maintainers reason about the code and internalise its behaviour'
+          },
+         'enums-used' : {
+              feature : 'Good use of \`enum\`',
+              category : 'review-point',
+              text : 'Good use of \`enum\`'
+          },
+         'encapuslation' : {
+              feature : 'good encapsulation',
+              category : 'review-point',
+              text : 'Good idea to encapsulate the calculation in its own method - you never know when that might come in useful'
+          },
       },
       'xxx-general' : {
           'good-solution' : {

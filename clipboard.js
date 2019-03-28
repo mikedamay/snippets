@@ -4,7 +4,7 @@ import {getActiveFeatures, getFeatureElements, EXERCISE_DROPDOWN, DATA_VAL_ATTR}
 export function copyToClipboard(element) {
     element.focus();
     element.select();
-    element.execCommand('copy', false);
+    document.execCommand('copy', false);
 }
 
 function saveState() {
