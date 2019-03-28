@@ -2,14 +2,17 @@ export const text = {
   exercises : {
       twofer : {
           'null-coalescence' : {
+              feature : 'Suggest null coalescence',
               category : 'discussion-point',
               text : `* null coalescence operator \`var expr = "something or nothing"; var default_val = "nothing"; var foo = expr ?? default_val;\``
           },
           'string-interpolation' : {
+              feature : 'Suggest string interpolation',
               category: 'discussion-point',
               text: ` string interpolation \`var expr = "abc"; var foo = $"this is {expr}";\``,
           },
           'default-parameter' : {
+              feature : 'Suggest default parameter',
               category: 'discussion-point',
               text : `* default parameter can be something other than null - \`void foo(string bar = "you"){}\``
           }
