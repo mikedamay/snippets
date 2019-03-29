@@ -124,6 +124,65 @@ code changes when you add or remove a planet.
               text : 'Good idea to encapsulate the calculation in its own method - you never know when that might come in useful'
           },
       },
+      'high-scores' : {
+          'suggest-ro-field' : {
+              feature : 'Suggest read only field',
+              category : 'review-point',
+              text : 'The field can be made read only.  "read only" discipline is good as it allows maintainers to reason better about the code.'
+          },
+          'suggest-ro-prop' : {
+              feature : 'Suggest read only property',
+              category : 'review-point',
+              text : 'The property can be made read only (remove `set`).  "read only" discipline is good as it allows maintainers to reason better about the code.'
+          },
+          'read-only' : {
+              feature : 'Good use of read only',
+              category : 'review-point',
+              text : 'Good use of read only members'
+          },
+          'linq-available' : {
+              feature : 'LINQ methods',
+              category : 'review-point',
+              text : `
+There are a number of LINQ methods that may simplify the code:
+\`\`\`
+IEnumerable.Max()
+IEnumerable.Last()
+IEnumerable.OrderByDescending()
+IEnumerable.Take()
+\`\`\`                  
+              `
+          },
+      },
+      'hamming' : {
+          'performance-comparison' : {
+              feature : 'Performance Comparison',
+              category : 'discussion-point',
+              text : `
+There are two obvious LINQ approaches - \`IEnumerable.Zip()\` 
+and one based around \`IEnumerble.SelectMany()\` (or one that accesses
+the second strand by index in some other way).  The "Zip" approach takes
+twice as long as the indexed approach (but less LINQy).  A typical
+non-LINQ approach is about 3 times the speed of "Zip".         
+                  `
+          }
+      },
+      'nucleotide-count' : {
+          'suggest-ro-dict' : {
+              feature : 'Suggest that the dictionary should be read only',
+              category : 'discussion-point',
+              text : `
+You should consider returning a read only version 
+of the dictionary to the caller.  This will guide 
+maintainers in how you expect the dictionary to be used.
+             `
+          },
+          'suggest-plus-plus' : {
+              feature : 'Suggest use of ++',
+              category : 'discussion-point',
+              text : 'The operator ++ / +=1 can be used with the value returned from dictionary (even primitive values)'
+          },
+      },
       'xxx-general' : {
           'good-solution' : {
               feature : 'A Good Solution',
