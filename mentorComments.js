@@ -183,6 +183,25 @@ maintainers in how you expect the dictionary to be used.
               text : 'The operator ++ / +=1 can be used with the value returned from dictionary (even primitive values)'
           },
       },
+      'allergies' : {
+          'flags' : {
+              feature : 'Suggest flags',
+              category : 'discussion-point',
+              text : `
+An alternative approach is to use an enum mutually exclusive  bit values e.g. 
+\`\`\`
+enum Allergen
+{
+  Eggs = 1 << 0,
+  Peanuts = 1 << 1,
+  Shellfish = 1 << 2,
+...
+}
+\`\`\`
+If you add the \`[Flags]\` attribute you can then use \`Enum.HasFlag()\` and \`Enum.GetValues()\` to implement the methods.
+              `
+          }
+      },
       'xxx-general' : {
           'good-solution' : {
               feature : 'A Good Solution',
