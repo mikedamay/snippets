@@ -167,6 +167,13 @@ non-LINQ approach is about 3 times the speed of "Zip".
                   `
           }
       },
+      'circular-buffer' : {
+          'queue' : {
+              feature : 'suggest queue',
+              category : 'discussion-point',
+              text : 'Code can be considerably simplified with the use of a collection such as a Queue'
+          },
+      },
       'nucleotide-count' : {
           'suggest-ro-dict' : {
               feature : 'Suggest that the dictionary should be read only',
@@ -201,6 +208,20 @@ enum Allergen
 If you add the \`[Flags]\` attribute you can then use \`Enum.HasFlag()\` and \`Enum.GetValues()\` to implement the methods.
               `
           }
+      },
+      'grains' : {
+          'right-shift' : {
+              feature: 'right shift',
+              category: 'discussion-point',
+              text: 'The bitwise operator right shift \`<<\` is a performant approach to powers of 2'
+          },
+      },
+      'isogram' : {
+          'suggest-linq' : {
+              feature: 'Suggest LINQ',
+              category: 'discussion-point',
+              text: 'You might want to think about a LINQ based solution (or you might not see the point in which case let me know).  Use of `Distinct()` or `GroupBy()` indicate two different ways to approach this.'
+          },
       },
       'xxx-general' : {
           'good-solution' : {
@@ -288,6 +309,41 @@ Other concerns: ease of debugging, ease of documentation, intuitive - close to m
               feature : "Purpose of comments?",
               category : 'mentor-question',
               text : `What do you see as the purpose of your comments?`
+          },
+          'suggest-private' : {
+              feature : "Favour private methods",
+              category : 'discussion-point',
+              text : `
+If this were a library routine it would probably be better to make \`PopulateSquares\` private access.  Public declaration increases the amount of noise in the API and constrains maintainers who may want to change the implementation.
+              `
+          },
+          'try-catch' : {
+              feature : "Try/catch confusion",
+              category : 'discussion-point',
+              text : `
+Regarding your "if" question: you have coded it correctly.  It is easy to get somewhat confused about exceptions before you have had a chance to see them from both sides.
+
+You use try/catch when you are expecting a library or the run-time to throw the exception.  In this case your code is the one that is detecting an exceptional condition and therefore you have to do the throwing and the caller of your routine has the try/catch.
+
+Unfortunately, in the case of the xunit tests the try/catch code is hidden from you inside the \`Assert.Throws()\` method but I can assure you it is there
+
+For when you do need to use it a typical try/catch construction might look something like the following.  Again xunit does not help as it will prevent the \`Console.WriteLine\` from producing anything but if you were running this as an application it would print out the line.
+\`\`\`
+        try
+        {
+            int sum = 0;
+            for (int ii = 0; ii < 1000; ii++)
+            {
+                checked {sum += 1_000_000_000;}
+            }
+        }
+        catch (OverflowException ex)
+        {
+            // do something like log a message
+            Console.WriteLine("It's all gone wrong");
+        }
+\`\`\`
+              `
           },
 
       }
