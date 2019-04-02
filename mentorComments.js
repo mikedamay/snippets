@@ -229,7 +229,12 @@ the second strand by index in some other way).  The "Zip" approach takes
 twice as long as the indexed approach (but less LINQy).  A typical
 non-LINQ approach is about 3 times the speed of "Zip".         
                   `
-          }
+          },
+          'linq-possibility' : {
+              feature : 'LINQ is an option',
+              category : 'discussion-point',
+              text : 'I\'m happy to discus a LINQ based solution with you if that is of interest.'
+          },
       },
       'circular-buffer' : {
           'queue' : {
@@ -374,11 +379,11 @@ Other concerns: ease of debugging, ease of documentation, intuitive - close to m
               category : 'mentor-question',
               text : `What do you see as the purpose of your comments?`
           },
-          'suggest-private' : {
+          'favour-private' : {
               feature : "Favour private methods",
               category : 'discussion-point',
               text : `
-If this were a library routine it would probably be better to make \`PopulateSquares\` private access.  Public declaration increases the amount of noise in the API and constrains maintainers who may want to change the implementation.
+It is generally considered better to give member fields private access.  Public declaration increases the amount of noise in the API and constrains maintainers who may want to change the implementation.  Let me know if you want to discuss further.
               `
           },
           'try-catch' : {
@@ -433,6 +438,16 @@ You should be aware that in many commercial roles you will need to know associat
 
 What we have referred to as the "maintainer approach" is more often referred to as software craftsmanship, principle based or best practice.  Examples are the Agile manifesto / Extreme Programming (SP), SOLID principles, defensive coding.  They are not specific to C#/.NET.  It has to be said that this approach may not be adhered to by as many programmers as some of us would like.
               `
+          },
+          'equals-idiom' : {
+              feature : '== is more idiomatic',
+              category : 'discussion-point',
+              text : 'The `==` operator is generally considered more idiomatic than `Equals` for value types such as primitives (int, etc.)'
+          },
+          'plus-plus-idiom' : {
+              feature : '++ is more idiomatic',
+              category : 'discussion-point',
+              text : 'The `++` operator is generally considered more idiomatic than `+= 1`'
           },
       },
   }
