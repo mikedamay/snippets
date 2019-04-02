@@ -258,6 +258,21 @@ maintainers in how you expect the dictionary to be used.
               category : 'discussion-point',
               text : 'The operator ++ / +=1 can be used with the value returned from dictionary (even primitive values)'
           },
+          'consider-except' : {
+              feature : 'Consider Except',
+              category : 'discussion-point',
+              text : 'Consider `IEnumerable.Except()` as an approach to validation'
+          },
+          'dictionary-init' : {
+              feature : 'You can initialise the dictionary',
+              category : 'discussion-point',
+              text : `
+The idiomatic way to initialise a dictionary is as follows:
+\`\`\`
+var dict = new Dictionary<string, int> { {"one", 1}, {"two", 2}...};
+\`\`\`
+              `
+          },
       },
       'allergies' : {
           'flags' : {
@@ -381,9 +396,9 @@ Other concerns: ease of debugging, ease of documentation, intuitive - close to m
           },
           'favour-private' : {
               feature : "Favour private methods",
-              category : 'discussion-point',
+              category : 'review-point',
               text : `
-It is generally considered better to give member fields private access.  Public declaration increases the amount of noise in the API and constrains maintainers who may want to change the implementation.  Let me know if you want to discuss further.
+It is generally considered better to give member fields and support methods private access.  Public declaration increases the amount of noise in the API and constrains maintainers who may want to change the implementation.  Let me know if you want to discuss further.
               `
           },
           'try-catch' : {
@@ -448,6 +463,25 @@ What we have referred to as the "maintainer approach" is more often referred to 
               feature : '++ is more idiomatic',
               category : 'discussion-point',
               text : 'The `++` operator is generally considered more idiomatic than `+= 1`'
+          },
+          'who-do-we-code-for' : {
+              feature : 'who do we expect to mainain the code',
+              category : 'discussion-point',
+              text : `
+Your new version is exactly what I would code.
+
+You may be right about the trade-off.  Your original is more explicit about when the method will return true and when it will return false.
+
+So why consider an alternative?
+
+I would say your new/my version is more idiomatic.  Its conciseness enhances its readability to coders of my standard.  I must have seen literally 150 solutions to Leap so I may be biased.  I still think that this is the solution I would expect to see in a quality C# shop.
+
+BTW I am not interested in conciseness unless it serves readability.
+
+I think the question comes down to - who is our audience?  Who do we think will maintain the code?  In 40 years of coding I have not found an answer - I just assume (almost certainly wrongly) they will be coders like me.
+
+Let me know if you come across a better answer and I (may just) be prepared to put my ego aside.
+              `
           },
       },
   }
