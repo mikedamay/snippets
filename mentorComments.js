@@ -274,6 +274,45 @@ var dict = new Dictionary<string, int> { {"one", 1}, {"two", 2}...};
               `
           },
       },
+      'robot-name' : {
+          'reflect-bus-rules' : {
+              feature : 'name construction should reflect business rules',
+              category : 'discussion-point',
+              text : `
+One aspect of expression is the relationship of the code to the business rules.  In this case we have been told to generate 2 letters and 3 numbers. If the maintainer sees 2 lines of code relating to letters followed by 3 lines of code relating to numbers they won’t even stop to consider it.  With your (perfectly good - but not meeting my expressiveness criterion - solution) the number 5 is involved which is good but then there is some question of a special condition of less than 2 that they will have to stop and parse.  They also have to recollect their ascii codes to parse the rest of it.
+
+Arguably something like the following may be more expressive.  A loop and condition will not bring the business rules to mind as instantly for the maintainer.
+\`\`\`
+  newName += (char)rnd.Next(‘A’, ‘Z’);
+  newName += (char)rnd.Next(‘A’, ‘Z’);
+  newName += (char)rnd.Next(‘0’, ‘9’);
+  newName += (char)rnd.Next(‘0’, ‘9’);
+  newName += (char)rnd.Next(‘0’, ‘9’);
+\`\`\`
+is worth considering.
+              `
+          },
+          'literal-ints' : {
+              feature : 'don\'t use ASCII codes',
+              category : 'discussion-point',
+              text : 'Rather than expressing letters with their ascii value you can use their literal value, i.e. `Next(\'A\', \'Z\' + 1)`'
+          },
+          'exit-condition' : {
+              feature : 'You need an exit condition',
+              category : 'review-point',
+              text : 'You don\'t have an exit condition for when all name slots have been used up - the robots are coming!'
+          },
+          'string-interpolation' : {
+              feature : 'interpolation works well',
+              category : 'review-point',
+              text : 'The string interpolation approach that you have chosen works well here'
+          },
+          'unique-robots' : {
+              feature : 'uniqueness check is required',
+              category : 'review-point',
+              text : 'You need a mechanism to ensure that no duplicates are generated'
+          },
+      },
       'allergies' : {
           'flags' : {
               feature : 'Suggest flags',
@@ -463,6 +502,11 @@ What we have referred to as the "maintainer approach" is more often referred to 
               feature : '++ is more idiomatic',
               category : 'discussion-point',
               text : 'The `++` operator is generally considered more idiomatic than `+= 1`'
+          },
+          'favour-read-only' : {
+              feature : 'Favour read-only fields',
+              category : 'discussion-point',
+              text : 'You should favour read only fields where possible as is the case here'
           },
           'who-do-we-code-for' : {
               feature : 'who do we expect to mainain the code',
