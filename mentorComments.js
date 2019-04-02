@@ -21,12 +21,69 @@ export const text = {
               category: 'discussion-point',
               text : `The solution does not address the case of an empty string being passed in`
           },
+          'non-var-expression' : {
+              feature : 'Expressions, not just variables',
+              category: 'discussion-point',
+              text : 'String interpolation can handle any expression not just single variables, e.g. \` $\"my name is {firstName + " " + lastName}\"\`'
+          },
       },
       leap : {
-          'xxx' : {
+          'basic-logic' : {
+              feature: 'Point out basic logic to user',
+              category : 'review-point',
+              text : `
+You care about 3 things
+* is the year divisible by 4
+* is the year divisible by 100
+* is the year divisible by 400
+
+You can combine these in a single expression using _and_ \`&&\`, _or_ \`||\` and _not_ \`!\`.
+
+give it a try
+              `
+          },
+          'exercism-approach' : {
+              feature: 'How to use Exercism',
+              category : 'review-point',
+              text : `
+Exercises in Exercism are designed to be run by unit tests. Pay close attention to the instructions 
+about running the tests, and follow the link there to the C# language page if you're running into trouble. 
+Your submission is expected to return a value rather than outputting it to the console. 
+Your initial download should have included a Leap.cs file with a template for you to get started with. 
+Once you've got that figured out, go ahead and submit a new solution. :-)
+
+As a consequence of this approach you cannot include \`Console.ReadLine()\` and other console read statements in the code as these "block" the execution.
+              `
+          },
+          'parens' : {
+              feature: 'Parens are optional',
               category : 'discussion-point',
-              text : `yyyy`
-          }
+              text : 'parentheses are optional in this case as operator precedence works in your favour.  You may prefer to keep them for readability'
+          },
+          'avoid-literals' : {
+              feature: 'Avoid boolean literals are optional',
+              category : 'discussion-point',
+              text : `
+There is no requirement for a conditional statement and boolean literals.
+
+Instead of having an if-statement and explicitly returning \`true\` or \`false\`, you could also just return the expression in the if-statement.
+
+Consider the following two bits of code, which are functionally equivalent:
+\`\`\`
+if (x > 1)
+{
+    return true;
+}
+
+return false;
+\`\`\`
+and
+\`\`\`
+return x > 1;
+\`\`\`
+You can combine the expressions with "and", \`&&\` and "or", \`!!\` to avoid conditional statements.
+              `
+          },
       },
       gigasecond :  {
           'thousands-separator' : {
@@ -71,6 +128,13 @@ export const text = {
               feature : 'Learner is using a switch statement',
               category : 'discussion-point',
               text : `Consider a read only, initialised dictionary as an alternative to the switch statement`
+          },
+          'performance' : {
+              feature : 'ColorCode() instantiates the array ',
+              category : 'review-point',
+              text : `
+ \`ColorCode()\` causes the color array to be instantiated each time it is called.  This is not optimally performant.
+`
           },
 
       },
@@ -345,8 +409,32 @@ For when you do need to use it a typical try/catch construction might look somet
 \`\`\`
               `
           },
+        'immutability' : {
+            feature : 'Favour immutability',
+            category : 'discussion point',
+            tezt : `
+By far the most important thing is that access to the field is restricted from outside the class.  This prevents unexpected changes to the instantiated objects and avoids many gotchas for maintainers.
 
-      }
+There is much less point in making the private field readonly.  But it is still worth it.  It helps a maintainer of the class to quickly internalise how the class behaves and what dangers there are in making changes.
+
+For one thing, If it turns out, as in this case, that all the class's data is readonly then the maintainer knows that the class is immutable and therefore thread safe or more susceptible to being cached, for example.            `
+        },
+          'maturity' : {
+              feature : 'When to start programming for real',
+              catgory : 'discussion-point',
+              text : `
+That is a difficult question.
+
+If you have the opportunity of transitioning from an existing/language to C# in the same organisation / role then you should just try that and see how it goes.
+
+Another approach is to participate in an open source project in C#/.NET.  I work on [dasblog-core](https://github.com/poppastring/dasblog-core).
+
+You should be aware that in many commercial roles you will need to know associated technologies, the most important of which are ASP.NET and SQL (probably SQL Server).
+
+What we have referred to as the "maintainer approach" is more often referred to as software craftsmanship, principle based or best practice.  Examples are the Agile manifesto / Extreme Programming (SP), SOLID principles, defensive coding.  They are not specific to C#/.NET.  It has to be said that this approach may not be adhered to by as many programmers as some of us would like.
+              `
+          },
+      },
   }
 };
 
