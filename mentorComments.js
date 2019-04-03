@@ -349,6 +349,72 @@ If you add the \`[Flags]\` attribute you can then use \`Enum.HasFlag()\` and \`E
               text : 'Rather than expressing letters with their ascii value you can use their literal value, i.e. `minChar = \'A\')`'
           },
       },
+      'clock' : {
+          'formula' : {
+              feature : 'Good modulus formula',
+              category : 'discussion-point',
+              text : `
+A neat modulus formula that simplifies some of the negative handling is:
+\`\`\`
+int Mod(double x, double y) => (int)(((x % y) + y) % y);
+\`\`\`
+              `
+          },
+          'struct' : {
+              feature : 'Struct',
+              category : 'discussion-point',
+              text : 'a lot of problems with `Equals()` are solved by making `Clock` a `struct` as equality testing is built in for a simple object like this'
+          },
+          'equality' : {
+              feature : 'The Equality story',
+              category : 'review-point',
+              text : `
+When it comes to testing equality you're expected to follow a particular pattern (similar to the notorious one in Java).
+
+if you provide an \`Equals()\` method you are also expected to provide a corresponding \`GetHashCode()\` method and
+to honour \`object\`'s contract for \`Equals()\`.
+
+My IDE (Rider) generates the following code.              
+\`\`\`
+protected bool Equals(Clock other)
+{
+    return hours == other.hours && minutes == other.minutes;
+}
+
+public override bool Equals(object obj)
+{
+    if (ReferenceEquals(null, obj)) return false;
+    if (ReferenceEquals(this, obj)) return true;
+    if (obj.GetType() != this.GetType()) return false;
+    return Equals((Clock) obj);
+}
+
+public override int GetHashCode()
+{
+    unchecked
+    {
+        return (hours * 397) ^ minutes;
+    }
+}
+\`\`\`
+ 1. You need the Equals(object) in order for your object to honour its contracts. In inheriting from object you assert that you can be passed an object for comparison so you had better handle it correctly.
+ 2. The first ReferenceEquals is null protection.
+ 3. The second ReferenceEquals is for performance
+ 4. GetHashCode() and the need for consistency with Equals are a bit more hazy. The hashcode is used, in particular, by dictionaries and sets and the bumping with a random number apparently spreads out the distribution in whatever tree structure they use. I suspect 5 moinutes of introspection or web search would reveal the importance of equality in this mix.
+ 5. \`protected...Equals(...)\` is for performance
+ 
+Let me know if you have any points to discuss on this. 
+              `
+          },
+
+      },
+      'bracket-push' : {
+          'stack' : {
+              feature : 'Stack is good',
+              category : 'review-point',
+              text : 'A stack of some sort is a good way to approach this (including recursion which is functionally equivalent'
+          },
+      },
       'grains' : {
           'right-shift' : {
               feature: 'right shift',
@@ -361,6 +427,13 @@ If you add the \`[Flags]\` attribute you can then use \`Enum.HasFlag()\` and \`E
               feature: 'Suggest LINQ',
               category: 'discussion-point',
               text: 'You might want to think about a LINQ based solution (or you might not see the point in which case let me know).  Use of `Distinct()` or `GroupBy()` indicate two different ways to approach this.'
+          },
+      },
+      'pangram' : {
+          'suggest-linq': {
+              feature: 'Suggest LINQ',
+              category: 'discussion-point',
+              text: 'You might want to think about a LINQ based solution (or you might not see the point in which case let me know).  Use of `Except()` or `Count()` indicate two different ways to approach this.'
           },
       },
       'xxx-general' : {
