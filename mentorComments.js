@@ -332,6 +332,23 @@ If you add the \`[Flags]\` attribute you can then use \`Enum.HasFlag()\` and \`E
               `
           }
       },
+      'rotational-cipher' : {
+          'unicode' : {
+              feature: 'Take a consistent position on unicode',
+              category: 'discussion-point',
+              text: 'Note that `IsLetter()` applies to unicode characters not just ASCII'
+          },
+          'string-linq' : {
+              feature: 'No need for char array',
+              category: 'discussion-point',
+              text: 'There is no requirement to convert the string to an array as it implements `IEnumerable<char>`'
+          },
+          'literal-ints' : {
+              feature : 'don\'t use ASCII codes',
+              category : 'discussion-point',
+              text : 'Rather than expressing letters with their ascii value you can use their literal value, i.e. `minChar = \'A\')`'
+          },
+      },
       'grains' : {
           'right-shift' : {
               feature: 'right shift',
