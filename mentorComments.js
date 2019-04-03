@@ -61,7 +61,7 @@ As a consequence of this approach you cannot include \`Console.ReadLine()\` and 
               text : 'parentheses are optional in this case as operator precedence works in your favour.  You may prefer to keep them for readability'
           },
           'avoid-literals' : {
-              feature: 'Avoid boolean literals are optional',
+              feature: 'Avoid boolean literals',
               category : 'discussion-point',
               text : `
 There is no requirement for a conditional statement and boolean literals.
@@ -435,6 +435,11 @@ Let me know if you have any points to discuss on this.
               category: 'discussion-point',
               text: 'You might want to think about a LINQ based solution (or you might not see the point in which case let me know).  Use of `Except()` or `Count()` indicate two different ways to approach this.'
           },
+          'unicode' : {
+              feature: 'Take a consistent position on unicode',
+              category: 'discussion-point',
+              text: 'Note that `IsLetter()` applies to unicode characters not just ASCII'
+          },
       },
       'xxx-general' : {
           'good-solution' : {
@@ -615,6 +620,34 @@ BTW I am not interested in conciseness unless it serves readability.
 I think the question comes down to - who is our audience?  Who do we think will maintain the code?  In 40 years of coding I have not found an answer - I just assume (almost certainly wrongly) they will be coders like me.
 
 Let me know if you come across a better answer and I (may just) be prepared to put my ego aside.
+              `
+          },
+          'bool-literal-comparison' : {
+              feature : 'Avoid comparisons with boolean literals',
+              category : 'discussion-point',
+              text : 'It is more idiomatic to use `if (expr) {}` than `if (expr == true) {}` and `if (!expr) {}` than `if (expr == false) {}`'
+          },
+          'avoid-literals' : {
+              feature: 'Avoid boolean literals',
+              category : 'discussion-point',
+              text : `
+There is no requirement for a conditional statement and boolean literals.
+
+Instead of having an if-statement and explicitly returning \`true\` or \`false\`, you could also just return the expression in the if-statement.
+
+Consider the following two bits of code, which are functionally equivalent:
+\`\`\`
+if (x > 1)
+{
+    return true;
+}
+
+return false;
+\`\`\`
+and
+\`\`\`
+return x > 1;
+\`\`\`
               `
           },
       },
