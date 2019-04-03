@@ -441,6 +441,39 @@ Let me know if you have any points to discuss on this.
               text: 'Note that `IsLetter()` applies to unicode characters not just ASCII'
           },
       },
+      'reverse-string' : {
+          'use-sb' : {
+              feature : 'Use StringBuilder',
+              category : 'review-point',
+              text : 'For performance reasons you should use a StringBuilder to construct the output string'
+          },
+      },
+      'rna-transcription' : {
+          'read-only-dict' : {
+              feature : 'Expose as a read only dictionary',
+              category : 'discussion-point',
+              text : 'you could make the dictionary read only (possibly, simply, through a read only interface)'
+          },
+          'dictionary' : {
+              feature : 'Use a dictionary',
+              category : 'discussion-point',
+              text : 'you could consider an initialised dictionary which might emphasise the relationships more clearly than the switch statement'
+          },
+      },
+      'roman-numerals' : {
+          'simplify' : {
+              feature : 'simplify by adding edge cases',
+              category : 'discussion-point',
+              text : 'One way of simplifying this is to include the "decremented" numbers in the list of numbers eg. `{4, "IV"}, {9, "IX"}`.'
+          }
+      },
+      'scrabble-score' : {
+          'indexable-string' : {
+              feature : 'No need for char array',
+              category : 'discussion-point',
+              text : 'There is no need to convert string to a char array - strings are indexable'
+          },
+      },
       'xxx-general' : {
           'good-solution' : {
               feature : 'A Good Solution',
@@ -511,6 +544,8 @@ You will see there is nothing too prescriptive it's about what the circumstances
 As hinted at above.  I think you made the right decision based on the agile principle.
 
 Other concerns: ease of debugging, ease of documentation, intuitive - close to mental model, refers to business rules
+
+Accepted coding conventions - use a StringBuilder even when you are unconcerned about performance.
 `
           },
           'expression-bodied-present' : {
