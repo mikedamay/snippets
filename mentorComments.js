@@ -84,12 +84,31 @@ return x > 1;
 You can combine the expressions with "and", \`&&\` and "or", \`!!\` to avoid conditional statements.
               `
           },
+          'avoid-ternary-literals' : {
+              feature : 'Don\`t use ternary + boolean literals',
+              category : 'discussion-point',
+              text : `
+There is no requirement for boolean literals and a ternary expression.
+
+Instead of having an ?  : and explicitly returning \`true\` or \`false\`, you could also just return the expression .
+
+\`\`\`
+return allOK ? true : false;
+\`\`\`
+can be replaced with
+\`\`\`
+return allOk;
+\`\`\`             
+You can combine the expressions with "and", \`&&\` and "or", \`!!\` to avoid conditional statements.
+ `
+          }
       },
       gigasecond :  {
           'thousands-separator' : {
               feature: 'Suggest thousands separator _',
               category : 'discussion-point',
-              text : `C# provides a 'thousands' separator '_', as in \`1_000_000_000\` which improves readability`
+              text : `C# provides a 'thousands' separator '_', as in \`1_000_000_000\` which improves readability.  \`1e9\` is also available.
+`
           },
           'add-seconds-missing' : {
               feature : 'Suggest DateTime.AddSeconds',
@@ -204,9 +223,14 @@ code changes when you add or remove a planet.
               category : 'review-point',
               text : 'Good use of read only members'
           },
+          'suggest-linq' : {
+              feature : 'Suggest a LINQ based approach',
+              category : 'discussion-point',
+              text : 'I am happy to discuss a solution based on LINQ.  This is the ideal exercise to consider it as it particularly enhances readability here,'
+          },
           'linq-available' : {
               feature : 'LINQ methods',
-              category : 'review-point',
+              category : 'discussion-point',
               text : `
 There are a number of LINQ methods that may simplify the code:
 \`\`\`
@@ -216,6 +240,16 @@ IEnumerable.OrderByDescending()
 IEnumerable.Take()
 \`\`\`                  
               `
+          },
+          'suggest-clone-collection' : {
+              feature : 'Clone list should be cloned',
+              category : 'discussion-point',
+              text : `Consider cloning the list on return from \`Scores()\` as a defensive measure or you could make it a read only collection.  This will prevent a user of the class from accidentally overwriting the values.`
+          },
+          'undersccores' : {
+              feature : 'Consider _ => _',
+              category : 'discussion-point',
+              text : 'I came across `OrderByDescending( _ => _)` recently which I liked'
           },
       },
       'hamming' : {
@@ -562,6 +596,8 @@ As hinted at above.  I think you made the right decision based on the agile prin
 Other concerns: ease of debugging, ease of documentation, intuitive - close to mental model, refers to business rules
 
 Accepted coding conventions - use a StringBuilder even when you are unconcerned about performance.
+
+reusability of code.
 `
           },
           'expression-bodied-present' : {
@@ -677,6 +713,21 @@ Let me know if you come across a better answer and I (may just) be prepared to p
               feature : 'Avoid comparisons with boolean literals',
               category : 'discussion-point',
               text : 'It is more idiomatic to use `if (expr) {}` than `if (expr == true) {}` and `if (!expr) {}` than `if (expr == false) {}`'
+          },
+          'intro-guidance' : {
+              feature : 'Use unit tests etc.',
+              category : 'review-point',
+              text : `
+Exercises in Exercism are designed to be run by unit tests. Pay close attention to the instructions 
+about running the tests, and follow the link there to the C# language page if you're running into trouble. 
+Your submission is expected to return a value rather than outputting it to the console. 
+Your initial download should have included a Leap.cs file with a template for you to get started with. 
+Once you've got that figured out, go ahead and submit a new solution. :-)
+
+As a consequence of this approach you cannot include \`Console.ReadLine()\` and other console read statements in the code as these "block" the execution.
+
+Have another go or ask questions and we will take it from there
+              `
           },
           'avoid-literals' : {
               feature: 'Avoid boolean literals',
