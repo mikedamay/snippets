@@ -43,4 +43,34 @@ depends on what you know about how the object will be used and what you want to 
 Happy to continue the discussion 
 
 
+In praise of LINQ
+Hamming n8water
+https://exercism.io/mentor/solutions/241cbdcc829840ee90e4a996d5480a07?iteration_idx=2
 
+Distaste for globals + giving multiple cases
+
+Review Points:
+
+Good solution
+
+Discussion Points:
+
+I saw a little idiom the other day that I liked
+```
+OrderBy(_ => _)
+```
+It's there for you if it appeals
+
+I don't agree about use of global on principle.  The principle being that your class immediately becomes non-thread safe and more difficult to reason about for a maintainer with negligible advantage to the code.  Perhaps you had more methods previously.
+
+Very much in the realm of personal preference: for a problem like this with multiple disparate choices I favour a structure that spells out the choices individually.  I did this on the Java track and went for a dictionary of enum->lambda.  I have not completed it in C#.
+
+More than happy to continue the debate.
+
+-------------------
+
+iteration vs. recursion
+
+Iteration would generally be faster than recursion except if the language/environment supports tail-call optimisation and your code takes advantage of it.  This of course would also overcome the stack overflow problem.
+
+In the case of .NET I think that F# may support tail-call optimisation and C# does not but I cannot refer to an authoritative statement on this.

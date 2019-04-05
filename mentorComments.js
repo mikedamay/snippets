@@ -473,6 +473,22 @@ Let me know if you have any points to discuss on this.
               category : 'discussion-point',
               text : 'There is no need to convert string to a char array - strings are indexable'
           },
+          'linq' : {
+              feature : 'LINQ hints',
+              category : 'discussion-point',
+              text : `
+LINQ:  
+Your dictionary should stay. Use it in a \`Select\` expression.
+
+You may need \`IEnumerable.DefaultIfEmpty()\`
+
+Bear in mind that a string implements \`IEnumerable<char>\`.
+
+You can use \`IEnumerable.Aggregate()\` to accumulate
+
+I'm happy to continue the LINQ discussion
+              `
+          },
       },
       'xxx-general' : {
           'good-solution' : {
