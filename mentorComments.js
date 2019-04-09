@@ -258,10 +258,12 @@ IEnumerable.Take()
               category : 'discussion-point',
               text : `
 There are two obvious LINQ approaches - \`IEnumerable.Zip()\` 
-and one based around \`IEnumerble.SelectMany()\` (or one that accesses
+and one based around \`IEnumerble.Select()\` (or one that accesses
 the second strand by index in some other way).  The "Zip" approach takes
 twice as long as the indexed approach (but less LINQy).  A typical
-non-LINQ approach is about 3 times the speed of "Zip".         
+non-LINQ approach is about 3 times the speed of "Zip".  
+
+Zip is more LINQy than the other approach as it can work entirely with \`IEnumerable\`.  No indexer required.       
                   `
           },
           'linq-possibility' : {
@@ -447,6 +449,13 @@ Let me know if you have any points to discuss on this.
               feature : 'Stack is good',
               category : 'review-point',
               text : 'A stack of some sort is a good way to approach this (including recursion which is functionally equivalent'
+          },
+      },
+      'collatz-conjecture' : {
+          'offer-recursive' : {
+              feature : 'Is student interested in recursive solution',
+              category : 'discussion-point',
+              text : 'Let me know if you are interested in attempting a recursive solution'
           },
       },
       'grains' : {
