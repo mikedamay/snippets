@@ -4,17 +4,17 @@ export const text = {
           'null-coalescence' : {
               feature : 'Suggest null coalescence',
               category : 'discussion-point',
-              text : `* null coalescence operator \`var expr = "something or nothing"; var default_val = "nothing"; var foo = expr ?? default_val;\``
+              text : `You may want to consider the null coalescence operator \`var expr = "something or nothing"; var default_val = "nothing"; var foo = expr ?? default_val;\``
           },
           'string-interpolation' : {
               feature : 'Suggest string interpolation',
               category: 'discussion-point',
-              text: `* string interpolation \`var expr = "abc"; var foo = $"this is {expr}";\``,
+              text: `You may want to consider string interpolation \`var expr = "abc"; var foo = $"this is {expr}";\``,
           },
           'suggest-default-parameter' : {
               feature : 'Suggest default parameter',
               category: 'discussion-point',
-              text : `* default parameter can be something other than null - \`void foo(string bar = "you"){}\``
+              text : `You may want to consider default parameter can be something other than null - \`void foo(string bar = "you"){}\``
           },
           'default-parameter' : {
               feature : 'Default parameter used',
@@ -244,7 +244,7 @@ IEnumerable.Take()
           'suggest-clone-collection' : {
               feature : 'Clone list should be cloned',
               category : 'discussion-point',
-              text : `Consider cloning the list on return from \`Scores()\` as a defensive measure or you could make it a read only collection.  This will prevent a user of the class from accidentally overwriting the values.`
+              text : `Consider cloning the list on return from \`Scores()\` as a defensive measure or you could make it a read only collection.  This will prevent a user of the class from accidentally overwriting the values.  Maybe the list passed in should also be cloned.  What do you think?`
           },
           'undersccores' : {
               feature : 'Consider _ => _',
@@ -347,6 +347,11 @@ is worth considering.
               feature : 'uniqueness check is required',
               category : 'review-point',
               text : 'You need a mechanism to ensure that no duplicates are generated'
+          },
+          'static-name-set' : {
+              feature : 'names must be static',
+              category : 'review-point',
+              text : 'The field containing the names must be static in order for it to contain names from other Robots'
           },
       },
       'allergies' : {
