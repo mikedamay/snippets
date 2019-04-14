@@ -94,3 +94,57 @@ It is appropriate to use writable static fields when you assess the relative cla
 
 An example might be a small library which is protected from multiple thread executions through its API, where perhaps you want some instrumentation on the code to show how many times a method is called.
 
+----------------------
+Leap and compressed boolean logic
+
+Looks good.
+
+You can simplify this to:
+```
+year % 400 == 0 || year % 4 == 0 && year % 100 != 0
+```
+if the year is divisible by 400 then it must be divisible by 4 so you get:
+```
+       4(1)      400      4(2)     !100
+1969 - false && false || false && true  == false
+2012 - true && false   || true && true  == true
+1900 - true && false   || true && false == false
+2000 - true && true    || true && false == true
+```
+You can see that the first occurrence of divisble-by-4 is always true if disible-by-400 is true and it doesn't matter what it is when divisble-by-400 is false because `&&` means that false wins.
+
+>  I come across a lot of these condensed return statements at work and normally spend 20 mins interpreting them.
+
+You make a valid point.  However a reasonable proportion of your peers will expect you to use the compressed form.  In order to be able to fit into coding shops of all types you should try to get comfortable with this approach.  Find a good tutorial on boolean logic and pick at it until you have internalised it.
+
+-----
+## Out Of Memory
+
+That's looking much better.
+
+You might want to consider what happens when you have created 26*26*10*10*10 robots.  It may not matter too much depending on the context for your program but the robots are coming!
+
+`OutOfMemoryException` takes me back to my C/C++ days.  In managed environments like C# and Java you are far less likely to see this kind of exception being caught.
+
+I wonder why we don't care so much.  Obviously you can still run out of memory.
+
+1. Perhaps, since managed code has been introduced in an age when virtual memory was plentiful the problem of memory problems became less pressing and therefore the practice was never introduced (despite our C/C++ roots).
+2. Where an operation comprises multiple allocations, say an array has to be cloned a couple of times, it is not clear, if the out-of-memory occurs part way through how the work-in-progress could be quickly cleared up in the absence of a `delete` function.
+3. You might think that say are allocating memory for a large image that you could test for available memory first.  There is no obvious call that jumps out to support this.  I suppose there is simply too much going on with the garbage collector etc. to enable a foolproof call to be provided.
+4. .NET code is not usually found in situations such as OS or embedded development where you are likely to run out of memory.
+5. To be honest we just behave like good citizens and hope for the best.
+
+---------------
+## Advangages of limited public APIs
+My very strong opinion, and I think it is conventional wisdom, is that public APIs should be as limited as is consistent with the required functionality.  Where ever possible make methods, enuums, fields, properties and any other members of a class private.
+
+Why not help out users of a class by providing as much information as possible?
+1. It limits how the extent to which the class maintainer can change the implementation.  In the case of Circular Buffer if you exposed any of your private fields then you could not switch to a queue implementation if you decided you needed to at some stage.
+2. It confuses users of the class or at least requires them to think more than necessary about its purpose and behaviour. To put it different way it adds noise.
+3. It increases the testing and documentation burden.
+4. It is extra baggage for maintainers.  Let us say that as part of its diagnostics Circular Buffer maintained a throughput rate.  After some years a maintainer realises that the the diagnostic process is depressing performance so they remove the diagnostics but keep the throughput rate which is a lightweight calculation.  Forever after they will need to maintain, document and test that feature and if the class is part of a library they will even know if it is being used. 
+5. I think your question precludes writeable fields but these of course are more dangerous in allowing details of the implementation to be affected from outside the class.
+
+Of course, anything can and should be made public (although the use of public fields is discouraged) if that's what enables the class to be used as intended.  From there we move on to a discussion of the advantages of immutable classes.
+
+----------------

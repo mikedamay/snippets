@@ -276,7 +276,12 @@ Zip is more LINQy than the other approach as it can work entirely with \`IEnumer
           'queue' : {
               feature : 'suggest queue',
               category : 'discussion-point',
-              text : 'Code can be considerably simplified with the use of a collection such as a Queue'
+              text : 'I think the setter\'s intention was that the buffer be implemented using low level constructs as you have but if you look at some of the high starred solutions you will see how use of a BCL class like Queue simplifies the code.'
+          },
+          'default-used' : {
+              feature : 'Solution uses default(T)',
+              category : 'discussion-point',
+              text : 'I see that you are using `default(T)` in a number of places.  Are you sure this will work with primitives where the default, such as zero could be a valid entry in the buffer.'
           },
       },
       'nucleotide-count' : {
@@ -454,6 +459,28 @@ Let me know if you have any points to discuss on this.
               feature : 'Stack is good',
               category : 'review-point',
               text : 'A stack of some sort is a good way to approach this (including recursion which is functionally equivalent'
+          },
+      },
+      'bank-account' : {
+          'balance' : {
+              feature : 'Case for Balance',
+              category : 'review-point',
+              text : 'Balance should probably also be subject to a lock as decimal operations are not guaranteed to be atomic'
+          },
+          'monitor' : {
+              feature : 'monitor provides a facility for a timeout',
+              category : 'discussion-point',
+              text : 'You can use Monitor.TryEnter as an alternative to lock() {} which allows for a timeout '
+          },
+          'methodimpl' : {
+              feature : 'MethodImpl is an alternative',
+              category : 'discussion-point',
+              text : 'Possible Alternative: the Base Class Library provides an attribute MethodImplOptions.Synchronized which, when applied to a member, causes the instance to be locked.  However there are dangers in locking an instance as you lose control over who can lock the instance.  See [this SO question](https://stackoverflow.com/questions/251391/why-is-lockthis-bad)'
+          },
+          'ReaderWriterLockSlim' : {
+              feature : 'ReaderWriterLockSlim is another alternative',
+              category : 'discussion-point',
+              text : 'Possible Alternative: ReaderWriterLockSlim can be used.  It is more flexible than a bare lock.  See [this](https://docs.microsoft.com/en-us/dotnet/api/system.threading.readerwriterlockslim?view=netcore-2.2)'
           },
       },
       'collatz-conjecture' : {
