@@ -134,7 +134,7 @@ You can combine the expressions with "and", \`&&\` and "or", \`!!\` to avoid con
               text : `Arguably the most maintainable solution would be a dictionary mapping string color names to explicit enums. This would apply if both color names and color values are mapped outside of this code, for example in a design document or a spec. Implicit mappings are less maintainable. As a bonus it's easier to mentally map the dictionary to the spec file.`
           },
           'readonly-dictionary-present' : {
-              feature : 'The read only dictionary is a good thing',
+              feature : 'Acknowledge that the read only dictionary is a good thing',
               category : 'discussion-point',
               text : `Making the dictionary read only, as you have, keeps maintainers on the right track`
           },
@@ -148,6 +148,11 @@ You can combine the expressions with "and", \`&&\` and "or", \`!!\` to avoid con
               category : 'discussion-point',
               text : `Consider a read only, initialised dictionary as an alternative to the switch statement`
           },
+          'ro-dictionary' : {
+              feature : 'Make dictionary read only',
+              category : 'discussion-point',
+              text : `Consider making the dictionary a readonly collection as a strong hint to maintainers`
+          },
           'performance' : {
               feature : 'ColorCode() instantiates the array ',
               category : 'review-point',
@@ -155,6 +160,7 @@ You can combine the expressions with "and", \`&&\` and "or", \`!!\` to avoid con
  \`ColorCode()\` causes the color array to be instantiated each time it is called.  This is not optimally performant.
 `
           },
+
 
       },
       'space-age' : {
@@ -244,7 +250,7 @@ IEnumerable.Take()
           'suggest-clone-collection' : {
               feature : 'Clone list should be cloned',
               category : 'discussion-point',
-              text : `Consider cloning the list on return from \`Scores()\` as a defensive measure or you could make it a read only collection.  This will prevent a user of the class from accidentally overwriting the values.  Maybe the list passed in should also be cloned.  What do you think?`
+              text : `Consider cloning the list on return from \`Scores()\` as a defensive measure.  This will prevent a user of the class from accidentally overwriting the values.  Maybe the list passed in should also be cloned.  What do you think?`
           },
           'undersccores' : {
               feature : 'Consider _ => _',
@@ -394,6 +400,12 @@ If you add the \`[Flags]\` attribute you can then use \`Enum.HasFlag()\` and \`E
               category : 'discussion-point',
               text : 'Rather than expressing letters with their ascii value you can use their literal value, i.e. `minChar = \'A\')`'
           },
+          'string-builder' : {
+              feature : 'Favour a StringBuilder',
+              category : 'discussion-point',
+              text : 'For performance reasons you should favour using a StringBuilder object over string concatenation'
+          },
+
       },
       'clock' : {
           'formula' : {

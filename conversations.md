@@ -1,4 +1,4 @@
-LINQ
+## LINQ
 
 Happy to help.
 
@@ -42,12 +42,21 @@ depends on what you know about how the object will be used and what you want to 
 
 Happy to continue the discussion 
 
+---------------------
+## In praise of LINQ
 
-In praise of LINQ
 Hamming n8water
 https://exercism.io/mentor/solutions/241cbdcc829840ee90e4a996d5480a07?iteration_idx=2
 
-Distaste for globals + giving multiple cases
+I have seriously used LINQ for about 18 months and complex solutions still do take longer to grasp.  The same goes for the functional style in general and recursion in particular.
+
+I don't think the pay off of LINQ is readability or even ease of reasoning.  I think it's dependability.  I think it shares this quality with strongly typed functional languages like Haskell and Elm.  You see it said of Elm that if it compiles then it probably behaves as you expect.  I have used Elm a bit and definitely found it to be true.
+
+LINQ may take longer to understand or write but once you have your code it is far more likely to behave as you intend and maintainers are far less likely to make mistakes if they modify or rely on it.
+
+I think it is worth sticking with.  It, and a functional style in general, are certainly in fashion.
+
+## Distaste for globals + giving multiple cases
 
 Review Points:
 
@@ -148,3 +157,14 @@ Why not help out users of a class by providing as much information as possible?
 Of course, anything can and should be made public (although the use of public fields is discouraged) if that's what enables the class to be used as intended.  From there we move on to a discussion of the advantages of immutable classes.
 
 ----------------
+Readability of Leap Compressed Expression
+
+This is a tricky point to address. I suspect experienced csharpers like me would call your final iteration "idiomatic".  It is quicker for us to read but does it take longer to internalise / grok.  I have seen about 200 solutions to Leap so I have long since ceased reacting to the code in any useful way.  I have a sneaking suspicion that we like to see the compressed expression which characterises your final solution because it shows that you belong to the "club".  You are one of us.  You are in control of the language and know its ways.
+
+I saw a solution this morning which I think I will come to favour:
+```
+return year % 4 == 0 && !(year % 100 == 0 && !year % 400 == 0);
+```
+
+Any thoughts? 
+
