@@ -527,6 +527,18 @@ Let me know if you have any points to discuss on this.
               category: 'discussion-point',
               text: 'Note that `IsLetter()` applies to unicode characters not just ASCII'
           },
+          'linq-alternatives' : {
+              feature: 'LINQ alternatives',
+              category: 'discussion-point',
+              text: `
+Some possible LINQ approaches are:
+* \`IEnumerable.Except()\` plus \`IEnumerable.Any()\`
+* \`IEnumerable.Any()\` plus \`string.Contains()()\`
+* \`IEnumerable.GroupBy()\`
+* \`IEnumerable.Distinct()\` plus \`IEnumerable.Count()\`
+
+              `
+          },
       },
       'reverse-string' : {
           'use-sb' : {
@@ -574,6 +586,18 @@ Bear in mind that a string implements \`IEnumerable<char>\`.
 You can use \`IEnumerable.Aggregate()\` to accumulate
 
 I'm happy to continue the LINQ discussion
+              `
+          },
+      },
+      'sum-of-multiples' : {
+          'perf' : {
+              feature : 'Performance',
+              category : 'review-point',
+              text : `
+This works well for the tests but try to broaden the range of inputs that the routine can handle e.g.
+\`\`\`
+Assert.Equal(1_999_999_999, SumOfMultiples.Sum(new[] { 1_999_999_999 }, 2_000_000_000));
+\`\`\`
               `
           },
       },
