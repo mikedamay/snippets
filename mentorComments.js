@@ -540,6 +540,18 @@ Some possible LINQ approaches are:
               `
           },
       },
+      'perfect-numbers' : {
+          'square-over-2' : {
+              feature : 'Use Square Root rather than divide by 2',
+              category : 'discussion-point',
+              text : 'Dividing the number by 2 is a big performance win when calculating factors but using the square root would improve it further'
+          },
+          'square-root' : {
+              feature : 'Use Square Root rather than number',
+              category : 'discussion-point',
+              text : 'More of a maths point than C# but when calculating the factors you can stop when you reach the square root of the original number'
+          },
+      },
       'reverse-string' : {
           'use-sb' : {
               feature : 'Use StringBuilder',
