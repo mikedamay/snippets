@@ -26,6 +26,19 @@ export const text = {
               category: 'discussion-point',
               text : 'String interpolation can handle any expression not just single variables, e.g. \` $\"my name is {firstName + " " + lastName}\"\`'
           },
+          'exercism-approach' : {
+              feature: 'How to use Exercism',
+              category : 'review-point',
+              text : `
+Exercises in Exercism are designed to be run by unit tests. Pay close attention to the instructions 
+about running the tests, and follow the link there to the C# language page if you're running into trouble. 
+Your submission is expected to return a value rather than outputting it to the console. 
+Your initial download should have included a Twofer.cs file with a template for you to get started with. 
+Once you've got that figured out, go ahead and submit a new solution. :-)
+
+As a consequence of this approach you cannot include \`Console.ReadLine()\` and other console read statements in the code as these "block" the execution.
+              `
+          },
       },
       leap : {
           'basic-logic' : {
@@ -152,6 +165,11 @@ You can combine the expressions with "and", \`&&\` and "or", \`!!\` to avoid con
               feature : 'Make dictionary read only',
               category : 'discussion-point',
               text : `Consider making the dictionary a readonly collection as a strong hint to maintainers`
+          },
+          'index-of' : {
+              feature : 'Suggest Array.IndexOf',
+              category : 'discussion-point',
+              text : 'You can use `Array.IndexOf` to convert color names to their equivalent value'
           },
           'performance' : {
               feature : 'ColorCode() instantiates the array ',
@@ -330,8 +348,8 @@ One aspect of expression is the relationship of the code to the business rules. 
 
 Arguably something like the following may be more expressive.  A loop and condition will not bring the business rules to mind as instantly for the maintainer.
 \`\`\`
-  newName += (char)rnd.Next(‘A’, ‘Z’);
-  newName += (char)rnd.Next(‘A’, ‘Z’);
+  newName += (char)rnd.Next(‘A’, ‘Z’ + 1);
+  newName += (char)rnd.Next(‘A’, ‘Z’ + 1);
   newName += (char)rnd.Next(‘0’, ‘9’);
   newName += (char)rnd.Next(‘0’, ‘9’);
   newName += (char)rnd.Next(‘0’, ‘9’);

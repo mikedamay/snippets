@@ -194,4 +194,115 @@ public override int GetHashCode()
 ``` 
 I have never found good practical advice on how to devise a hash code, i.e. what prime to choose, when to xor.  I rely on my IDE.
 
+-------------
+## Defensive Copy (HighScores)
+
+I hope that the following illustrates the problem (based on your previous submission):
+```
+var li = new List<int>{ 1, 3, 2 };
+var hs = new HighScores(li);
+Console.WriteLine(hs.Latest());  // 2
+//.... thousands of lines of code later
+li.Add(4);
+// ... in a different part of the code base
+Console.WriteLine(hs.Latest());  // 4
+```
+The same applies to the list returned by `Scores`.
+
+The problem here is that the change from 2 to 4 is not immediately obvious to maintainers because instead of going via a formal API the change is achieved in a rather surreptitious way.  Imagine these changes take place in a code base of thousands of lines over a period of months.
+
+Let me know if you don't fully see the problem.  It is subtle.  If you want to follow up more authoritative references the fix (`ToList()` in our case) is known as defensive copying.
+
+---------------
+## LINQ Difficfulties (ref to GradeSchool)
+LINQ
+
+I am sorry I can't help by referring you to a good LINQ tutorial.  I think the problem is that LINQ cannot be easily internalised at its abstract level and to understand it through its implementation (which I think is the best approach) requires a fairly advanced familiarity with the rest of the language.
+
+The following technologies are involved in LINQ:
+* Extension Methods - `Enumerable.GroupBy, Enumerable.OrderBy, Enumerabiel.Select` etc.
+* `IEnumerable<T>` and the relationship with foreach - `grades`
+* lambdas - e.g. `x => x.grade == grade)`
+* anonymous objects - `new {x.grade, x.student}`
+* generic type inference - 
+* Classification of methods (immediate vs. deferred), (streaming vs. non-streaming) - e.g. `Select`- deferred/streaming, `OrderBy`-deferred/non-streaming, `ToList`-immediate.  All immediate services are non-streaing.
+
+Pick out what confuses/intrigues you from the above and we can discuss
+
+----------------
+## Expression Bodied Members
+> As far as expression bodied members.. I'm not sure I really get them after reading
+
+Don't worry.  They are the ultimate syntactic sugar.  I think your problem is that they solving some problem in a new way.  They are not.
+```
+int foo(int a, int b) => a + b;
+```
+is functionally equivalent to:
+```
+int foo(int a, int b)
+{
+    return a + b;
+}
+```
+> It seems similar to Lambda expressions?
+
+Expression bodied members have nothing to do with lambdas - just coincidence of syntax.
+
+Lambdas do indeed exist in C#.  Very similar to Python I'm sure.
+
+Feel free to show me any examples that confuse.
+
+## Readonly Discipline
+> what exactly adding "readonly" to grades list adds to the functionality of the class
+
+The simple answer, as you surmised, is - absolutely nothing.  `readonly` makes no difference to the functionality of the class.
+
+Why use `readonly` on private members of a class?  It comes under the heading of making the code as expressive as possible so that when a maintainer is inspecting the code they can very quickly assess how it behaves, how they can change it, how risky changes are likely to be.
+
+Maintainers can grok code as declarative rather than having to trace through the procedures that affect it.
+
+In the case in point the maintainer will know that they can safely take a reference to `grades` and that will not change under them.
+
+Does it give any advantage in 27 lines of code?  Probably not.  What mistakes are a maintainer likely to make?  Is there really any doubt about how the code behaves?  NO!
+
+Why give the `readonly` advice?  It's about discipline.  Get into the habit of making code as tightly constrained as is consistent with the circumstances and you won't forget it when it counts and you won't have to tax your brain with whether or not it counts in a particular situation.
+
+------------------
+## LINQ Implementation (with ref to Grade School)
+
+> also, the last sentence from your comment is totally confused me :)
+
+The following is expressed in terms which relate to LINQ over objects rather than database/entity framework.  The concepts still more or less apply to other LINQ providers but the implementation is different for them.
+
+__Streaming vs. non-streaming methods__
+
+This is fairly simple.  Some routines like `Select` or `Where` simply pass through one record at a time.  They don't care whether they are at the start or end or how long it will take the next record to come through.  Their great advantage over non-streaming routines is that they do not require multiple records to be buffered in memory.
+
+Non-streaming methods are the likes of `OrderBy()` which requires all the data to be gathered in memory so ti can be sorted.  This can obviously have a major impact on memory.
+
+Also, if you were handling data subject to time delays such as data from a socket then I think you would favour streaming over non-streaming to make a system responsive irrespective of memory usage.
+
+__Deferred Methods__
+
+Deferral goes to the heart of LINQ.  Because the pipelining such as `var unsortedStudents = grades.Where(x => x.grade == grade).Select(x => x.student)` simply builds a great big nested `IEnumerable` rather than executing methods against `grades` it allows you to build up the pipeline incrementally and use the composed pipeline at a later stage.  It has other advantages such as allowing precisely the same syntax to be used with other LINQ providers such as databases or entity framework where immediate execution would not be an option.  There may be other reasons - I will have to think about that.
+
+The pipeline is executed by non-deferred methods like `ToList()` or `ToArray()` as well as by `foreach` constructs which iterate over the results of the pipeline.
+
+__Generic Type Inference__
+
+Have you wondered why the whole thing works without a mention of the types involved?  The same syntax applies to a collection of `int`s as to a collection of a class like `Student`.  See `IEnumerable.Cast`, `IEnumerable.OfType` and `IEnumerable.AsEnumerable` for cases where types do come into play.
+
+The reason that you don't usually have to care about the types involved is that the compiler can almost always infer the types from the context.  It uses the type of the object on which it is an extension method and the result type from whatever lambda is executed.
+
+Without this magic `Roster` would look like this:
+```
+return grades.OrderBy<Student,int>(x => x.grade).ThenBy<Student, string>(x => x.student).Select<Student, string>(g => g.student);
+```
+
+
+------------------
+## communication skills and Approach to LINQ
+Please bear in mind that just as you are practising your C# skills I am practising my communication skills so I am more than a little interested in your feedback.
+
+Things got rather heavy with the explanation.  as I said in my comment way back the problem with LINQ is that it's difficult to internalise at the abstract level and that understanding its implementation (which was certainly necessary for me to master it) requires a fairly advanced understanding of the C# language.  I suggest you start with extension methods and work down the list in my review of your previous submission.
 
