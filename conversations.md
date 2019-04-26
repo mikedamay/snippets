@@ -306,3 +306,29 @@ Please bear in mind that just as you are practising your C# skills I am practisi
 
 Things got rather heavy with the explanation.  as I said in my comment way back the problem with LINQ is that it's difficult to internalise at the abstract level and that understanding its implementation (which was certainly necessary for me to master it) requires a fairly advanced understanding of the C# language.  I suggest you start with extension methods and work down the list in my review of your previous submission.
 
+-----------------
+## Use of Regex (with ref to Acronym)
+
+I suspect you are referring to `string.Split` and `Regex`.  `string.Split` you should have a handle on fairly early in your study.  It's pretty simple - check it out.
+
+`Regex` or regular expressions are a different matter.  A little bit marmite perhaps but surely designed to introduce subtle, untestable, bugs into a code base.
+
+As an experienced csharper I did not use either of these constructs.  To me the problem is shaped as a state machine and I, like you, used a loop.
+
+------------------
+## Acronym - state machine vs. Regex / Split
+
+I suspect you are referring to `string.Split` and `Regex`.  `string.Split` you should have a handle on fairly early in your study.  It's pretty simple - check it out.
+
+`Regex` or regular expressions are a different matter.  A little bit marmite perhaps but surely designed to introduce subtle, untestable, bugs into a code base.
+
+As an experienced csharper I did not use either of these constructs.  To me the problem is shaped as a state machine and I, like you, used a loop.
+
+-------------------------
+## readonly discipline (with ref to rna translation)
+It's a pretty subtle point.  I am suggesting that you have `private static readonly IReadOnlyDictionary...`.
+
+Ostensibly I'm saying that this will inform maintainers of what sort of thing this object is.  It is safe to throw around within the class, they could safely make it public if they had to.  They are guaranteed that the class is thread safe.  They can see all of this from the declaration and do not have to "wade through" the implementation.
+
+In fact, the code is so trivial that it will make little difference to the maintainer.  However, it  is a good discipline to follow and from a mentoring stand point it emphasises that making the variable `readonly` has no effect on the writability of the dictionary.  you can still add delete or modify.
+

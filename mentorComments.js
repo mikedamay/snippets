@@ -382,6 +382,16 @@ is worth considering.
               category : 'review-point',
               text : 'The field containing the names must be static in order for it to contain names from other Robots'
           },
+          'next-exclusive-upper-bound' : {
+              feature : 'upper-bound',
+              category : 'review-point',
+              text : 'Random.Next\'s second parameter is an exclusive bound - one past the last valid value'
+          },
+          'char-int' : {
+              feature : 'Avoid Conversions between char and int',
+              category : 'discussion-point',
+              text : 'You don\'t need to use the `Convert` utilities between int and char.  char is implicitly promoted to an int and a simple cast works in the opposite direction.'
+          },
       },
       'allergies' : {
           'flags' : {
@@ -401,6 +411,13 @@ enum Allergen
 If you add the \`[Flags]\` attribute you can then use \`Enum.HasFlag()\` and \`Enum.GetValues()\` to implement the methods.
               `
           }
+      },
+      'grade-school' : {
+          'simple-solution' : {
+              feature : 'Simple LINQ solution',
+              category : 'discussion-point',
+              text : 'There are many ways to address this problem.  If you believe that Read performance is not an issue then the code can be radically simplified by having a list of name+grade and using LINQ routines to order and report on that.'
+          },
       },
       'rotational-cipher' : {
           'unicode' : {
@@ -544,6 +561,11 @@ Let me know if you have any points to discuss on this.
               feature: 'Take a consistent position on unicode',
               category: 'discussion-point',
               text: 'Note that `IsLetter()` applies to unicode characters not just ASCII'
+          },
+          'single-loop' : {
+              feature: 'Suggest a single loop',
+              category: 'review-point',
+              text: 'Try to find an approach that uses a single loop.  Your nested loop approach is a little wasteful'
           },
           'linq-alternatives' : {
               feature: 'LINQ alternatives',
