@@ -11,10 +11,15 @@ export const text = {
               category: 'discussion-point',
               text: `You may want to consider string interpolation \`var expr = "abc"; var foo = $"this is {expr}";\``,
           },
+          'suggest-you' : {
+              feature : 'Suggest "you" as default parameter',
+              category: 'discussion-point',
+              text : `You may want to consider default parameter can be something other than null - \`void foo(string bar = "you"){}\``
+          },
           'suggest-default-parameter' : {
               feature : 'Suggest default parameter',
               category: 'discussion-point',
-              text : `You may want to consider default parameter can be something other than null - \`void foo(string bar = "you"){}\``
+              text : `You may want to consider the use of a default parameter which will allow you to use a single overload of \`Speak()\``
           },
           'default-parameter' : {
               feature : 'Default parameter used',
