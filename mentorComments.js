@@ -750,10 +750,10 @@ reusability of code.
               text : `What do you see as the purpose of your comments?`
           },
           'favour-private' : {
-              feature : "Favour private methods",
-              category : 'review-point',
+              feature : "Favour private members",
+              category : 'discussion-point',
               text : `
-It is generally considered better to give member fields and support methods private access.  Public declaration increases the amount of noise in the API and constrains maintainers who may want to change the implementation.  Let me know if you want to discuss further.
+It is generally considered better to give member fields and support methods and properties private access.  Public declaration increases the amount of noise in the API and constrains maintainers who may want to change the implementation.  Let me know if you want to discuss further.
               `
           },
           'try-catch' : {
