@@ -178,7 +178,7 @@ You can combine the expressions with "and", \`&&\` and "or", \`!!\` to avoid con
           },
           'performance' : {
               feature : 'ColorCode() instantiates the array ',
-              category : 'review-point',
+              category : 'discussion-point',
               text : `
  \`ColorCode()\` causes the color array to be instantiated each time it is called.  This is not optimally performant.
 `
@@ -397,6 +397,20 @@ is worth considering.
               category : 'discussion-point',
               text : 'You don\'t need to use the `Convert` utilities between int and char.  char is implicitly promoted to an int and a simple cast works in the opposite direction.'
           },
+          'flawed-requirements' : {
+              feature : 'Address the flawed requirements',
+              category : 'discussion-point',
+              text : `
+The simple (and admittedly flawed) solution is to check on the number of names in \`robots\` and reject an attempt to add names when there were 26 * 26 * 1000.
+
+> Would be better if I know the last name generated so that I could continue generating names from there.
+
+You are of course quite right.  The requirements are problematic.  Generating names in this way randomly is not sensible.  The processing cost would be too great
+
+One approach, if you do not care about memory usage and start up time, is to generate all the names at the start, sort them into a random order and then keep a counter as to which has been used.  You then have the question of handling reset robots.  Who needs it!              
+`
+
+          },
       },
       'allergies' : {
           'flags' : {
@@ -572,6 +586,16 @@ Let me know if you have any points to discuss on this.
               category: 'review-point',
               text: 'Try to find an approach that uses a single loop.  Your nested loop approach is a little wasteful'
           },
+          'array-indexof' : {
+              feature: 'Suggest Array.Indexof',
+              category: 'discussion-point',
+              text: 'You might be able to simplify your lookup with `Array.IndexOf`'
+          },
+          'string-tochararray' : {
+              feature: 'string.ToCharArray is not necessary',
+              category: 'discussion-point',
+              text: 'You don\'t have to use `string.ToCharArray()` if you only want to read the string'
+          },
           'linq-alternatives' : {
               feature: 'LINQ alternatives',
               category: 'discussion-point',
@@ -656,6 +680,14 @@ This works well for the tests but try to broaden the range of inputs that the ro
 Assert.Equal(1_999_999_999, SumOfMultiples.Sum(new[] { 1_999_999_999 }, 2_000_000_000));
 \`\`\`
               `
+          },
+          'how-to-fix-perf' : {
+              feature : 'How to fix performance',
+              category : 'discussion-point',
+              test : `
+The trick is to examine the inputs one at a time.  For each input you can see which numbers between 0 and \`max\` are multiples of that input.  But you don't have to check every number between 0 and \`max\` only those that are multiples of the input!  
+
+You will have to find a way that avoids integer overflow.              `
           },
       },
       'xxx-general' : {
@@ -847,6 +879,11 @@ Let me know if you come across a better answer and I (may just) be prepared to p
               feature : 'Avoid comparisons with boolean literals',
               category : 'discussion-point',
               text : 'It is more idiomatic to use `if (expr) {}` than `if (expr == true) {}` and `if (!expr) {}` than `if (expr == false) {}`'
+          },
+          'avoid-parameter-reassignment' : {
+              feature : 'Avoid reassigning parameters',
+              category : 'discussion-point',
+              text : 'Reassigning values to a parameter within a method is generally frowned upon.  A maintainer will generally focus on the method signature and grasp what the parameter is likely to contain.  They may be surprised if that value changes within the method'
           },
           'intro-guidance' : {
               feature : 'Use unit tests etc.',

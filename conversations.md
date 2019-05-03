@@ -332,3 +332,51 @@ Ostensibly I'm saying that this will inform maintainers of what sort of thing th
 
 In fact, the code is so trivial that it will make little difference to the maintainer.  However, it  is a good discipline to follow and from a mentoring stand point it emphasises that making the variable `readonly` has no effect on the writability of the dictionary.  you can still add delete or modify.
 
+-------------------------
+## Array / Index Of (ref resistor-colors)
+our confusion over the return value from IndexOf() is utterly justified.  What a mediocre piece of documentation that particular MSDN article is!  Incidentally make sure you use the latest documentation at [docs.microsoft.com](http://docs.microsoft.com).
+
+Actually in the docs.microsoft.com version of the documentation the text you quote is from the overload that takes an `Array` rather than a conventional array.  Other overloads of `IndexOf()` do mention -1.  But none the less poor guidance unless the reader happens to be looking for bear traps.
+
+The short answer is that in 99.9999% of cases the return values in a C# program is -1 and the following code would be expected in your solution:
+```
+var cc = Array.IndexOf(colorCodeArr, color);
+return cc != -1 ? cc ? thrown new ArgumentException();
+```
+So why can't the docs just say that?
+
+There is a different sort of array (an instance of the class `System.Array`) which allows the lower bound of the array to be set by the caller see [http://csharphelper.com/blog/2015/05/make-arrays-with-non-zero-lower-bounds-in-c/](http://csharphelper.com/blog/2015/05/make-arrays-with-non-zero-lower-bounds-in-c/).  It is unfortunate the example in the article is for a 2 dimensional array.
+
+`Array`'s static methods have to operate on both traditional arrays (e.g. `new int[10]`) and instances of `Array`.
+
+You will see from the article above that if you create an array say with the bounds 2000 to 2009 (`Array.CreateInstance(typeof(string), new int[] {10}, new int[] {2000})`) then a call to `arr.GetValue(0)` will cause an out-of-bounds exception where as a call to say `arr.GetValue(2003)` will return 0 (or whatever is subsequently stored there.  Presumable `IndexOf` returns 1999.  - I've certainly never used any of this stuff.
+
+As far as I am aware there is no easy way to convert between instances of `Array` and conventional arrays.
+
+Why all this nonsense?
+
+.NET libraries support the CLR (Common Language Runtime) rather than a particular language.  One CLR language, VB.NET, had to keep faith with its ancestor Visual Basic.  In Visual Basic these non-zero bounded arrays were first class citizens and had the same form as conventional arrays.
+
+--------------------
+## Array / Cast (ref Allergies)
+`Enum.GetValues()` returns you an object of type `System.Array` which implements an IEnumerable.  On the face of it you should be able to call `Where()`, `ToList()` or `ToArray()` on the collection.  This will not work as `Array` is not an `IEnumerable<T>` it is only an `IEnumerable` which LINQ does not handle by default.
+
+The solution is to call either `Cast<T>()` or `OfType<T>()` which are provided by LINQ to convert an `IEnumerable` to an `IEnumerable<T>`.  In your case you want an `IEnumerable<Allergen>`.  You can then call `Where()` and `ToArray()` on the result of this.
+
+`System.Array` is an object that behaves very like an `object[]` but is not quite one.  Instances are seldom used although its `Array.IndexOf()` method is popular.  It is really a hangover from early .NET - before generics.  There are a couple of places it is still useful and I will point you there if you are interested.
+
+`System.Collections.IEnumerable` is another hangover from early .NET, before generics.  It and other members of `System.Colletions` such as `List` or `Dictionary` allow you to have collections containing elements of different types.  Like `IEnumerable<object>` although not fully compatible (as is the case here with LINQ methods).
+
+This a lot to take in and probably more than you want to know, although I am happy to explain further.
+
+I am well, by the way but no holidays for me.  Thank you for asking.
+
+--------------------
+## More on Dictionary of string to enum (ref resistor-color)
+
+The argument in favour of having strings represented (particularly within an initialised dictionary) is that it hints to the maintainer that the format of actual strings passed in is important.  They can't be any old strings.  In your solution, in the absence of such a hint, you would have to read through the entire implementation to be sure.
+
+It is a subtle and very arguable point.  I would never raise it in a commercial code review.
+
+In reality, I would probably start with an enum and wait for developments before switching to anything more sophisticated.
+
