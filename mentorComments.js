@@ -11,6 +11,11 @@ export const text = {
               category: 'discussion-point',
               text: `You may want to consider string interpolation \`var expr = "abc"; var foo = $"this is {expr}";\``,
           },
+          'is-null-or-whitespace' : {
+              feature : 'Consider `IsNullOrWhiteSpace`',
+              category: 'discussion-point',
+              text: 'Have a look at `string.IsNullOrWhiteSpace()`. It might work better for you'
+          },
           'suggest-you' : {
               feature : 'Suggest "you" as default parameter',
               category: 'discussion-point',
@@ -190,7 +195,7 @@ You can combine the expressions with "and", \`&&\` and "or", \`!!\` to avoid con
             'suggest-ro-dict' : {
                 feature : 'Suggest that Learner makes the dictionary read only',
                 category : 'discussion-point',
-                text : 'Making the dictionary read only would keep maintainers on the right track'
+                text : 'Making the dictionary read only (rather than just the field reference) would keep maintainers on the right track'
             },
             'suggest-enums' : {
                 feature : 'enums rather than strings for planet names',
@@ -213,7 +218,7 @@ code changes when you add or remove a planet.
           'use-given-numbers' : {
               feature : 'Advise learner to use numbers from the instructions',
               category : 'discussion-point',
-              text : 'The instructions provide the number of seconds in an earth year.  If we see the instructions as a sort of stand-in for the business rules then it might make more sense to reflect this back in the code rather than calculate the value'
+              text : 'The instructions provide the number of seconds in an earth year.  If we see the instructions as a sort of stand-in for the business rules then it might make more sense to reflect this back in the code in the form of a well named constant or even a comment referring back to the requirements documentation rather than calculate the value.'
           },
          'rounding-unnecessary' : {
               feature : 'Rounding is not necessary',
@@ -279,6 +284,15 @@ IEnumerable.Take()
               feature : 'Consider _ => _',
               category : 'discussion-point',
               text : 'I came across `OrderByDescending( _ => _)` recently which I liked'
+          },
+          'avoid-mutable' : {
+              feature : 'Avoid Mutable Object',
+              category : 'review-point',
+              text : `
+But you need to find a way of sorting and selecting that does not touch \`_Scores\` as the results will be altered when multiple calls are made to \`Latest()\` and \`PersonalTopThree\`.
+
+Have a look at the LINQ methods, \`OrderBy(Descending(), Take(), Last()\` etc.
+              `
           },
       },
       'hamming' : {

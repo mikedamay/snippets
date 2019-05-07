@@ -378,5 +378,34 @@ The argument in favour of having strings represented (particularly within an ini
 
 It is a subtle and very arguable point.  I would never raise it in a commercial code review.
 
-In reality, I would probably start with an enum and wait for developments before switching to anything more sophisticated.
+In reality, I would probably start with an enum (without a dictionary) and wait for developments before switching to anything more sophisticated.
 
+----------------------
+## Three altenratives for Leap
+```
+return (year % 4 == 0) ? (year % 400 == 0 || year % 100 != 0) : false;
+```
+The more conventional solution is:
+```
+return year % 4 == 0 && year % 4 != 100 || year % 400 == 0;
+```
+
+Your solution may well be more readable - I've seen hundreds of these so I can't tell any more.
+
+I think I like
+```
+return year % 4 == 0 && !(year % 100 == 0 && !(year % 400 == 0));
+```
+
+-------------------------
+## In defence of the single line (ref Leap)
+
+First of all, if you have considered all appropriate factors and think your solution is correct then you should stick with it.
+
+Readability is very important.  Performance and dependability are also key but neither matters here.
+
+So, which is more readable your multiline solution or a single line?  It all depends on who's reading it.  Most experienced csharpers would be ok with both.  They can take in the single line faster.
+
+CSharp/.NET is moving in a functional programming direction where you have to train yourself to read those sort of expressions when they occur in LINQ pipelines etc.
+
+Or maybe using the single line shows you belong to the "club".  Not a particularly uplifting reason for using it but there are job interviews, etc. to be considered.
