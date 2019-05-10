@@ -36,6 +36,22 @@ export const text = {
               category: 'discussion-point',
               text : 'String interpolation can handle any expression not just single variables, e.g. \` $\"my name is {firstName + " " + lastName}\"\`'
           },
+          'meaningful-identifer' : {
+              feature : 'More Meaningful Identifier',
+              category: 'discussion-point',
+              text : 'Try to choose a more meaningful identifier.  If you are in doubt, it is appropriate to use an identifier from your first language.  I will catch on.\n'
+          },
+          'more-generalised' : {
+              feature : 'More Generalised Solution',
+              category: 'review-point',
+              text : `
+Try something more generalised - have a look at the following and decide which you prefer:
+* string concatenation: \`"abc" + "def"\`.  This works for literals like "abc" and for variables like \`Name\`
+* \`string.Format\`
+* string interpolation
+              
+              `
+          },
           'exercism-approach' : {
               feature: 'How to use Exercism',
               category : 'review-point',
@@ -47,6 +63,8 @@ Your initial download should have included a Twofer.cs file with a template for 
 Once you've got that figured out, go ahead and submit a new solution. :-)
 
 As a consequence of this approach you cannot include \`Console.ReadLine()\` and other console read statements in the code as these "block" the execution.
+
+Let me know (by commenting on this solution page) if you need further halp.
               `
           },
       },
@@ -181,6 +199,11 @@ You can combine the expressions with "and", \`&&\` and "or", \`!!\` to avoid con
               category : 'discussion-point',
               text : 'You can use `Array.IndexOf` to convert color names to their equivalent value'
           },
+          'avoid-repetition' : {
+              feature : 'Avoid Repetition of Color Array',
+              category : 'review-point',
+              text : 'Try to find a way to avoid repeating the  color names'
+          },
           'performance' : {
               feature : 'ColorCode() instantiates the array ',
               category : 'discussion-point',
@@ -201,6 +224,11 @@ You can combine the expressions with "and", \`&&\` and "or", \`!!\` to avoid con
                 feature : 'enums rather than strings for planet names',
                 category : 'discussion-point',
                 text : 'Using an enum rather than strings for planet names would avoid the possibility of bugs being introduced by typos'
+            },
+            'use-constant' : {
+                feature : 'make number of seconds a constant',
+                category : 'review-point',
+                text : 'The number of seconds in an earth year would be better as a named constant to avoid the possibility of typos and to provide a little documentation.\n'
             },
             'gather-constants' : {
                 feature : 'Suggest that year lengths are more readable in a bunch',
@@ -284,6 +312,11 @@ IEnumerable.Take()
               feature : 'Consider _ => _',
               category : 'discussion-point',
               text : 'I came across `OrderByDescending( _ => _)` recently which I liked'
+          },
+          'take' : {
+              feature : 'Take handles fewer elements',
+              category : 'review-point',
+              text : 'You don\'t have to check on the list size when using `Take()`.  If there are fewer than 3 elements it will return the actual number of elements.'
           },
           'avoid-mutable' : {
               feature : 'Avoid Mutable Object',
@@ -605,11 +638,6 @@ Let me know if you have any points to discuss on this.
               category: 'discussion-point',
               text: 'You might be able to simplify your lookup with `Array.IndexOf`'
           },
-          'string-tochararray' : {
-              feature: 'string.ToCharArray is not necessary',
-              category: 'discussion-point',
-              text: 'You don\'t have to use `string.ToCharArray()` if you only want to read the string'
-          },
           'linq-alternatives' : {
               feature: 'LINQ alternatives',
               category: 'discussion-point',
@@ -707,17 +735,17 @@ You will have to find a way that avoids integer overflow.              `
       'xxx-general' : {
           'good-solution' : {
               feature : 'A Good Solution',
-              category : 'review-point',
+              category : 'assessment',
               text : `Good solution`
           },
           'effective-solution' : {
               feature : 'An Effective Solution',
-              category : 'review-point',
+              category : 'assessment',
               text : `Effective solution`
           },
           'limited-solution' : {
               feature : 'A Limited Solution',
-              category : 'review-point',
+              category : 'assessment',
               text : `This is an effective solution as far as it goes`
           },
           'invitation' : {
@@ -734,6 +762,16 @@ You will have to find a way that avoids integer overflow.              `
               feature : "Try \`string.Empty`",
               category : 'discussion-point',
               text : `\`string.Empty\` is an idiomatic alternative to \`""\``
+          },
+          'string-tochararray' : {
+              feature: 'string.ToCharArray is not necessary',
+              category: 'discussion-point',
+              text: 'You don\'t have to use `string.ToCharArray()` if you only want to read the string'
+          },
+          'equals' : {
+              feature: '== is more idiomatic than Equals()',
+              category: 'discussion-point',
+              text: '`==` is more idiomatic than `Equals()`'
           },
           'decision-criteria' : {
               feature : 'screed on principle based coding',
@@ -899,6 +937,21 @@ Let me know if you come across a better answer and I (may just) be prepared to p
               category : 'discussion-point',
               text : 'Reassigning values to a parameter within a method is generally frowned upon.  A maintainer will generally focus on the method signature and grasp what the parameter is likely to contain.  They may be surprised if that value changes within the method'
           },
+          'remove-throw' : {
+              feature : 'Remove throw',
+              category : 'review-point',
+              text : 'Remove `throw new NotImplementedException...`.  It will never be executed'
+          },
+          'initialise-dictionary' : {
+              feature : 'Dictionary Initialisation',
+              category : 'discussion-point',
+              text : `
+You can initialise the dictionary with:
+\`\`\`
+var dict = new Dictionary<key, value>{ {key1, value1}, Okey2, value2}...};
+\`\`\`              
+              `
+          },
           'intro-guidance' : {
               feature : 'Use unit tests etc.',
               category : 'review-point',
@@ -935,6 +988,36 @@ and
 \`\`\`
 return x > 1;
 \`\`\`
+              `
+          },
+          'extra-tests' : {
+              feature : 'Extra Tests',
+              category : 'discussion-point',
+              text : `
+if you add tests you can use the following approach (which means you don't have to upload the test file and mentors don't have to worry about them).
+
+In the source file in your case TwoFer.cs append something like the following after the final closing curly bracket (my example is from HighScores):
+\`\`\`
+namespace MyTests 
+{    
+    using System.Collections.Generic;
+    using Xunit;
+
+    public class MyTests
+    {
+        [Fact(Skip = "")]
+        public void Personal_best()
+        {
+            Assert.Throws<InvalidOperationException>(
+                () =>
+                {
+                    var sut = new HighScores(new List<int> { }).PersonalBest();
+                });
+        }
+    }
+    
+}
+\`\`\`              
               `
           },
       },

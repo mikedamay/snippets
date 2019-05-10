@@ -409,3 +409,8 @@ So, which is more readable your multiline solution or a single line?  It all dep
 CSharp/.NET is moving in a functional programming direction where you have to train yourself to read those sort of expressions when they occur in LINQ pipelines etc.
 
 Or maybe using the single line shows you belong to the "club".  Not a particularly uplifting reason for using it but there are job interviews, etc. to be considered.
+
+-------------------------
+Use of single ampersand & (ref Leap)
+
+Use of `&` rather than the more usual `&&` is interesting.  It is valid.  The difference between the two is that with your version `year % 100 == 0` is executed even if `year %4 == 0 is false` and with the conventional approach evaluation ceases as soon as an expression returns `false`.  `&&` like `||` is known as a short-circuiting operation.
