@@ -411,6 +411,25 @@ CSharp/.NET is moving in a functional programming direction where you have to tr
 Or maybe using the single line shows you belong to the "club".  Not a particularly uplifting reason for using it but there are job interviews, etc. to be considered.
 
 -------------------------
-Use of single ampersand & (ref Leap)
+## Use of single ampersand & (ref Leap)
 
 Use of `&` rather than the more usual `&&` is interesting.  It is valid.  The difference between the two is that with your version `year % 100 == 0` is executed even if `year %4 == 0 is false` and with the conventional approach evaluation ceases as soon as an expression returns `false`.  `&&` like `||` is known as a short-circuiting operation.
+
+-------------------------
+## Use of Finalizer (ref Robot Name)
+
+The finaliser (as in `~Robot`) is almost never used in day-to-day coding.  It is not guaranteed to be executed in a timely manner.  I suppose it could be used when debugging or instrumenting code when things get hairy.  
+
+So, you may be wondering how to handle the death of a robot.  I think Robot would have to expose a method such as `Dispose()` and code using the robot would be required to call that when the robot was killed.
+
+For certain sorts of objects such as files, streams and other objects that own external resources there is a "disposable" pattern that they use enforced with `using` construct but that would not be appropriate for this sort of value object.
+
+----------------------------
+## Alteration of Tests
+I assume the tests have been run by the student unless it is obvious (from my visual inspection) that the code would not pass them. I am sure I miss cases where the student has not bothered to run tests or they fail. As far as I'm concerned that's their business.
+
+Sometimes (but not that often) I like to run the code which I copy and paste from the submission page and that would be against the standard tests which I already have loaded in my IDE.
+
+Not often for TwoFer! The last time I did it for TwoFer was when a student made the parameter's default value a private const of the class. I did not know you could do that. BTW I would not advocate it.
+
+There is a link for the mentor to download your solution (as is - which I assume includes tests you have uploaded) but that does not tie into my IDE as easily and in certain cases misses some of my own tests.

@@ -766,7 +766,12 @@ You will have to find a way that avoids integer overflow.              `
           'string-tochararray' : {
               feature: 'string.ToCharArray is not necessary',
               category: 'discussion-point',
-              text: 'You don\'t have to use `string.ToCharArray()` if you only want to read the string'
+              text: 'You don\'t have to use `string.ToCharArray()` if you only want to read the string.  It implements an indexer for direct access to characters and `IEnumerable<char>` for LINQ contexts'
+          },
+          'string-builder' : {
+              feature: 'StringBuilder',
+              category: 'discussion-point',
+              text: 'If you are constructing strings then `StringBuilder` is more performant than string concatenation (for all practical purposes)'
           },
           'equals' : {
               feature: '== is more idiomatic than Equals()',
