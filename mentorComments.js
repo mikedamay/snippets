@@ -204,6 +204,11 @@ You can combine the expressions with "and", \`&&\` and "or", \`!!\` to avoid con
               category : 'review-point',
               text : 'Try to find a way to avoid repeating the  color names'
           },
+          'enum-defined' : {
+              feature : 'Enum - Consider Enum.IsDefined',
+              category : 'discussion-point',
+              text : 'Consider `Enum.Defined()` to detect invalid colors passed to `ColorCode()`'
+          },
           'performance' : {
               feature : 'ColorCode() instantiates the array ',
               category : 'discussion-point',
@@ -359,6 +364,11 @@ Zip is more LINQy than the other approach as it can work entirely with \`IEnumer
               category : 'discussion-point',
               text : 'I see that you are using `default(T)` in a number of places.  Are you sure this will work with primitives where the default, such as zero could be a valid entry in the buffer.'
           },
+          'read-only' : {
+              feature : 'Buffer array can be readonly',
+              category : 'discussion-point',
+              text : 'Your buffer array can be a `readonly` field'
+          },
       },
       'nucleotide-count' : {
           'suggest-ro-dict' : {
@@ -484,12 +494,17 @@ If you add the \`[Flags]\` attribute you can then use \`Enum.HasFlag()\` and \`E
               category : 'discussion-point',
               text : 'There are many ways to address this problem.  If you believe that Read performance is not an issue then the code can be radically simplified by having a list of name+grade and using LINQ routines to order and report on that.'
           },
+          'no-dictionaries' : {
+              feature : 'Avoid dictionary of list',
+              category : 'discussion-point',
+              text : 'Arguably a simpler solution would be to maintain a single list of students (where each student was tuple or an object containing name and grade).  You could then use `OrderBy()` and `Where()` to sort and filter at the point of reporting.  Does this approach appeal to you, at all?'
+          },
       },
       'rotational-cipher' : {
           'unicode' : {
               feature: 'Take a consistent position on unicode',
               category: 'discussion-point',
-              text: 'Note that `IsLetter()` applies to unicode characters not just ASCII'
+              text: 'Note that `Char`\'s methods like `IsLetter(), IsUpper(), IsLower()` apply to unicode characters not just ASCII'
           },
           'string-linq' : {
               feature: 'No need for char array',
@@ -499,12 +514,17 @@ If you add the \`[Flags]\` attribute you can then use \`Enum.HasFlag()\` and \`E
           'literal-ints' : {
               feature : 'don\'t use ASCII codes',
               category : 'discussion-point',
-              text : 'Rather than expressing letters with their ascii value you can use their literal value, i.e. `minChar = \'A\')`'
+              text : 'Rather than expressing letters with their ascii value you can use their literal value, e.g. `int minChar = \'A\'` rather than `int minChar = 65`'
           },
           'string-builder' : {
               feature : 'Favour a StringBuilder',
               category : 'discussion-point',
               text : 'For performance reasons you should favour using a StringBuilder object over string concatenation'
+          },
+          'string-builder-good' : {
+              feature : 'Well done, selecting StringBuilder',
+              category : 'review-point',
+              text : 'Well done for selecting a `StringBuilder`.  This is a good choice when assembling strings'
           },
 
       },
@@ -523,6 +543,16 @@ int Mod(double x, double y) => (int)(((x % y) + y) % y);
               feature : 'Struct',
               category : 'discussion-point',
               text : 'a lot of problems with `Equals()` are solved by making `Clock` a `struct` as equality testing is built in for a simple object like this'
+          },
+          'interpolation-format' : {
+              feature : 'Format within Interpolation',
+              category : 'review-point',
+              text : 'You can use formatting characters with string interpolation, "{expr:00}" or "{expr:D2}"'
+          },
+          'string-format' : {
+              feature : 'String Format',
+              category : 'review-point',
+              text : 'For `ToString()` you can use `string.Format()` with the formatting string `D2`.'
           },
           'equality' : {
               feature : 'The Equality story',
@@ -548,30 +578,36 @@ public override bool Equals(object obj)
     return Equals((Clock) obj);
 }
 
-public override int GetHashCode()
-{
-    unchecked
-    {
-        return (hours * 397) ^ minutes;
-    }
-}
 \`\`\`
  1. You need the Equals(object) in order for your object to honour its contracts. In inheriting from object you assert that you can be passed an object for comparison so you had better handle it correctly.
  2. The first ReferenceEquals is null protection.
  3. The second ReferenceEquals is for performance
- 4. GetHashCode() and the need for consistency with Equals are a bit more hazy. The hashcode is used, in particular, by dictionaries and sets and the bumping with a random number apparently spreads out the distribution in whatever tree structure they use. I suspect 5 moinutes of introspection or web search would reveal the importance of equality in this mix.
- 5. \`protected...Equals(...)\` is for performance
+ 4. \`protected...Equals(...)\` is for performance
  
 Let me know if you have any points to discuss on this. 
               `
           },
 
       },
+      bob : {
+          'ends-with' : {
+              feature : 'EndsWith exists',
+              category : 'discussion-point',
+              text : '`string.EndsWith()` is an idiomatic way of finding the final character '
+          },
+      },
       'bracket-push' : {
           'stack' : {
               feature : 'Stack is good',
               category : 'review-point',
               text : 'A stack of some sort is a good way to approach this (including recursion which is functionally equivalent'
+          },
+      },
+      'acronym' : {
+          'string-builder' : {
+              feature : 'Use StringBuilder',
+              category : 'review-point',
+              text : 'You would be expected to use a `StringBuilder` rather than string concatenation to build the result acronym for better perfarmance.  Even though it might not make any difference here (or conceivably impair performance slightly) the best policy to use a StringBuilder as it fulfills maintainers\' expectations.  I am happy to discuss this slightly confusing point further.'
           },
       },
       'bank-account' : {
@@ -638,6 +674,11 @@ Let me know if you have any points to discuss on this.
               category: 'discussion-point',
               text: 'You might be able to simplify your lookup with `Array.IndexOf`'
           },
+          'literal-ints' : {
+              feature : 'don\'t use ASCII codes',
+              category : 'discussion-point',
+              text : 'Rather than expressing letters with their ascii value you can use their literal value, i.e. `Next(\'A\', \'Z\' + 1)`'
+          },
           'linq-alternatives' : {
               feature: 'LINQ alternatives',
               category: 'discussion-point',
@@ -655,12 +696,24 @@ Some possible LINQ approaches are:
           'square-over-2' : {
               feature : 'Use Square Root rather than divide by 2',
               category : 'discussion-point',
-              text : 'Dividing the number by 2 is a big performance win when calculating factors but using the square root would improve it further'
+              text : 'Dividing the number by 2 is a big performance win when calculating factors but using the square root would improve it further.  You will have to add both the divisor and the quotient as factors rather than just the divisor'
           },
           'square-root' : {
               feature : 'Use Square Root rather than number',
               category : 'discussion-point',
-              text : 'More of a maths point than C# but when calculating the factors you can stop when you reach the square root of the original number'
+              text : 'More of a maths point than C# but when calculating the factors you can stop when you reach the square root of the original number.  You will have to add both the divisor and the quotient as factors rather than just the divisor'
+          },
+      },
+      'phone-number' : {
+          'linq' : {
+              feature : 'LINQ',
+              category : 'discussion-point',
+              text : 'If you would like to investigate a LINQ based solution I am happy to help'
+          },
+          'regex' : {
+              feature : 'Regex',
+              category : 'discussion-point',
+              text : 'Life can be made simple with a regex string  `@"^1?([2-9]\\d\\d[2-9]\\d{6})$"` if you think that is maintainable'
           },
       },
       'reverse-string' : {
@@ -946,6 +999,11 @@ Let me know if you come across a better answer and I (may just) be prepared to p
               feature : 'Remove throw',
               category : 'review-point',
               text : 'Remove `throw new NotImplementedException...`.  It will never be executed'
+          },
+          'community-solutions' : {
+              feature : 'Look at Community Solutions',
+              category : 'discussion-point',
+              text : 'Have a look at the starred community solutions for some alternative approaches'
           },
           'initialise-dictionary' : {
               feature : 'Dictionary Initialisation',

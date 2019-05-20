@@ -371,6 +371,13 @@ This a lot to take in and probably more than you want to know, although I am hap
 
 I am well, by the way but no holidays for me.  Thank you for asking.
 
+Alternative explanation:
+
+The problem is that `GetValues()` returns an object of type `System.Array`.  It's an anomalous object, not like a conventional array, `object[]` (in fact it is described as the base class for arrays - but that's not very helpful).  
+
+`System.Array` implements `IEnumerable` (which is not quite the same as `IEnumerable<object>`.  LINQ provides the method `Enumerable.Cast()` that allows you to convert from an `IEnumerable` to `IEnumerable<T>` where `T` is Allergen in your case.
+
+
 --------------------
 ## More on Dictionary of string to enum (ref resistor-color)
 
@@ -433,3 +440,28 @@ Sometimes (but not that often) I like to run the code which I copy and paste fro
 Not often for TwoFer! The last time I did it for TwoFer was when a student made the parameter's default value a private const of the class. I did not know you could do that. BTW I would not advocate it.
 
 There is a link for the mentor to download your solution (as is - which I assume includes tests you have uploaded) but that does not tie into my IDE as easily and in certain cases misses some of my own tests.
+
+----------------------------
+## IEquatable interface
+
+`IEquatable<Clock> is a marker interface.  
+A marker interface is one that expects to be detected at runtime and that callers will change their internal behaviour depending on the presence or absence of the interface.  Tools and runtime can detect the interface and validate instances or use them in a particular way.
+
+[https://stackoverflow.com/questions/1023068/what-is-the-purpose-of-a-marker-interface](https://stackoverflow.com/questions/1023068/what-is-the-purpose-of-a-marker-interface)
+
+In our case simply remove ` : IEquatable<Clock>` from the class declaration and you will see it makes no difference at all.  Note,  the  only change to make is to include the text `: IEquatable<Clock>` in the declaration or exclude it.  Both Equals methods remain in the definitition which ever way the declaration is expressed.
+
+So, what's it for?  If you had a list of clocks and called Contains on them then the list's behaviour would vary depending on whether IEquatable is part of the declaration or not.  If IEquatable is declared then the List.Contains method will call Clock.Equals(Clock other) directly.  If IEquatable is not part of the declaration then List.Contains will call Clock.Equals(object obj) and thereby Clock.Equals(Clock other) indirectly.
+
+So, what's the point?  The ONLY point of including `IEquatable<Clock>` in the declaration is to allow collections like `List<Clock>` to skip the unncessary call via `Clock.Equals(object obj)`.
+
+------------------------------
+## LINQ - Imperative Equivalence (ref Perfect Number)
+
+Where ever you have a for loop over incrementing integers you can use `Enumerable.Range()`.
+
+Where ever you have a simple condition based around the incrementing integer you can filter with a `Where()`.
+
+Where ever you are accumulating a total you can use `Aggregate()` 
+
+You are doing exactly these things in `CountAlquotSum()`.
