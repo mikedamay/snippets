@@ -479,3 +479,17 @@ I think that returning a readonly collection is slightly better than cloning.  A
 I shall change my guidance notes.
 
 I'm also wondering in these days when "fail fast" is the watch word whether defensive copying is the right approach.  I suspect that as so often the answer is "it depends".
+
+---------------------------------
+## Maxim
+
+The more that you correctly understand about the code you are maintaining and the quicker that you interlise it, the safer the modifications that you make.
+
+---------------------------------
+## Learning
+
+2 Stages:
+1. Mentee should be aware of available approaches
+2. Mentee should be provided with mechanism and criteria for making a choice.
+
+Possibly we could be explicit about this in the review points

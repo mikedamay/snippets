@@ -101,6 +101,11 @@ As a consequence of this approach you cannot include \`Console.ReadLine()\` and 
               category : 'discussion-point',
               text : 'parentheses are optional in this case as operator precedence works in your favour.  You may prefer to keep them for readability'
           },
+          'no-intermediates' : {
+              feature: 'No Intermediates',
+              category : 'discussion-point',
+              text : 'Seasoned CSharp developers would probably not bother with the intermediate variables and simply evaluate all three components of the expression in the return statement.'
+          },
           'avoid-literals' : {
               feature: 'Avoid boolean literals',
               category : 'discussion-point',
