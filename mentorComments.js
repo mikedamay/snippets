@@ -172,7 +172,43 @@ You can combine the expressions with "and", \`&&\` and "or", \`!!\` to avoid con
           'ideal-solution' : {
               feature : 'Suggest Dictionary of string to enum',
               category : 'discussion-point',
-              text : `Arguably the most maintainable solution would be a dictionary mapping string color names to explicit enums. This would apply if both color names and color values are mapped outside of this code, for example in a design document or a spec. Implicit mappings are less maintainable. As a bonus it's easier to mentally map the dictionary to the spec file.`
+              text : `
+It's arguable that the solution should show an explicit mapping between name and numeric value for each color as, according to [Wikipedia](https://en.wikipedia.org/wiki/Electronic_color_code#Resistor_color-coding), the numeric values have quantitative significance in calculating resistance.
+
+Two approaches that provide such explicitness are a dictionary of color name to integer and an enum with specified values.
+
+Two approaches that, whilst being adequate, hide the relationship between color and numeric value are an array of colors and an enum without specified values.
+
+Examples of these 4 contrasting approaches are shown below:
+\`\`\`
+// Explicit mappings
+    static IReadOnlyDictionary<string, int> colorMap = new Dictionary<string, int>{
+        {"black", 0},        
+        {"brown",1},
+        {"red", 2} // ...
+    };
+// OR
+    private enum Color : byte
+    {
+        black = 0,
+        brown = 1,
+        red = 2  // ...
+    }
+// BUT NOT
+    static string[] colorArr = {"black", "brown", "red" /* ... */};
+// NOR
+    private enum Color2 : byte
+    {
+        black,
+        brown,
+        red  // ...
+    }
+\`\`\`
+Being explicit can be useful for maintainers groking the code; for example in relating the code to a a design document or a spec.
+
+Perhaps you could start with the enum (with specified values) which is simple and concise and refactor code to introduce the dictionary when requirements added complexity - say localisation was required. 
+                            
+              `
           },
           'readonly-dictionary-present' : {
               feature : 'Acknowledge that the read only dictionary is a good thing',

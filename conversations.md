@@ -465,3 +465,17 @@ Where ever you have a simple condition based around the incrementing integer you
 Where ever you are accumulating a total you can use `Aggregate()` 
 
 You are doing exactly these things in `CountAlquotSum()`.
+
+------------------------------
+## Justification for Craftsmanship
+
+You should understand that this is not about right and wrong but about choosing between alternatives to find a style that suits you and that results in maintainable code.  I don't think C# is a technically challenging language (in comparison to say Haskell, Rust, C++ or Scala) and a lot of what we do is about software craftsmanship, i.e. providing readable, dependable, performant and gotcha free code to those who have to maintain our efforts.
+
+--------------------------------
+## Is defensive copying such a good idea?  (ref High Scores))
+
+I think that returning a readonly collection is slightly better than cloning.  A user of the class is made immediately aware (by way of an exception) of their mistake in attempting to modify the list whereas with a cloned list the change would be quietly swallowed.  It's a shame that the constructor spoils it all.
+
+I shall change my guidance notes.
+
+I'm also wondering in these days when "fail fast" is the watch word whether defensive copying is the right approach.  I suspect that as so often the answer is "it depends".
