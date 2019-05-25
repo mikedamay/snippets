@@ -493,3 +493,15 @@ The more that you correctly understand about the code you are maintaining and th
 2. Mentee should be provided with mechanism and criteria for making a choice.
 
 Possibly we could be explicit about this in the review points
+
+-----------------------------
+## Bitwise Operations (ref Allergies)
+
+Try the [Wikipedia Article](https://en.wikipedia.org/wiki/Bitwise_operations_in_C) on bitwise operations and then put your queries about it here (in the form of comments).
+
+## Pro's and Con's of Defensive Copying (ref HighScores)
+
+If we did want the list changed at a high level I would contend that this is not a good API.  HighScores has all the attention and in learning about the code a maintainer would be prone to think that all changes to HighScores should be going via the HighScores interface.
+
+A different question for me is that in avoiding one gotcha with our defensive copy to we create another in that a naive maintainer might (without inspecting the implementation of HighScores) believe that they are effecting a change to the scores at runtime when in fact their change quietly fails to affect HighScores.  If we follow a fail fast principle maybe screwing up HighScores is the lesser of two evils.  Possibly a question comparable with the number of angels on the point of a needle.  Still, I would be interested in your view.
+

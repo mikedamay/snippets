@@ -431,6 +431,11 @@ maintainers in how you expect the dictionary to be used.
               category : 'discussion-point',
               text : 'Consider `IEnumerable.Except()` as an approach to validation'
           },
+          'avoid-repetition' : {
+              feature : 'Avoid Repeating ACGT',
+              category : 'discussion-point',
+              text : 'It would be good to find a way not to repeat A, C, G and T.  The synthetic biologists are working on new ones so it would be good to have a slightly more maintainable approach.'
+          },
           'dictionary-init' : {
               feature : 'You can initialise the dictionary',
               category : 'discussion-point',
@@ -495,6 +500,16 @@ is worth considering.
               category : 'discussion-point',
               text : 'You don\'t need to use the `Convert` utilities between int and char.  char is implicitly promoted to an int and a simple cast works in the opposite direction.'
           },
+          'encapsulate-name-gen' : {
+              feature : 'Encapsulate Name Generation',
+              category : 'review-point',
+              text : 'It might make the code clearer to encapsulate the generation of an individual name in its own method.\n'
+          },
+          'recursive-solution' : {
+              feature : 'Recursive Solution Problematic',
+              category : 'review-point',
+              text : 'A recursive solution will probably cause a stack overflow exception for a large number of robots.  This is best avoided.\n'
+          },
           'flawed-requirements' : {
               feature : 'Address the flawed requirements',
               category : 'discussion-point',
@@ -527,7 +542,17 @@ enum Allergen
 \`\`\`
 If you add the \`[Flags]\` attribute you can then use \`Enum.HasFlag()\` and \`Enum.GetValues()\` to implement the methods.
               `
-          }
+          },
+          'get-values' : {
+              feature : 'GetValues+Cast is avaialble',
+              category : 'discussion-point',
+              text : 'You can use `Enum.GetValues()` together with `IEnumerable.Cast<Allergen>` to build a LINQ expression that will return a list of values.\n'
+          },
+          'has-flag' : {
+              feature : 'Use HasFlag() with Flags',
+              category : 'review-point',
+              text : 'If you are using [Flags] then you might as well make of `Enum.HasFlag()` in `IsAllergicTo()`'
+          },
       },
       'grade-school' : {
           'simple-solution' : {
@@ -1006,6 +1031,11 @@ What we have referred to as the "maintainer approach" is more often referred to 
               feature : 'Favour read-only fields',
               category : 'discussion-point',
               text : 'You should favour read only fields where possible as is the case here'
+          },
+          'favour-const' : {
+              feature : 'Const vs. Static ReadOnly',
+              category : 'discussion-point',
+              text : '`const` is more idiomatic than an initialised `static readonly` field.'
           },
           'who-do-we-code-for' : {
               feature : 'who do we expect to mainain the code',
