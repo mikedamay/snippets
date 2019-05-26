@@ -505,3 +505,21 @@ If we did want the list changed at a high level I would contend that this is not
 
 A different question for me is that in avoiding one gotcha with our defensive copy to we create another in that a naive maintainer might (without inspecting the implementation of HighScores) believe that they are effecting a change to the scores at runtime when in fact their change quietly fails to affect HighScores.  If we follow a fail fast principle maybe screwing up HighScores is the lesser of two evils.  Possibly a question comparable with the number of angels on the point of a needle.  Still, I would be interested in your view.
 
+-------------------------------
+## More on Returning readonly dictionary in NucleotideCount
+
+The comment is more to make you think about the effect of your code on maintainers and to make you think about how readonly applies to field references and collectons, not to mention what is going on with `Assert.Equals()` that would let you change `Count()`'s method signature.
+
+My point is you could just change:
+```
+public static IDictionary...
+```
+to:
+```
+public static IReadOnlyDictionary...
+```
+It's a hint to maintainers about how you expect the dictionary to be used.  You don't expect anybody to be changing it.
+
+The point is debatable and I am happy to discuss this further.
+
+Note that changing the interface does not guarantee that the collection cannot be modified.  A maintainer could downcast the object returned by `Count()` back to a dictionary but, depending on circumstances, converting the returned object to a read only dictionary (as opposed to simply changing the interface, as we have here) would be overkill.

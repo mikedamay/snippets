@@ -626,8 +626,8 @@ int Mod(double x, double y) => (int)(((x % y) + y) % y);
               text : `
 When it comes to testing equality you're expected to follow a particular pattern (similar to the notorious one in Java).
 
-if you provide an \`Equals()\` method you are also expected to provide a corresponding \`GetHashCode()\` method and
-to honour \`object\`'s contract for \`Equals()\`.
+if you provide an \`Equals()\` method you are expected as well as providing a short cut specifically for objects of this type
+(protected version below) to honour \`object\`'s contract for \`Equals()\`.
 
 My IDE (Rider) generates the following code.              
 \`\`\`
@@ -895,7 +895,7 @@ You will have to find a way that avoids integer overflow.              `
           'equals' : {
               feature: '== is more idiomatic than Equals()',
               category: 'discussion-point',
-              text: '`==` is more idiomatic than `Equals()`'
+              text: '`==` is more idiomatic than `Equals()` for primitives (int, bool, double...), strings and structs'
           },
           'decision-criteria' : {
               feature : 'screed on principle based coding',
