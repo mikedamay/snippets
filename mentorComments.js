@@ -814,6 +814,15 @@ Some possible LINQ approaches are:
               category : 'discussion-point',
               text : 'There is no need to convert string to a char array - strings are indexable'
           },
+          'under-used-dictionary' : {
+              feature : 'Under Used Dictionary',
+              category : 'discussion-point',
+              text : `
+You do not use the facilities of the dictionary.  It would probably be easier for the maintainer to grasp the code if you had a list of tuple(Letter_list, score) as they would not be wondering what the point of the dictionary is.
+
+Alternatively you could rejig your key value pairs and take advantage of the dictionary's direct lookup capability.              
+              `
+          },
           'linq' : {
               feature : 'LINQ hints',
               category : 'discussion-point',
@@ -829,6 +838,18 @@ You can use \`IEnumerable.Aggregate()\` to accumulate
 
 I'm happy to continue the LINQ discussion
               `
+          },
+      },
+      'series' : {
+          'linq' : {
+              feature: 'LINQ',
+              category: 'discussion-point',
+              text: 'If you want to assess the value of a LINQ based solution I am happy to discuss.  Just comment here'
+          },
+          'sub-string' : {
+              feature: 'SubString',
+              category: 'discussion-point',
+              text: '`string.SubString()` is worth considering'
           },
       },
       'sum-of-multiples' : {
