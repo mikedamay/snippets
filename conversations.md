@@ -523,3 +523,37 @@ It's a hint to maintainers about how you expect the dictionary to be used.  You 
 The point is debatable and I am happy to discuss this further.
 
 Note that changing the interface does not guarantee that the collection cannot be modified.  A maintainer could downcast the object returned by `Count()` back to a dictionary but, depending on circumstances, converting the returned object to a read only dictionary (as opposed to simply changing the interface, as we have here) would be overkill.
+
+-----------------------------
+## Analysis of Hamming Performance Difference (LINQ vs. non-LINQ)
+
+> why it would be 3 times as slow using Zip
+
+Interesting Point
+
+This is the code I used for the comparison:
+```
+// non-LINQ version
+int distance = 0;
+for (int ii = 0; ii < s1.Length; ii++)
+{
+    distance += s1[ii] != s2[ii] ? 1 : 0;
+}
+
+// LINQ version
+firstStrand.Zip(secondStrand, (a, b) => (a, b)).Count(p => p.Item1 != p.Item2);
+
+// test
+[Fact(Skip = "")]
+public void Long_Strand()
+{
+    string strand = new string(Enumerable.Repeat('A', 1_000_000_000).ToArray());
+    Assert.Equal(0, Hamming.Distance(strand, strand));
+}
+```
+Some questions to think about (to which I don't have the answer):
+* Does the JIT compiler get involved?  I'm thinking "no" because the method is called only once.
+* Is there a lot of infrastructure around the `Zip` version?  Having a look at the IL code would probably give a better picture of what's involved.
+* Is there some problem with the test or the slight variation in our `Zip` code?  You can do the comparison yourself and see what results you get.
+
+My guess is that the diminution in speed comes from the infrastructure (code generated) to support `Zip` but optimisation is an area famous for defeating intuition.

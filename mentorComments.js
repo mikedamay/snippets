@@ -514,13 +514,15 @@ is worth considering.
               feature : 'Address the flawed requirements',
               category : 'discussion-point',
               text : `
-The simple (and admittedly flawed) solution is to check on the number of names in \`robots\` and reject an attempt to add names when there were 26 * 26 * 1000.
+How do we handle hundreds of thousands of robots?
 
-> Would be better if I know the last name generated so that I could continue generating names from there.
+The simple (and admittedly flawed) solution is to check on the number of names in the robot collection and reject an attempt to add names when the limit of 26 * 26 * 1000 has been reached.
 
-You are of course quite right.  The requirements are problematic.  Generating names in this way randomly is not sensible.  The processing cost would be too great
+The requirements are problematic.  Generating names in this way randomly is not sensible as the program might have to make hundreds of thousands of attempts before it found a "free slot".  The processing cost would be too great
 
-One approach, if you do not care about memory usage and start up time, is to generate all the names at the start, sort them into a random order and then keep a counter as to which has been used.  You then have the question of handling reset robots.  Who needs it!              
+An alternative approach, if you do not care about memory usage and start up time, is to generate all the names at the start, sort them into a random order and then keep a counter as to which has been used.  You then have the question of handling reset robots.  
+
+Perhaps compromise is to impose a limit of a few thousand robots.  If the client complains you can point out the shortcomings of their requirements.          
 `
 
           },
@@ -564,6 +566,11 @@ If you add the \`[Flags]\` attribute you can then use \`Enum.HasFlag()\` and \`E
               feature : 'Avoid dictionary of list',
               category : 'discussion-point',
               text : 'Arguably a simpler solution would be to maintain a single list of students (where each student was tuple or an object containing name and grade).  You could then use `OrderBy()` and `Where()` to sort and filter at the point of reporting.  Does this approach appeal to you, at all?'
+          },
+          'list-of-tuples' : {
+              feature : 'Favour List of Tuples if Dictiobary not Used',
+              category : 'discussion-point',
+              text : 'Perhaps implementing the collection as a dictionary rather than say a list of tuples will give the maintainer pause to wonder what "dictionary-lookup-stuff" is happening - and there is none.  Maybe it\'s clearer with tuples.'
           },
       },
       'rotational-cipher' : {
@@ -643,12 +650,20 @@ public override bool Equals(object obj)
     if (obj.GetType() != this.GetType()) return false;
     return Equals((Clock) obj);
 }
-
+public override int GetHashCode()
+{
+    unchecked
+    {
+        return (hours * 397) ^ minutes;
+    }
+}
 \`\`\`
  1. You need the Equals(object) in order for your object to honour its contracts. In inheriting from object you assert that you can be passed an object for comparison so you had better handle it correctly.
  2. The first ReferenceEquals is null protection.
  3. The second ReferenceEquals is for performance
  4. \`protected...Equals(...)\` is for performance
+ 5. GetHashCode() and the need for consistency with Equals are a bit more hazy. The hashcode is used, in particular, by dictionaries and sets and the bumping with a random number apparently spreads out the distribution in whatever tree structure they use. I suspect 5 moinutes of introspection or web search would reveal the importance of equality in this mix.
+
  
 Let me know if you have any points to discuss on this. 
               `
