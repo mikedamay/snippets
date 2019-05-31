@@ -734,6 +734,13 @@ Let me know if you have any points to discuss on this.
               text: 'You might want to think about a LINQ based solution (or you might not see the point in which case let me know).  Use of `Distinct()` or `GroupBy()` indicate two different ways to approach this.'
           },
       },
+      'meetup' : {
+          'suggest-linq' : {
+              feature: 'Suggest LINQ',
+              category: 'discussion-point',
+              text: 'I am happy to discuss a LINQ solution.  It can make the code cleaner but possibly at the expense of perfornance.'
+          },
+      },
       'pangram' : {
           'suggest-linq': {
               feature: 'Suggest LINQ',

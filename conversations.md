@@ -557,3 +557,46 @@ Some questions to think about (to which I don't have the answer):
 * Is there some problem with the test or the slight variation in our `Zip` code?  You can do the comparison yourself and see what results you get.
 
 My guess is that the diminution in speed comes from the infrastructure (code generated) to support `Zip` but optimisation is an area famous for defeating intuition.
+
+-----------------------
+## More on Defensive Copying (ref HighScores)
+
+`ToList()` is a simple way to do a shallow copy. 
+
+> but what do you think? If they were reference types
+
+If the reference types were immutable then a shallow copy would be sufficient.  Yet another reason to make types immutable if possible.
+
+If the reference types were mutable then there is a whole different discussion.  I think you would need to examine exactly what was intended to happen to the list.
+
+>  Is this common or more of a thought exercise?
+
+A fine question.
+
+I first came across defensive copying in Joshua Bloch's brilliant Effective Java.  Java is famous for having a mutable Date object.  I am sure I must have done at least one defensive copy in my decade of Java web programming but I can't actually remember it or remember encountering any bugs caused by its absence.  The team I worked with were not the sort of people who laid traps for each other by quietly changing objects after having passed them to a collection or another object, the program sizes were less than 250,000 lines of code and we were forced to have mutable types by testing, frameworks and libraries so there was no point in being too precious about things.
+
+Possibly better than a defensive copy is to think about how you would redesign the HighScores API.
+
+I think that accepting an `IEnumerable<int>` in the constructor and returning a readonly collection in `Scores` is better than cloning.  A user of the class is made immediately aware (by way of an exception) of their mistake in attempting to modify the list whereas with a cloned list the change would be quietly swallowed.
+
+I must change my guidance notes.
+
+I'm also wondering in these days when "fail fast" is the watchword whether defensive copying is the right approach.  I suspect that as so often the answer is "it depends".
+
+------------------------
+## How to Approach Recursion (ref Collatz Conjecture)
+
+> couldn't see a way to initialise and keep a count without creating a separate function
+
+It seems that the way to approach these problems with recursion is to find a way to divide the problem up into a "current step" and "the same method applied to the remainder of the problem" (and also to find an exit condition).
+
+The exit condition is simple - if the number is 1 then return 0.
+
+If we say that the "current step" is to include 1 (for the current step) in the return value then "the same method applied to the remainder of the problem" would be to apply the method to the number as transformed by the collatz algorithm.
+
+I freely admit that the above may not have given you much of an insight so feel free to come back with questions.
+
+My technique (I am learning Haskell) is usually just to implement the function any old way that works (it has to be recursive with Haskell) and see whether that gives me inspiration.
+
+If you find that you need two methods then you can make one a nested function of the main method which makes things look neat.
+
