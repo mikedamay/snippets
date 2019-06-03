@@ -24,7 +24,7 @@ export const text = {
           'suggest-default-parameter' : {
               feature : 'Suggest default parameter',
               category: 'discussion-point',
-              text : `You may want to consider the use of a default parameter which will allow you to use a single overload of \`Speak()\``
+              text : `You may want to consider the use of a default parameter (optional argument with a default value) which will allow you to use a single overload of \`Speak()\``
           },
           'default-parameter' : {
               feature : 'Default parameter used',
@@ -352,7 +352,7 @@ IEnumerable.Take()
           'suggest-clone-collection' : {
               feature : 'Clone list should be cloned',
               category : 'discussion-point',
-              text : `Consider cloning the list on return from \`Scores()\` as a defensive measure.  This will prevent a user of the class from accidentally overwriting the values.  Maybe the list passed in should also be cloned.  What do you think?`
+              text : `As it stands the class's explicit API can be by-passed by a caller manipulating the list after it has been passed in to the constructor or when it is returned from \`Scores()\`.  Do you think is a problem worth worrying about and if so how would you address it?`
           },
           'undersccores' : {
               feature : 'Consider _ => _',
@@ -553,7 +553,7 @@ If you add the \`[Flags]\` attribute you can then use \`Enum.HasFlag()\` and \`E
           'has-flag' : {
               feature : 'Use HasFlag() with Flags',
               category : 'review-point',
-              text : 'If you are using [Flags] then you might as well make of `Enum.HasFlag()` in `IsAllergicTo()`'
+              text : 'You could make use of `Enum.HasFlag()` in `IsAllergicTo()`'
           },
       },
       'grade-school' : {
