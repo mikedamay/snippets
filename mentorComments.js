@@ -983,6 +983,10 @@ Other concerns: ease of debugging, ease of documentation, intuitive - close to m
 Accepted coding conventions - use a StringBuilder even when you are unconcerned about performance.
 
 reusability of code.
+
+Tool-ready code (starting with no warnings)
+
+Compile time
 `
           },
           'expression-bodied-present' : {
