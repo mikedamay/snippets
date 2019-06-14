@@ -211,7 +211,7 @@ Examples of these 4 contrasting approaches are shown below:
 \`\`\`
 Being explicit can be useful for maintainers groking the code; for example in relating the code to a a design document or a spec.
 
-Perhaps you could start with the enum (with specified values) which is simple and concise and refactor code to introduce the dictionary when requirements added complexity - say localisation was required. 
+Perhaps the winning approach is to start with the enum (with specified values) which is simple and concise and refactor code to introduce the dictionary when requirements added complexity - say localisation was required. 
                             
               `
           },
@@ -352,7 +352,7 @@ IEnumerable.Take()
           'suggest-clone-collection' : {
               feature : 'Clone list should be cloned',
               category : 'discussion-point',
-              text : `As it stands the class's explicit API can be by-passed by a caller manipulating the list after it has been passed in to the constructor or when it is returned from \`Scores()\`.  Do you think is a problem worth worrying about and if so how would you address it?`
+              text : `As it stands the class's explicit API can be by-passed by a caller manipulating the list after it has been passed in to the constructor or when it is returned from \`Scores()\`.  Do you think that this is a problem worth worrying about and if so how would you address it?`
           },
           'undersccores' : {
               feature : 'Consider _ => _',
@@ -1041,8 +1041,8 @@ For when you do need to use it a typical try/catch construction might look somet
           },
         'immutability' : {
             feature : 'Favour immutability',
-            category : 'discussion point',
-            tezt : `
+            category : 'discussion-point',
+            text : `
 By far the most important thing is that access to the field is restricted from outside the class.  This prevents unexpected changes to the instantiated objects and avoids many gotchas for maintainers.
 
 There is much less point in making the private field readonly.  But it is still worth it.  It helps a maintainer of the class to quickly internalise how the class behaves and what dangers there are in making changes.

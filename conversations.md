@@ -600,3 +600,34 @@ My technique (I am learning Haskell) is usually just to implement the function a
 
 If you find that you need two methods then you can make one a nested function of the main method which makes things look neat.
 
+---------------------------
+## IEnumerable (ref Grade School)
+
+I have not found any good tutorials on LINQ.  Sadly I think the only way to truly get comfortable with LINQ is to understand the implementation.
+
+These are some of my notes (they may be as unilluminating as Microsoft’s but at least you get to ask me questions):
+
+I assume that the question is how does `IEnumerable<GradeStudent>` relate to a LINQ expression like `StudentList.Select(element => element.Student).ToArray()`.  This would transform a list such as
+```
+new List<GradeStudent>{ new GradeStudent(“Pedro”, 4), new GradeStudent(“Mike”, 3)}
+into {“Pedro”, “Mike”}
+```
+`List<GradeStudent>` implements `Enumerable<GradeStudent>`.  The reason that the types involved are not mentioned in the LINQ expression is that the compiler can almost always infer the types from the context. It uses the type of the object on which it is an extension method and the result type from whatever lambda is executed.  It knows that `StudentList` is all about `GradeStudent`s.
+
+The extension method `Select()`’s signature is as follows:
+```
+public static IEnumerable<TResult> Select<TSource, TResult>(  this IEnumerable<TSource> source, Func<TSource, TResult> selector)
+```
+It takes `StudentList` as its source plus the lambda `element => element.Student` as the second parameter.  It creates an `Enumerable<string>` which is passed to `ToArray()`.  The string in this case is the student name.
+
+`Enumerable<T>` has a method `GetEnumerator()` which will walk along things like lists.  `ToArray()` calls `GetEnumerator()` on the implementation of `Enumerable<string>` passed by `Select()` and calls `MoveNext()` to get the first item. this in turn (because of the way `Select()` has set it up calls `MoveNext()` on `StudentList`’s enumerator.
+
+`Select()` is only called to create an `Enumerable<string>` whose implementation hooks it up with `StudentList`s enumerator.
+
+Please bear in mind that just as you are practising your C# skills I am practising my communication skills so I am more than a little interested in your feedback.
+
+Things got rather heavy with the explanation. as I said in my comment way back the problem with LINQ is that it's difficult to internalise at the abstract level and that understanding its implementation (which was certainly necessary for me to master it) requires a fairly advanced understanding of the C# language. I suggest you start with extension methods and work down the list in my review of your previous submission.
+
+
+
+
