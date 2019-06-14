@@ -572,6 +572,11 @@ If you add the \`[Flags]\` attribute you can then use \`Enum.HasFlag()\` and \`E
               category : 'discussion-point',
               text : 'Perhaps implementing the collection as a dictionary rather than say a list of tuples will give the maintainer pause to wonder what "dictionary-lookup-stuff" is happening - and there is none.  Maybe it\'s clearer with tuples.'
           },
+          'performance-anziety' : {
+              feature : 'Performance Anxiety Preventing Simple Solution',
+              category : 'discussion-point',
+              text : 'Unless you are particularly concerned about performance you can write a more straight forward LINQ based solution using a `List<(int grade, string student)>` structure.'
+          },
       },
       'rotational-cipher' : {
           'unicode' : {
@@ -913,7 +918,7 @@ You will have to find a way that avoids integer overflow.              `
           'invitation' : {
               feature : 'Modify, argue or query',
               category : 'end-point',
-              text : `Please modify, argue or query as seems appropriate`
+              text : `Feel free to argue, modify or raise questions.`
           },
           'promised-sign-off' : {
               feature : 'Pre-sign-off Modify, argue or query',

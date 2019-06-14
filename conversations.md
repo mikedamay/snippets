@@ -577,7 +577,7 @@ I first came across defensive copying in Joshua Bloch's brilliant Effective Java
 
 Possibly better than a defensive copy is to think about how you would redesign the HighScores API.
 
-I think that accepting an `IEnumerable<int>` in the constructor and returning a readonly collection in `Scores` is better than cloning.  A user of the class is made immediately aware (by way of an exception) of their mistake in attempting to modify the list whereas with a cloned list the change would be quietly swallowed.
+I think that accepting an `IEnumerable<int>` in the constructor and returning one in `Scores()` (or possibly returning a readonly collection in `Scores`) is better than cloning.  A user of the class is made immediately aware (by way of an exception) of their mistake in attempting to modify the list whereas with a cloned list the change would be quietly swallowed.
 
 I must change my guidance notes.
 
@@ -627,6 +627,16 @@ It takes `StudentList` as its source plus the lambda `element => element.Student
 Please bear in mind that just as you are practising your C# skills I am practising my communication skills so I am more than a little interested in your feedback.
 
 Things got rather heavy with the explanation. as I said in my comment way back the problem with LINQ is that it's difficult to internalise at the abstract level and that understanding its implementation (which was certainly necessary for me to master it) requires a fairly advanced understanding of the C# language. I suggest you start with extension methods and work down the list in my review of your previous submission.
+
+## In Favour of Immutable Classes (ref Grade School)
+
+I acknowledge that `Student`'s being modifiable has no great effect on this code but an "immutable" discipline is good as it makes life in general easy for maintainers.
+
+* Immutable classes are automatically thread safe
+* Immutable classes are more amenable to use in sets and maps.
+* Immutable classes prevent the need for "defensive copying` or other counter-measures against API circumvention.
+* Immutable classes are easier to work with when debugging or reasoning about code.
+
 
 
 
