@@ -627,6 +627,11 @@ int Mod(double x, double y) => (int)(((x % y) + y) % y);
               category : 'review-point',
               text : 'You can use formatting characters with string interpolation, "{expr:00}" or "{expr:D2}"'
           },
+          'immutability' : {
+              feature : 'Fields must be read-only',
+              category : 'review-point',
+              text : 'One thing you could do is make hours and minutes `readonly`.  This is generally good practice as it cuts down the number of things maintainers have to think about when reasoning bout the code.  In this case it is particularly important as the fields are used in the calculation of the hash code and therefore need to be immutable.  You might even add a comment to the fields to that effect.'
+          },
           'string-format' : {
               feature : 'String Format',
               category : 'review-point',
@@ -681,6 +686,27 @@ Let me know if you have any points to discuss on this.
               category : 'discussion-point',
               text : '`string.EndsWith()` is an idiomatic way of finding the final character '
           },
+          'elegant-approach' : {
+              feature : 'Elegant Approach',
+              category : 'discussion-point',
+              text : `There are only 4 characteristics of the stament that you care about:
+* Does it contain an uppercase letter?
+* Does it contain a lower case letter?
+* Is it entirely made up of whitespace?
+* Is the last non-space character a '?'?
+
+Not sure about the exlamation mark, '!' the tests don't push it.
+
+The following may be useful:
+
+*    \`string.Any(Char.IsUpper)\`
+*    \`string.Any(Char.IsLower)\`
+*    \`string.IsNullOrWhiteSpace()\`
+
+
+`
+            },
+
       },
       'bracket-push' : {
           'stack' : {

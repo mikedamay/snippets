@@ -637,6 +637,19 @@ I acknowledge that `Student`'s being modifiable has no great effect on this code
 * Immutable classes prevent the need for "defensive copying` or other counter-measures against API circumvention.
 * Immutable classes are easier to work with when debugging or reasoning about code.
 
+## In Praise of Low Level (Ref Variable Length String)
+
+The only thing I would say (and tentatively, because I don't hold up my own solution as any sort of example) is that I don't think it helps to abstract things in the way that you have, e.g. introducing a stack and an IEnumerable.  It may (or may not) be better to keep the concepts ant the bit and byte level for this sort of low level thing.
+
+## Choices in an Exercise (ref Grade School)
+
+Your suggestion is a common approach.  I prefer the simpler tuple based approach but both are thoroughly acceptable. 
+
+In a non-Exercism situation I think other factors would determine which approach you chose.  It's the fact that exercises leave us without a realistic context that necessitates an arbitrary decision.
+* Performance in general, update vs. read in particular
+* Part of trivial uitilty or a massive code base
+* Coding standards
+* known future development direction
 
 
 
