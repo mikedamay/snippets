@@ -99,7 +99,7 @@ As a consequence of this approach you cannot include \`Console.ReadLine()\` and 
           'parens' : {
               feature: 'Parens are optional',
               category : 'discussion-point',
-              text : 'parentheses are optional in this case as operator precedence works in your favour.  You may prefer to keep them for readability'
+              text : 'The correct result will be produced without parentheses.  Operator precedence works in your favour.  You may want to have parentheses for readability but it\'s more important to know about their effect on performance (known as short-circuiting.  If the sub expression `|| year % 400 == 0` is not coupled with `year % 100 != 0` then it will always execute even in the typically majority case when `year %4 == 0` is false and further calculation is pointless.'
           },
           'no-intermediates' : {
               feature: 'No Intermediates',
@@ -835,11 +835,30 @@ Some possible LINQ approaches are:
               text : 'Life can be made simple with a regex string  `@"^1?([2-9]\\d\\d[2-9]\\d{6})$"` if you think that is maintainable'
           },
       },
+      'pythagorean-triplets' : {
+          'maths' : {
+              feature : 'Maths',
+              category : 'discussion-point',
+              text : 'This is beyond my rudimentary maths as well.  I have seen solutions (actually a LINQ solution) which limits the outer loop to `sum / 3` and the inner loop to `sum / 2`.  It\'s not immediately obvious to me why and I haven\'t given it much thought.  In addition, I think the inner loop only needs to start from where the outer loop is at - or something like that.  As I say - no mathematical insights.'
+          },
+          'yield-return' : {
+              feature : 'Use Yield Return',
+              category : 'discussion-point',
+              text : 'From a csharp point of view you could consider using `yield return`.  I don\'t imagine we will have a huge number of triplets but it\'s good discipline to avoid unnecessary list building. '
+          },
+      },
       'reverse-string' : {
           'use-sb' : {
               feature : 'Use StringBuilder',
               category : 'review-point',
               text : 'For performance reasons you should use a StringBuilder to construct the output string'
+          },
+      },
+      'rational-numbers' : {
+          'expression-bodied-members' : {
+              feature : 'Use Expression Bodied Members',
+              category : 'discussion-point',
+              text : 'It might be beneficial to try and code the operations as expression bodied members.  They suit this sort of problem where there are multiple similar but distinct methods.'
           },
       },
       'rna-transcription' : {

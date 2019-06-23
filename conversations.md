@@ -651,6 +651,40 @@ In a non-Exercism situation I think other factors would determine which approach
 * Coding standards
 * known future development direction
 
+## LINQ Tutorials
+> if you could direct me to some useful learning resources
 
+The top Google entry (for LINQ tutorials) [here](https://www.tutorialsteacher.com/linq/linq-tutorials) looks useful.  If you have queries feel free to ask me (by commenting here).
 
+You will see there are two sets of syntax - query syntax and method syntax.  You need to be aware of both but most students on Exercism seem to use method syntax.  I certainly do.
 
+I believe [https://www.linqpad.net/](https://www.linqpad.net/) is also a useful tool for practicing.
+
+It's interesting.  I've been asked this question a number of times and this is the first occasion on which I founds something online that looked useful.  I must have asked a different question in the past or the site's SEO is a better match.
+
+## Parallel Letters
+> I feel like there has to be a better way to do this
+
+For me your submission is 2 to 3 times faster than the standard LINQ approach using `GroupBy()` for the 3 anthems repeated 100,000 times as the input array.  But my tests are not very scientific.
+
+> the method wasn't async to begin with
+
+Surely async/await would generate pretty much the same code as you've got.  It you want the syntatic sugar you could call a private async method.  It won't make any difference to the time taken as the test won't complete without a full dictionary.
+
+> I'm also not entirely sure where the best place for division of labor here is
+
+I would think that to some extent this would depend on the characteristics of the data.  "abc" repeated 10,000 times is different to the 3 anthems.  I did not understand why you split the text into words when handling each text.
+
+You don't need `ToCharArray()`.
+
+I don't you'll find much to learn from the community solutions.  Many like me went for Linq/GroupBy. 
+
+You'll have gathered that this is not an area of expertise for me.  It continues to look like a black art.
+
+## Further Explanation of Resistor Color
+> Could you please elaborate on it?
+
+I make 3 separate points:
+1. "ColorCode() causes ...".  Each time `ColorCode` is called the entire Colors array is reconstructed.  You should be aware that this is not efficient.
+2. "Expression bodied members ...".  If you have a method like `Colors()` that simply returns an expression then you can use the format `string[] MethodName() => expr;` rather than `string[] MethodName() {return expr;}`
+3. This is a very subtle point.  An array like `{ "black", "brown",...}` works well.  It is concise well understood and gives correct results.  However it does not draw the maintainer's attention to the fact that the absolute index associated with each element of the array is of crucial importance.  A maintainer may accidentally change the order of elements in the array and cause problems.  What we are trying to do here is to reduce the opportunity for maintainers of the code to make mistakes.
