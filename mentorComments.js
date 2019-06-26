@@ -36,7 +36,7 @@ export const text = {
               category: 'discussion-point',
               text : 'String interpolation can handle any expression not just single variables, e.g. \` $\"my name is {firstName + " " + lastName}\"\`'
           },
-          'meaningful-identifer' : {
+          'meaningful-identifier' : {
               feature : 'More Meaningful Identifier',
               category: 'discussion-point',
               text : 'Try to choose a more meaningful identifier.  If you are in doubt, it is appropriate to use an identifier from your first language.  I will catch on.\n'
@@ -176,7 +176,7 @@ You can combine the expressions with "and", \`&&\` and "or", \`!!\` to avoid con
           },
           'ideal-solution' : {
               feature : 'Suggest Dictionary of string to enum',
-              category : 'discussion-point',
+              category : 'mentor-preference',
               text : `
 It's arguable that the solution should show an explicit mapping between name and numeric value for each color as, according to [Wikipedia](https://en.wikipedia.org/wiki/Electronic_color_code#Resistor_color-coding), the numeric values have quantitative significance in calculating resistance.
 
@@ -232,8 +232,8 @@ Perhaps the winning approach is to start with the enum (with specified values) w
           },
           'ro-dictionary' : {
               feature : 'Make dictionary read only',
-              category : 'discussion-point',
-              text : `Consider making the dictionary a readonly collection as a strong hint to maintainers`
+              category : 'mentor-preference',
+              text : `Consider making the dictionary a readonly collection.  It providesa strong hint to maintainers about how the dictionary is being used`
           },
           'index-of' : {
               feature : 'Suggest Array.IndexOf',
@@ -248,7 +248,7 @@ Perhaps the winning approach is to start with the enum (with specified values) w
           'enum-defined' : {
               feature : 'Enum - Consider Enum.IsDefined',
               category : 'discussion-point',
-              text : 'Consider `Enum.Defined()` to detect invalid colors passed to `ColorCode()`'
+              text : 'Consider `Enum.isDefined()` to detect invalid colors passed to `ColorCode()`'
           },
           'performance' : {
               feature : 'ColorCode() instantiates the array ',
@@ -263,7 +263,7 @@ Perhaps the winning approach is to start with the enum (with specified values) w
       'space-age' : {
             'suggest-ro-dict' : {
                 feature : 'Suggest that Learner makes the dictionary read only',
-                category : 'discussion-point',
+                category : 'mentor-preference',
                 text : 'Making the dictionary read only (rather than just the field reference) would keep maintainers on the right track'
             },
             'suggest-enums' : {
@@ -278,7 +278,7 @@ Perhaps the winning approach is to start with the enum (with specified values) w
             },
             'gather-constants' : {
                 feature : 'Suggest that year lengths are more readable in a bunch',
-                category : 'discussion-point',
+                category : 'mentor-preference',
                 text : `
 Arguably it is helpful to gather the year values 
 together in one place say as a bunch of constants 
@@ -291,7 +291,7 @@ code changes when you add or remove a planet.
             },
           'use-given-numbers' : {
               feature : 'Advise learner to use numbers from the instructions',
-              category : 'discussion-point',
+              category : 'mentor-preference',
               text : 'The instructions provide the number of seconds in an earth year.  If we see the instructions as a sort of stand-in for the business rules then it might make more sense to reflect this back in the code in the form of a well named constant or even a comment referring back to the requirements documentation rather than calculate the value.'
           },
          'rounding-unnecessary' : {
@@ -366,7 +366,7 @@ IEnumerable.Take()
           },
           'avoid-mutable' : {
               feature : 'Avoid Mutable Object',
-              category : 'review-point',
+              category : 'discussion-point',
               text : `
 But you need to find a way of sorting and selecting that does not touch \`_Scores\` as the results will be altered when multiple calls are made to \`Latest()\` and \`PersonalTopThree\`.
 
@@ -414,7 +414,7 @@ Zip is more LINQy than the other approach as it can work entirely with \`IEnumer
       'nucleotide-count' : {
           'suggest-ro-dict' : {
               feature : 'Suggest that the dictionary should be read only',
-              category : 'discussion-point',
+              category : 'mentor-preference',
               text : `
 You should consider returning a read only version 
 of the dictionary to the caller.  This will guide 
@@ -450,7 +450,7 @@ var dict = new Dictionary<string, int> { {"one", 1}, {"two", 2}...};
       'robot-name' : {
           'reflect-bus-rules' : {
               feature : 'name construction should reflect business rules',
-              category : 'discussion-point',
+              category : 'mentor-preference',
               text : `
 One aspect of expression is the relationship of the code to the business rules.  In this case we have been told to generate 2 letters and 3 numbers. If the maintainer sees 2 lines of code relating to letters followed by 3 lines of code relating to numbers they won’t even stop to consider it.  With your (perfectly good - but not meeting my expressiveness criterion - solution) the number 5 is involved which is good but then there is some question of a special condition of less than 2 that they will have to stop and parse.  They also have to recollect their ascii codes to parse the rest of it.
 
@@ -572,7 +572,7 @@ If you add the \`[Flags]\` attribute you can then use \`Enum.HasFlag()\` and \`E
               category : 'discussion-point',
               text : 'Perhaps implementing the collection as a dictionary rather than say a list of tuples will give the maintainer pause to wonder what "dictionary-lookup-stuff" is happening - and there is none.  Maybe it\'s clearer with tuples.'
           },
-          'performance-anziety' : {
+          'performance-anxiety' : {
               feature : 'Performance Anxiety Preventing Simple Solution',
               category : 'discussion-point',
               text : 'Unless you are particularly concerned about performance you can write a more straight forward LINQ based solution using a `List<(int grade, string student)>` structure.'
