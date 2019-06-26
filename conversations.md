@@ -688,3 +688,6 @@ I make 3 separate points:
 1. "ColorCode() causes ...".  Each time `ColorCode` is called the entire Colors array is reconstructed.  You should be aware that this is not efficient.
 2. "Expression bodied members ...".  If you have a method like `Colors()` that simply returns an expression then you can use the format `string[] MethodName() => expr;` rather than `string[] MethodName() {return expr;}`
 3. This is a very subtle point.  An array like `{ "black", "brown",...}` works well.  It is concise well understood and gives correct results.  However it does not draw the maintainer's attention to the fact that the absolute index associated with each element of the array is of crucial importance.  A maintainer may accidentally change the order of elements in the array and cause problems.  What we are trying to do here is to reduce the opportunity for maintainers of the code to make mistakes.
+
+## .NET Open Source
+The source to the compiler and .NET Core libraries is openly available on github as is the runtime for .NET core.  The .NET Framework is closed source.  You can submit PRs.  The language team at Microsoft (led by Mads Magnusson) retain control over its direction.  I don't think there are any non-Microsoft committers but I could be wrong.  You can fork it and build your own version - although that would be a considerable undertaking.
