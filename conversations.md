@@ -52,7 +52,7 @@ I have seriously used LINQ for about 18 months and complex solutions still do ta
 
 I don't think the pay off of LINQ is readability or even ease of reasoning.  I think it's dependability.  I think it shares this quality with strongly typed functional languages like Haskell and Elm.  You see it said of Elm that if it compiles then it probably behaves as you expect.  I have used Elm a bit and definitely found it to be true.
 
-LINQ may take longer to understand or write but once you have your code it is far more likely to behave as you intend and maintainers are far less likely to make mistakes if they modify or rely on it.
+LINQ may take longer to understand or write but once you have your code, or have taken the trouble to understand someone else's, it is far more likely to behave as you intend and maintainers are far less likely to make mistakes if they modify or rely on it.
 
 I think it is worth sticking with.  It, and a functional style in general, are certainly in fashion.
 
@@ -691,3 +691,12 @@ I make 3 separate points:
 
 ## .NET Open Source
 The source to the compiler and .NET Core libraries is openly available on github as is the runtime for .NET core.  The .NET Framework is closed source.  You can submit PRs.  The language team at Microsoft (led by Mads Magnusson) retain control over its direction.  I don't think there are any non-Microsoft committers but I could be wrong.  You can fork it and build your own version - although that would be a considerable undertaking.
+
+## In praise of `const` (ref: Rotational Cipher)
+> I thought const can potentially cause problem 
+
+Good observation, but it only matters when the `const` is `public`.  You should favour `const` over `readonly static` for `private` values where the value is known and available^ at compile time and will remain unchanged over the life of the program.
+
+^avaialble: [the docs](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/const) say that "Constants can be numbers, Boolean values, strings, or a null reference".  Actually, simple expressions made up of the foregoing are also allowed.  A very quick look at the documentation did not reveal a formal definition but it's fairly intuitive.  You can combine values with operators but you can't call functions.
+
+I don't know whether there is a huge (or indeed any) difference in performance between `const` and `readonly static`.  For all I know the compiler, runtime and jitter may eliminate any performance differences.  You should use them because it is the idiomatic usage.  This is more than simply showing that you know what you are doing.  Using idiomatic constructs allows maintainers to instantly internalise information about a piece of code. The single word `const` tells them that the value will not be set anywhere else in the code.  Code made up of idiomatic usages is easier to grok.

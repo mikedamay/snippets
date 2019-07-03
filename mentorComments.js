@@ -29,7 +29,7 @@ export const text = {
           'default-parameter' : {
               feature : 'Default parameter used',
               category: 'discussion-point',
-              text : `The solution does not address the case of an empty string being passed in`
+              text : `The solution does not address the case of an empty string being passed in.  What steps might you take to address that?`
           },
           'non-var-expression' : {
               feature : 'Expressions, not just variables',
@@ -223,7 +223,7 @@ Perhaps the winning approach is to start with the enum (with specified values) w
           'suggest-clone-array' : {
               feature : 'Color array should be cloned',
               category : 'discussion-point',
-              text : `Consider cloning the array on return from \`Colors()\` as a defensive measure.  This will prevent a user of the class from accidentally overwriting the values.`
+              text : `The color array is returned by the \`Colors()\` method.  This will give the caller an opportunity to change the behaviour of the \`ResistorColor\` method without using the standard API.  Do you care about this bypassing of the API and, if so, what can you do about it?`
           },
           'switch-present' : {
               feature : 'Learner is using a switch statement',
@@ -436,6 +436,16 @@ maintainers in how you expect the dictionary to be used.
               category : 'discussion-point',
               text : 'It would be good to find a way not to repeat A, C, G and T.  The synthetic biologists are working on new ones so it would be good to have a slightly more maintainable approach.'
           },
+          'single-expression-dictionary' : {
+              feature : 'Dictionary Constructed in a Single Expression',
+              category : 'mentor-preference',
+              text : 'I tend to avoid solutions where there is something closer to my mental model of the problem that can be coded.  Adding the four letters at the start and subtraction 1 from the count in each is ingenious but would give a maintainer (if they did not, in contrast to me, happen to have seen a couple of hundred of these before) pause for thought and there is an argument for saying that the approach may be avoided.'
+          },
+          'avoid-switch' : {
+              feature : 'Avoid Switch Statement',
+              category : 'review-point',
+              text : 'Try to use the lookup facilities of the dictionary rather than a switch statement.\n'
+          },
           'dictionary-init' : {
               feature : 'You can initialise the dictionary',
               category : 'discussion-point',
@@ -604,6 +614,11 @@ If you add the \`[Flags]\` attribute you can then use \`Enum.HasFlag()\` and \`E
               category : 'review-point',
               text : 'Well done for selecting a `StringBuilder`.  This is a good choice when assembling strings'
           },
+          'linq-approach' : {
+              feature : 'LINQ Approach',
+              category : 'mentor-preference',
+              text : 'Have a look at some of the LINQ approaches in the starred community solutions.  You may not find them as readable as yours but avoiding mutable variables makes them easier to reason about (once you have deciphered them) and less likely to trip up unsuspecting maintainers.'
+          },
 
       },
       'clock' : {
@@ -689,13 +704,13 @@ Let me know if you have any points to discuss on this.
           'elegant-approach' : {
               feature : 'Elegant Approach',
               category : 'discussion-point',
-              text : `There are only 4 characteristics of the stament that you care about:
+              text : `There are only 4 characteristics of the statement that you care about:
 * Does it contain an uppercase letter?
 * Does it contain a lower case letter?
 * Is it entirely made up of whitespace?
 * Is the last non-space character a '?'?
 
-Not sure about the exlamation mark, '!' the tests don't push it.
+Not sure about the exclamation mark, '!' the tests don't push it.
 
 The following may be useful:
 
@@ -720,6 +735,11 @@ The following may be useful:
               feature : 'Use StringBuilder',
               category : 'review-point',
               text : 'You would be expected to use a `StringBuilder` rather than string concatenation to build the result acronym for better perfarmance.  Even though it might not make any difference here (or conceivably impair performance slightly) the best policy to use a StringBuilder as it fulfills maintainers\' expectations.  I am happy to discuss this slightly confusing point further.'
+          },
+          'split-overload' : {
+              feature : 'Another Overload for Split',
+              category : 'review-point',
+              text : '`string.Split()` has an overload that will help you simplify the code a little.'
           },
       },
       'bank-account' : {
@@ -821,6 +841,15 @@ Some possible LINQ approaches are:
               feature : 'Use Square Root rather than number',
               category : 'discussion-point',
               text : 'More of a maths point than C# but when calculating the factors you can stop when you reach the square root of the original number.  You will have to add both the divisor and the quotient as factors rather than just the divisor'
+          },
+      },
+      'parallel-letter-frequency' : {
+          'performance' : {
+              feature : 'Performance',
+              category : 'discussion-point',
+              text : `
+For the anthems \`Parallel.Foreach\` together with a \`ConcurrentDictionary\` considerably out performs LINQ based solutions.  At least according to my unscientific testing.  The story may be different for the short "abc" strings.
+`
           },
       },
       'phone-number' : {
@@ -1172,6 +1201,11 @@ Let me know if you come across a better answer and I (may just) be prepared to p
               feature : 'Look at Community Solutions',
               category : 'discussion-point',
               text : 'Have a look at the starred community solutions for some alternative approaches'
+          },
+          'algorithm-heavy' : {
+              feature : 'Algorithms are Key',
+              category : 'discussion-point',
+              text : 'These more complex exercises, at least on the C# track, are less about language idioms and library features than algorithms where abstract reasoning and CS technique are central.  A long-winded way of saying that I don\'t have much to say.  Have a look at the starred community solutions for some elegant approaches. '
           },
           'initialise-dictionary' : {
               feature : 'Dictionary Initialisation',
