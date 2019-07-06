@@ -700,3 +700,66 @@ Good observation, but it only matters when the `const` is `public`.  You should 
 ^avaialble: [the docs](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/const) say that "Constants can be numbers, Boolean values, strings, or a null reference".  Actually, simple expressions made up of the foregoing are also allowed.  A very quick look at the documentation did not reveal a formal definition but it's fairly intuitive.  You can combine values with operators but you can't call functions.
 
 I don't know whether there is a huge (or indeed any) difference in performance between `const` and `readonly static`.  For all I know the compiler, runtime and jitter may eliminate any performance differences.  You should use them because it is the idiomatic usage.  This is more than simply showing that you know what you are doing.  Using idiomatic constructs allows maintainers to instantly internalise information about a piece of code. The single word `const` tells them that the value will not be set anywhere else in the code.  Code made up of idiomatic usages is easier to grok.
+
+## Justification for functional style (ref Leap)
+> It makes it a bit harder to read for me personally
+
+This is a non-trivial point.  You are certainly not the only one who finds the step by step imperative code easier to grok.  I think, in general, you have to be aware of your audience and put your code somewhere within their grasp.
+
+I think I would be bold enough to say that experienced csharp developers would prefer the one liner.  I suppose I take this from what coders are doing in quality code bases and at what shops like Microsoft do.  I suspect students would want to be made aware of these practices.
+
+## [Flags] (Ref: Allergies)
+The only practical effect I have found for `[Flags]` is that it causes `ToSttring()` to output something meaningful like `Cats, Peanuts` when there the variable contains multiple flags.  There may be other subtle effects that I am missing.
+
+## Equivalence of for loop and Enumerable.Range() (Ref: Series)
+Before you decide on your final version give some consideration to using `Enumerable.Range()` to drive the iteration over the string.  If you have a simple counting loop as you do in your original submission you can always substitute a `Range()` clause so that
+```
+for (int i = 0; i < 10; i++)
+  output[i] = i*10;
+```
+becomes
+```
+Enumerable.Range(0,10).Select(x => x * 10).ToArray();
+```
+Just a thought
+
+## Perfroance (Ref: Parallel Letter Frequeny)
+Most solutions put the `AsParallel` before the `SelectMany`.  (Incidentally, in your solution the intermediate `ToArray()` seems a bit of a waste. 
+
+I messed about timing various combinations (unscientifically, as usual) and nothing seemed to make sense.  I was very disappointed in the overall LINQ performance, particularly as `Parallel.ForEach` beat it into a cocked hat (for the more realistic anthem example).
+
+I think as we move from an imperative to a functional style the performance characteristics will become less easy to predict.  I am definitely finding that with Haskell.  Perhaps it's a good thing that we've all made up our minds that premature optimisation is misguided.  Then, again...
+
+
+>  couldn't figure out how to return the result.
+
+I've lost the original reference to this student solution using `Parallel.ForEach` but somehow managed to snaffle the code.
+```
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+using System;
+using System.Collections.Generic;
+using System.Collections.Concurrent;
+using System.Threading.Tasks;
+
+public static class ParallelLetterFrequency
+{
+    public static Dictionary<char, int> Calculate(IEnumerable<string> texts)
+    {
+        var freq = new ConcurrentDictionary<char, int>();
+        Parallel.ForEach(texts, (s) => {
+            Parallel.ForEach (s, (c) =>
+            {
+                if(char.IsLetter(c)) 
+                {
+                    freq.AddOrUpdate(char.ToLower(c), (cKey) => 1, (cKey, cVal) => ++cVal);
+                }
+            });
+        });
+
+        return new Dictionary<char, int>(freq);
+    }
+}
+```

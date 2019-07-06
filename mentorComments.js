@@ -269,7 +269,7 @@ Perhaps the winning approach is to start with the enum (with specified values) w
             'suggest-enums' : {
                 feature : 'enums rather than strings for planet names',
                 category : 'discussion-point',
-                text : 'Using an enum rather than strings for planet names would avoid the possibility of bugs being introduced by typos'
+                text : 'Using an enum rather than strings for planet names would avoid the possibility of bugs being introduced by typos.  Or maybe a static class with a set of appropriately named `const` values.\n'
             },
             'use-constant' : {
                 feature : 'make number of seconds a constant',
@@ -352,7 +352,7 @@ IEnumerable.Take()
           'suggest-clone-collection' : {
               feature : 'Clone list should be cloned',
               category : 'discussion-point',
-              text : `As it stands the class's explicit API can be by-passed by a caller manipulating the list after it has been passed in to the constructor or when it is returned from \`Scores()\`.  Do you think that this is a problem worth worrying about and if so how would you address it?`
+              text : `As it stands the class's explicit API can be by-passed by a caller manipulating the list after it has been passed into the constructor or when it is returned from \`Scores()\`.  Do you think that this is a problem worth worrying about and if so how would you address it?`
           },
           'undersccores' : {
               feature : 'Consider _ => _',
@@ -363,6 +363,11 @@ IEnumerable.Take()
               feature : 'Take handles fewer elements',
               category : 'review-point',
               text : 'You don\'t have to check on the list size when using `Take()`.  If there are fewer than 3 elements it will return the actual number of elements.'
+          },
+          'favoured-soluton' : {
+              feature : 'Favoured Solution',
+              category : 'mentor-preference',
+              text : 'n the absence of any guidance about performance requirements I favour using a single list and simple LINQ expressions as it makes the code so easy to read.'
           },
           'avoid-mutable' : {
               feature : 'Avoid Mutable Object',
@@ -1284,10 +1289,125 @@ namespace MyTests
 }
 \`\`\`              
               `
+          },    // extra-tests
+          Convert_field_to_const : {
+              feature : 'An initialised field (often `private static`) is used where a `const` is appropriate',
+              category : 'auto-mentor',
+              text : `Consider converting the \`%{name}\` field to a \`const\`, as the value is intended never to change. Using constants is not only more common, there are also some subtle differences between a \`const\` and a \`field\`, which are explained in [this StackOverflow post](https://stackoverflow.com/questions/755685/static-readonly-vs-const#755693).`
           },
-      },
+          convert_variable_to_const : {
+              feature : 'An initialised variable is used where `const` is appropriate',
+              category : 'auto-mentor',
+              text : `Consider converting the \`%{name}\` variable to a \`const\`, as the value is intended never to change. Usually, \`const\` values are defined at the class level, as they are frequently used in multiple methods. In this case, the \`const\` value can be defined within the method itself, which means that other methods cannot use its value.`
+          },
+          do_not_assign_and_return : {
+              feature : 'A value has been assigned to a variable which has been immediately returned',
+              category : 'auto-mentor',
+              text : `Consider returning the value directly instead of storing it into an intermediate value and then returning it.`
+          },
+          do_not_use_nested_if_statement : {
+              feature : 'Deeply nested if statements',
+              category : 'auto-mentor',
+              text : `Try rewriting the if-statements to avoid deep nesting, as it can lead to code that is harder to follow. Consider the following two pieces of code:
+
+\`\`\`csharp
+void PrintName(Person p)
+{
+    if (p != null)
+    {
+        if (p.Name != null)
+        {
+            if (p.Age >= 21)
+            {
+                Console.WriteLine(p.Name);
+            }
+        }
+    }
+}
+\`\`\`
+
+Compare that to the following code:
+
+\`\`\`csharp
+void PrintName(Person p)
+{
+  if (p == null || p.Name == null || p.Age < 21)
+  {
+      return;
   }
-};
+
+  Console.WriteLine(p.Name);
+}
+\`\`\`
+
+The second example has a very specific structure: all paths that are dealing with errors are dealt with in indented blocks, whereas the "happy path" is always leftmost aligned. This makes for very easy reading, as one can quickly see what is the most common, error-free path through the code.
+`
+          },
+          do_not_write_to_console : {
+              feature : 'Submission contains a `Console.WriteLine` or similar',
+              category : 'auto-mentor',
+              text : `Try removing the method(s) that write to the console, as the tests don't require them and they make the code slightly harder to read.
+
+Usually, these statements are added to help debug the code. However, a better approach is to debug the code while running one or more unit tests. This has the added advantage that one can focus on debugging a specific test case. Here are some links that explain how to debug C# code while running unit tests in various IDE's:
+
+- [Visual Studio](https://docs.microsoft.com/en-us/visualstudio/test/run-unit-tests-with-test-explorer?view=vs-2019)
+- [VS Code](https://github.com/OmniSharp/omnisharp-vscode/wiki/How-to-run-and-debug-unit-tests)
+- [Rider](https://www.jetbrains.com/help/rider/Unit_Testing__Index.html)
+`
+          },
+          has_compile_errors : {
+              feature : 'Build failure',
+              category : 'auto-mentor',
+              text : `The code has one or more compile errors, which prevents the test suite from running. A good first step in finding out how to fix the error(s) is to examine the error messages displayed when trying to compile the code. These error messages contain an error number and description, which helps pinpoint what the exact problem is.`
+          },
+          has_main_method : {
+              feature : 'Submission includes `Main` method',
+              category : 'auto-mentor',
+              text : `Try removing the \`Main\` method from code, as the tests don't require them and they make the code slightly harder to read.
+
+Usually, the \`Main\` method is added to help debug the code. However, a better approach is to debug the code while running one or more unit tests. This has the added advantage that one can focus on debugging a specific test case. Here are some links that explain how to debug C# code while running unit tests in various IDE's:
+
+- [Visual Studio](https://docs.microsoft.com/en-us/visualstudio/test/run-unit-tests-with-test-explorer?view=vs-2019)
+- [VS Code](https://github.com/OmniSharp/omnisharp-vscode/wiki/How-to-run-and-debug-unit-tests)
+- [Rider](https://www.jetbrains.com/help/rider/Unit_Testing__Index.html)
+`
+          },
+          remove_throw_not_implemented_exception : {
+              feature : 'Mentee has not removed throw statement',
+              category : 'auto-mentor',
+              text : `Try removing the \`throw new NotImplementedException\` code, which either causes one or more tests to fail, or is in a part of the code that is never reached.`
+          },
+          use_expression_bodied_member : {
+              feature : 'Good case for expression bodied members',
+              category : 'auto-mentor',
+              text : `As the \`%{name}\` method only has a single statement, consider converting the method to an [expression-bodied method](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/statements-expressions-operators/expression-bodied-members#methods).`
+          },
+          use_null_coalescing_operator_not_null_check : {
+              feature : 'Good case for null coalescence',
+              category : 'auto-mentor',
+              text : `Use the [null-coalescing operator](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/null-coalescing-operator) to simplify your code, rather than explicitly checking for a value to equal \`null\` and then doing something with it.`
+          },
+          use_private_visibility : {
+              feature : 'Members are public without good reason',
+              category : 'auto-mentor',
+              text : `As the \`%{name}\` field is only used within its class, its visibility can, and almost always should, be set to \`private\`.`
+          },
+          use_string_interpolation_not_string_concatenation : {
+              feature : 'Submission contains string concatenation',
+              category : 'auto-mentor',
+              text : `Use [string interpolation](https://csharp.net-tutorials.com/operators/the-string-interpolation-operator/) to dynamically build a string, rather than using string concatenation. The main benefit is less "noise"; whereas string concatenation requires \`+\` to be added between each string, string interpolation has no such limitation. As a result, string interpolation code is usually a bit easier to read.`
+          },
+          use_string_interpolation_not_string_format : {
+              feature : 'Submission contains `string.Format`',
+              category : 'auto-mentor',
+              text : `A more common approach in C# is to use [string interpolation](https://csharp.net-tutorials.com/operators/the-string-interpolation-operator/), rather than using \`string.Format\` to dynamically build a string.
+
+Note that string interpolation is just a compiler trick, also known as syntactic sugar. This means that when a string interpolation expression is compiled, the compiler will actually convert it to a \`string.Format\` call. The benefit of using string interpolation is thus purely visual.
+`
+          },
+      },    // xxx-general
+  } // exercises
+};  // text
 
 
 
