@@ -1026,6 +1026,7 @@ You will have to find a way that avoids integer overflow.              `
           },
           'decision-criteria' : {
               feature : 'screed on principle based coding',
+              dont_publish : true,
               category : 'discussion-point',
               text : `Review Points:
 
@@ -1080,6 +1081,7 @@ Compile time
           },
           'suggest-expression-bodied' : {
               feature : "Suggest expression bodied members ",
+              dont_publish : true,
               category : 'discussion-point',
               text : `Expression bodied members would work well for this solution`
           },
@@ -1090,6 +1092,7 @@ Compile time
           },
           'favour-private' : {
               feature : "Favour private members",
+              dont_publish : true,
               category : 'discussion-point',
               text : `
 It is generally considered better to give member fields and support methods and properties private access.  Public declaration increases the amount of noise in the API and constrains maintainers who may want to change the implementation.  Let me know if you want to discuss further.
@@ -1135,7 +1138,8 @@ For one thing, If it turns out, as in this case, that all the class's data is re
         },
           'maturity' : {
               feature : 'When to start programming for real',
-              catgory : 'discussion-point',
+              dont_publish : true,
+              category : 'discussion-point',
               text : `
 That is a difficult question.
 
@@ -1147,11 +1151,6 @@ You should be aware that in many commercial roles you will need to know associat
 
 What we have referred to as the "maintainer approach" is more often referred to as software craftsmanship, principle based or best practice.  Examples are the Agile manifesto / Extreme Programming (SP), SOLID principles, defensive coding.  They are not specific to C#/.NET.  It has to be said that this approach may not be adhered to by as many programmers as some of us would like.
               `
-          },
-          'equals-idiom' : {
-              feature : '== is more idiomatic',
-              category : 'discussion-point',
-              text : 'The `==` operator is generally considered more idiomatic than `Equals` for value types such as primitives (int, etc.)'
           },
           'plus-plus-idiom' : {
               feature : '++ is more idiomatic',
@@ -1165,11 +1164,13 @@ What we have referred to as the "maintainer approach" is more often referred to 
           },
           'favour-const' : {
               feature : 'Const vs. Static ReadOnly',
+              dont_publish : true,
               category : 'discussion-point',
               text : '`const` is more idiomatic than an initialised `static readonly` field.'
           },
           'who-do-we-code-for' : {
               feature : 'who do we expect to mainain the code',
+              dont_publish : true,
               category : 'discussion-point',
               text : `
 Your new version is exactly what I would code.
@@ -1199,6 +1200,7 @@ Let me know if you come across a better answer and I (may just) be prepared to p
           },
           'remove-throw' : {
               feature : 'Remove throw',
+              dont_publish : true,
               category : 'review-point',
               text : 'Remove `throw new NotImplementedException...`.  It will never be executed'
           },
@@ -1208,7 +1210,7 @@ Let me know if you come across a better answer and I (may just) be prepared to p
               text : 'Have a look at the starred community solutions for some alternative approaches'
           },
           'algorithm-heavy' : {
-              feature : 'Algorithms are Key',
+              feature : 'Algorithms are Key in more complex exercises',
               category : 'discussion-point',
               text : 'These more complex exercises, at least on the C# track, are less about language idioms and library features than algorithms where abstract reasoning and CS technique are central.  A long-winded way of saying that I don\'t have much to say.  Have a look at the starred community solutions for some elegant approaches. '
           },
@@ -1287,7 +1289,9 @@ namespace MyTests
     }
     
 }
-\`\`\`              
+\`\`\`      
+
+Note that normally it is not good practice to include tests in the same files as functional code.        
               `
           },    // extra-tests
           Convert_field_to_const : {
@@ -1390,7 +1394,7 @@ Usually, the \`Main\` method is added to help debug the code. However, a better 
           use_private_visibility : {
               feature : 'Members are public without good reason',
               category : 'auto-mentor',
-              text : `As the \`%{name}\` field is only used within its class, its visibility can, and almost always should, be set to \`private\`.`
+              text : `As the \`%{name}\` field is only used within its class, its visibility can, and almost always should, be set to \`private\`. Public declaration increases the amount of noise in the API and constrains maintainers who may want to change the implementation.`
           },
           use_string_interpolation_not_string_concatenation : {
               feature : 'Submission contains string concatenation',
