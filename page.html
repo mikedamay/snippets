@@ -19,8 +19,9 @@
 </head>
 <body>
 <script type="module">
-    import {showText} from "./main.js";
+    import {showText, buildHtml} from "./main.js";
     window.showText = showText;
+    window.buildHtml = buildHtml;
     import {copyToClipboard} from "./clipboard.js"
     window.copyToClipboard = copyToClipboard;
     import {layoutFeatures} from "./featureLayout.js";
@@ -97,7 +98,8 @@
 
     <form>
         <input type="button" class="btn btn-primary btn-default" name="maintenanceMode" value="Copy to Clipboard"
-          onclick="copyToClipboard(document.getElementById('commentText'));"/>
+          onclick="buildHtml();"/>
+<!--          onclick="copyToClipboard(document.getElementById('commentText'));"/>-->
     </form>
 
     <h2>Mentor Comments</h2>
@@ -126,13 +128,6 @@ Mentor Preferences (choices I would make, and why):
 {{end-point}}
 
             </textarea>
-<!--
-            <div>Rerview Points:</div>
-            <div id="review-point"></div>
-            <div>Discussion Points:</div>
-            <div id="discussion-point"></div>
-            <div id="end-point"></div>
--->
         </div>
     </div>
 

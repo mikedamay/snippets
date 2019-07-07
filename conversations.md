@@ -763,3 +763,14 @@ public static class ParallelLetterFrequency
     }
 }
 ```
+
+## Truth Table (ref: Leap)
+year    ((year % 4 == 0 && year % 100 == 0 && year % 400 == 0) || year % 4 == 0 && year % 100 != 0);
+2019     (false         && false           && false)           || false         && true
+2020     (true          && false           && false)           || true          && true
+2100     (true          && true            && false)           || true          && false
+2400     (true          && true            && true)            || true          && false
+
+Remember that `true && false` always evaluates to `false` and that `true || false` always evaluates to `true`.
+
+Notice that `year % 100 == 0` and `year % 100 != 0` always produce the opposite results and that the two instances of `year % 4 == 0` always evaluate to the same result.  Try reorganising the expression to eliminate these duplications.

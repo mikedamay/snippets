@@ -150,6 +150,32 @@ function getCommentCateogries(commentTemplate) {
     return categories;
 }
 
+/**
+ *
+ * @param The fuill mentorComments.js contents - all the snippets
+ * @returns Selected snippets converted to HTML
+ */
+export function buildHtml() {
+    const result = "<HTML>\n<BODY>\n<TABLE>\n{{table-contents}}\n</TABLE>\n</BODY>\n</HTML>";
+    const commentTextEl = document.getElementById(COMMENT_TEXT_ID);
+    let itemsHtml = "";
+    const snippets = text.exercises['xxx-general']
+    for (var snippet in snippets) {
+        if (snippets.hasOwnProperty(snippet)) {
+            const tpl = "<TR><TD>{{snippet-id}}</TD><TD><TABLE><TR><TD>{{feature}}</TD></TR><TR><TD>{{comment}}</TD></TR></TABLE></TD></TR>\n";
+            const line = tpl.replace( "{{feature}}", snippets[snippet].feature)
+                .replace("{{snippet-id}}", snippet)
+                .replace("{{comment}}", snippets[snippet].text);
+            itemsHtml += line
+        }
+    }
+    commentTextEl.value = result.replace("{{table-contents}}", itemsHtml);
+}
+
+
+
+
+
 function assert(assertion, message) {
     if (!assertion) {
         throw( message);
