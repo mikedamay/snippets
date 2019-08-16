@@ -421,7 +421,7 @@ Zip is more LINQy than the other approach as it can work entirely with \`IEnumer
               feature : 'Suggest that the dictionary should be read only',
               category : 'mentor-preference',
               text : `
-You should consider returning a read only version 
+You could consider returning a read only version 
 of the dictionary to the caller.  This will guide 
 maintainers in how you expect the dictionary to be used.
              `
@@ -524,6 +524,15 @@ is worth considering.
               feature : 'Recursive Solution Problematic',
               category : 'review-point',
               text : 'A recursive solution will probably cause a stack overflow exception for a large number of robots.  This is best avoided.\n'
+          },
+          'using-100' : {
+              feature : 'The number component starts at 100',
+              category : 'review-point',
+              text : `Using \`100\` as the starting number means that you reduce the number of possible names by 2,600.  Have a look at some approaches that will help with this:
+* \`Int32.ToString()\` which takes a format string.
+* or better: \`string.Format()\`
+* or still better: string interpolation
+`
           },
           'flawed-requirements' : {
               feature : 'Address the flawed requirements',
@@ -1308,6 +1317,11 @@ Note that normally it is not good practice to include tests in the same files as
               feature : 'A value has been assigned to a variable which has been immediately returned',
               category : 'auto-mentor',
               text : `Consider returning the value directly instead of storing it into an intermediate value and then returning it.`
+          },
+          no_writeline : {
+              feature : 'WriteLine does not produce any output',
+              category : 'discussion-point',
+              text : `The failure of \`WriteLine\` to produce output is a characteristic of xunit, the testing library, not the IDE.  xunit runs tests by default in parallel and suppresses calls to \`WriteLine\` as they are not thread safe.  Actually, tests are run in parallel only if there is more than one test module but it does not add complexity by handling the non-parallel case differently.  [https://xunit.net/docs/capturing-output](https://xunit.net/docs/capturing-output)`
           },
           do_not_use_nested_if_statement : {
               feature : 'Deeply nested if statements',
