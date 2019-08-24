@@ -774,3 +774,20 @@ year    ((year % 4 == 0 && year % 100 == 0 && year % 400 == 0) || year % 4 == 0 
 Remember that `true && false` always evaluates to `false` and that `true || false` always evaluates to `true`.
 
 Notice that `year % 100 == 0` and `year % 100 != 0` always produce the opposite results and that the two instances of `year % 4 == 0` always evaluate to the same result.  Try reorganising the expression to eliminate these duplications.
+
+## Games Programmong (ref: High Scores)
+> I've tried to avoid using LINQ as I mostly dabble in Unity
+
+Excellent counterpoint to the Exercism csharp track orthodoxy (or perhaps it's just _my_ orthodoxy).  We're obviously sensitive about the trade-offs between performance and other factors such as expressiveness but the default position tends to be the "don't optimise prematurely".  From what you say this sounds inappropriate from games programming and presumably will become tedious for a student with a games orientation.
+
+> Would declaring scores and sortedScores readonly fix this?
+
+Declaring fields `readonly` does not prevent the collections to which they refer from being modified.  The `readonly` modifier simply prevents a new collection from being assigned to the fields.  However, it is a good idea to make fields `readonly` where possible as this helps in groking the code.
+
+Where performance is not an issue you can consider making the collections `IEnumerable<int>` instead of a list.  This works well for the constructor but it would require a trivial change to the signature for `Scores`.
+
+If you need both performance and safety then you may have to use `ReadOnlyCollection<int>` rather than a list but this would require changes to the tests as well as the implementation.
+
+I will discuss this with fellow mentors.  If your focus is games programming then there is little point in going to far down the road of LINQ and other practices (which I would normally encourage) where caching and general mutability are shunned.
+
+I would be interested in any insights you have on this.
