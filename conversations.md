@@ -791,3 +791,22 @@ If you need both performance and safety then you may have to use `ReadOnlyCollec
 I will discuss this with fellow mentors.  If your focus is games programming then there is little point in going to far down the road of LINQ and other practices (which I would normally encourage) where caching and general mutability are shunned.
 
 I would be interested in any insights you have on this.
+
+## LINQ solutions (ref: Pangram)
+
+In general, a LINQ approach is safer to maintain, assuming the coder is familiar with LINQ and can come to terms with often convoluted or elliptical constructions.  Because there is no mutable state involved there is less for the maintainer to keep track of and therefore less to forget.  It seems to have the property of functional languages like Haskell of Elm in that if it compiles there is a better than even chance it will behave correctly.
+
+In the absence of any non-functional requirements and without any coding standards I would favour a LINQ approach.  However, I find the top starred community solution which combines `IEnumerable.All` with `string.Contains` the most expressive LINQ.
+
+## Efficiency vs. Clarity (ref: Pangram)
+
+> Should I put efficiency over clarity?
+
+The answer to almost all interesting software engineering problems is "it depends".  There are always trade-offs.  Is performance is important.
+
+So how does one judge?
+
+1) Is there an accepted efficient way of implementing some algorithm, e.g. you should always use `StringBuilder` rather than string concatenation (unless you have some very obscure requirement) irrespective of the importance of performance.
+2) You should favour clarity until performance looks as if it will be an issue.  In the future your code may be read many, many times whereas platforms it runs on are more likely to get faster than slower. 
+3) When coding an application (rather than a general-purpose library) you can request/make up non-functional requirements indicating necessary performance.  By monitoring performance during development you can decide as you do along what is the appropriate trade-off.   
+4) Probably the most difficult circumstances in which to make a decision are when developing a general-purpose library where you don't know how it will be used.  Perhaps you can look at the speed of similar or comparable libraries and make sure is in the same ball park.

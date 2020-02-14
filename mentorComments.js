@@ -672,8 +672,7 @@ int Mod(double x, double y) => (int)(((x % y) + y) % y);
               text : `
 When it comes to testing equality you're expected to follow a particular pattern (similar to the notorious one in Java).
 
-if you provide an \`Equals()\` method you are expected as well as providing a short cut specifically for objects of this type
-(protected version below) to honour \`object\`'s contract for \`Equals()\`.
+if you provide an \`Equals()\` method you are expected as well to provide another \`Equals()\` overload, a short cut specifically for objects of this type (see protected overload in the sample code below) to honour \`System.object\`'s contract for \`Equals()\`.
 
 My IDE (Rider) generates the following code.              
 \`\`\`
@@ -701,10 +700,12 @@ public override int GetHashCode()
  2. The first ReferenceEquals is null protection.
  3. The second ReferenceEquals is for performance
  4. \`protected...Equals(...)\` is for performance
- 5. GetHashCode() and the need for consistency with Equals are a bit more hazy. The hashcode is used, in particular, by dictionaries and sets and the bumping with a random number apparently spreads out the distribution in whatever tree structure they use. I suspect 5 moinutes of introspection or web search would reveal the importance of equality in this mix.
+ 5. GetHashCode() and the need for consistency with Equals are a bit more hazy. The hashcode is used, in particular, by dictionaries and sets and the bumping with a random number apparently spreads out the distribution in whatever tree structure they use. I suspect 5 minutes of introspection or web search would reveal the importance of equality in this mix.  If you think that the absence of a dictionary let's you off this requirement then you are setting future maintainers up for failure as they will probably expect a hash code accompanying the \`Equals()\`.
 
+A final "nasty" here is \`hours\` and \`minutes\` must be immutable as they are used in the hashcode so the fields need to be \`readonly\`
  
 Let me know if you have any points to discuss on this. 
+              
               `
           },
 
@@ -810,7 +811,7 @@ The following may be useful:
           'suggest-linq': {
               feature: 'Suggest LINQ',
               category: 'discussion-point',
-              text: 'You might want to think about a LINQ based solution (or you might not see the point in which case let me know).  Use of `Except()` or `Count()` indicate two different ways to approach this.'
+              text: 'You might want to think about a LINQ based solution (or you might not see the point in which case let me know). `IEnumerable.All` plus `string.Contains` is one approach or `IEnumerable.Except` plus `IEnumerable.Any`.  There are some other approaches.'
           },
           'unicode' : {
               feature: 'Take a consistent position on unicode',
@@ -830,7 +831,8 @@ The following may be useful:
           'literal-ints' : {
               feature : 'don\'t use ASCII codes',
               category : 'discussion-point',
-              text : 'Rather than expressing letters with their ascii value you can use their literal value, i.e. `Next(\'A\', \'Z\' + 1)`'
+              text : 'Rather than expressing letters with their ascii value you can use their literal value, e.g.. \n' +
+                  '`for ( int asciinum = \'A\'; asciinum <= \'Z\' ; asciinum  += 1)`\n'
           },
           'linq-alternatives' : {
               feature: 'LINQ alternatives',
@@ -838,12 +840,19 @@ The following may be useful:
               text: `
 Some possible LINQ approaches are:
 * \`IEnumerable.Except()\` plus \`IEnumerable.Any()\`
-* \`IEnumerable.Any()\` plus \`string.Contains()()\`
+* \`IEnumerable.All()\` plus \`string.Contains()()\`
 * \`IEnumerable.GroupBy()\`
 * \`IEnumerable.Distinct()\` plus \`IEnumerable.Count()\`
 
               `
           },
+          'immutable-approach' : {
+              feature: 'Immutable Approach',
+              category: 'mentor-preference',
+              text: `
+You are using a mutable array - xxxxx.  This makes reasoning about the code more difficult for the maintainer.  They have to keep track of the changing state of the array.  In general (I appreciate the current case is trivial so it does not matter other than for coding discipline) it is beneficial to investigate immutable approaches.  In this case you could try driving the loop from an array of alphabetic ascii characters or you could consider a LINQ approach - for which see the top starred community solution. `
+          },
+
       },
       'perfect-numbers' : {
           'square-over-2' : {
