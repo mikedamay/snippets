@@ -794,10 +794,35 @@ The following may be useful:
           },
       },
       'isogram' : {
+          'isletter' : {
+              feature: 'Char.IsLetter',
+              category: 'discussion-point',
+              text: '`Char.IsLetter` is worth considering'
+          },
           'suggest-linq' : {
               feature: 'Suggest LINQ',
               category: 'discussion-point',
               text: 'You might want to think about a LINQ based solution (or you might not see the point in which case let me know).  Use of `Distinct()` or `GroupBy()` indicate two different ways to approach this.'
+          },
+          'immutable' : {
+              feature: 'Favour Immutability',
+              category: 'mentor-preference',
+              text: 'Give a choice I favour immutable solutions (let me know if you are not comfortable with this concept).  These present less work to the maintainer when reasoning about the code (they don\'t have to keep track of a changing variable).'
+          },
+          'group-by' : {
+              feature: 'Group By',
+              category: 'discussion-point',
+              text: 'An alternative LINQ approach uses `GroupBy`'
+          },
+          'distinct' : {
+              feature: 'Distinct',
+              category: 'discussion-point',
+              text: 'An alternative LINQ approach uses `Distinct`'
+          },
+          'hashset' : {
+              feature: 'HashSet',
+              category: 'discussion-point',
+              text: '`HashSet` is the best sort of collection for accumulating data to test for uniqueness.  It is purpose built and efficient'
           },
       },
       'meetup' : {
