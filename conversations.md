@@ -810,3 +810,49 @@ So how does one judge?
 2) You should favour clarity until performance looks as if it will be an issue.  In the future your code may be read many, many times whereas platforms it runs on are more likely to get faster than slower. 
 3) When coding an application (rather than a general-purpose library) you can request/make up non-functional requirements indicating necessary performance.  By monitoring performance during development you can decide as you do along what is the appropriate trade-off.   
 4) Probably the most difficult circumstances in which to make a decision are when developing a general-purpose library where you don't know how it will be used.  Perhaps you can look at the speed of similar or comparable libraries and make sure is in the same ball park.
+
+## Unicode Surrogate Problems (ref: ReverseString)
+
+> The tricky part is that many unicode characters take up more than 1 byte.
+
+What fun!  The problem for .NET is that a few characters such as the one that you chose take up more than 2 bytes.  Internally .NET uses UTF 16 (2 bytes) for encoding.  This is the first time in 20ish years of coding C# that I have come across the sort of problem you have so splendidly raised.  Normally we assume a string can be safely broken up into chars without our having to think about it.  
+
+Where a unicode code point is greater than 0xffff surrogates have to be used when encoding in UTF16.  The first character contains the low surrogate and a second character contains the high surrogate.  Other parts of the system are able to stick them together to produce smiley faces etc.
+
+Whilst your approach is effective it is a little jarring for the seasoned C# coder. I kind of think its overkill to have a stack.  A more performant approach given the likely infrequency of the problem is just to test for the presence of surrogates - somethiong like this (where `sbOut` is a `StringBuilder`):
+```
+sbOut.Append(input[jj]);
+if (Char.IsHighSurrogate(input[jj]))
+{
+	(sbOut[ii], sbOut[ii - 1]) = (sbOut[ii - 1], sbOut[ii]);
+}
+```
+
+You've rather undermined my faith in .NET strings.  I don't care that the occurrence of surrogates is a remote possibility or that the docs probably go on about using library routines to manipulate strings - the possibility of producing unsafe code means that using strings with LINQ (which is generally a treat) is not a risky proposition.
+
+https://exercism.io/mentor/solutions/5ac2d9b0435e4604ac3133a4dddbbb93?iteration_idx=2#discussion-post-594839
+
+## Performane (ref: Hamming)
+> is it a matter of always measuring your optionswith the system's StopWatch()
+
+I generally have to experiment to find out what is non-performant.  I ran 3 experiments in this case.  I usually assume LIMQ will be slower but it often surprises me by being better than I would have predicted.  When optimising code you are generally advised not to rely on intuition.  In a more large scale situation (not these small programs) you would generally consider using a profiler.
+
+Having said all that there are some rules of thumb (I recently did a bit of Haskell and was at a complete loss about performance so I feel your pain).
+
+* Code involving object allocation (`new`) is likely to be slower than code that avoids it.
+* Use `Stringbuilder` when outputting strings
+* Reflection is slow
+* Anything involving external resoures e.g. writing to the console will be slow conpared to string and integer manipulation or even memory allocations.
+* It's worth considering parallel execution but I always test this explicitly 
+
+## Unicode String Reversal (ref: reverse-string)
+
+https://qntm.org/trick
+
+You can't. The Unicode standard does not have a concept of string reversal.
+
+There are numerous semi-obvious ways in which a programmer could rapidly/spontaneously define "string reversal", but all of them run into serious problems when presented with arbitrary Unicode strings which may contain non-ASCII characters, combining characters, ligatures, joined "words", bidirectional text in multiple languages, surrogate pairs and so on. As the problem becomes more complex, we discover that defining reversal on an arbitrary Unicode string in a meaningful, practical way is, though probably not completely impossible, extremely difficult. The algorithm we would eventually define would be complex and highly non-obvious, taking months of work to create. Additionally, it would have to be created by the same sort of highly informed language specialists who came up with Unicode's character-combining, normalization or bidirectionality algorithms — namely, the Unicode Consortium. And then, suitable metadata might need to be added to all 100,000+ Unicode characters to facilitate the algorithm.
+
+This has not been done, because there is no genuine real-world need for such a thing. The algorithm doesn't exist. You can't reverse a Unicode string.
+
+A corollary is that Unicode also has no concept of palindromes (strings which read the same after being "reversed"). When encountering programming questions relating to palindromes, it's important to ascertain exactly what a "string" is considered to be, and what "reversed" is considered to mean.

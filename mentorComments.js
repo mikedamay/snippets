@@ -387,7 +387,7 @@ Have a look at the LINQ methods, \`OrderBy(Descending(), Take(), Last()\` etc.
 There are two obvious LINQ approaches - \`IEnumerable.Zip()\` 
 and one based around \`IEnumerble.Select()\` (or one that accesses
 the second strand by index in some other way).  The "Zip" approach takes
-twice as long as the indexed approach (but less LINQy).  A typical
+twice as long as the indexed approach.  A typical
 non-LINQ approach is about 3 times the speed of "Zip".  
 
 Zip is more LINQy than the other approach as it can work entirely with \`IEnumerable\`.  No indexer required.       
@@ -566,7 +566,7 @@ enum Allergen
 ...
 }
 \`\`\`
-If you add the \`[Flags]\` attribute you can then use \`Enum.HasFlag()\` and \`Enum.GetValues()\` to implement the methods.
+You can then use \`Enum.HasFlag()\` and \`Enum.GetValues()\` to implement the methods.
               `
           },
           'get-values' : {
@@ -583,12 +583,12 @@ If you add the \`[Flags]\` attribute you can then use \`Enum.HasFlag()\` and \`E
       'grade-school' : {
           'simple-solution' : {
               feature : 'Simple LINQ solution',
-              category : 'discussion-point',
-              text : 'There are many ways to address this problem.  If you believe that Read performance is not an issue then the code can be radically simplified by having a list of name+grade and using LINQ routines to order and report on that.'
+              category : 'mentor-preference',
+              text : 'There are many ways to address this problem.  If you believe that Read performance is not an issue then the code can be simplified by having a list of name+grade and using LINQ routines to order and report on that.'
           },
           'no-dictionaries' : {
               feature : 'Avoid dictionary of list',
-              category : 'discussion-point',
+              category : 'mentor-preference',
               text : 'Arguably a simpler solution would be to maintain a single list of students (where each student was tuple or an object containing name and grade).  You could then use `OrderBy()` and `Where()` to sort and filter at the point of reporting.  Does this approach appeal to you, at all?'
           },
           'list-of-tuples' : {
@@ -1015,10 +1015,28 @@ Assert.Equal(1_999_999_999, SumOfMultiples.Sum(new[] { 1_999_999_999 }, 2_000_00
           'how-to-fix-perf' : {
               feature : 'How to fix performance',
               category : 'discussion-point',
-              test : `
+              text : `
 The trick is to examine the inputs one at a time.  For each input you can see which numbers between 0 and \`max\` are multiples of that input.  But you don't have to check every number between 0 and \`max\` only those that are multiples of the input!  
 
-You will have to find a way that avoids integer overflow.              `
+You will have to find a way that avoids integer overflow.              
+`
+          },
+          'checked' : {
+              feature : 'Checked',
+              category : 'discussion-point',
+              text : `
+but when talking about overflow you should be aware of the keyword [\`checked\`](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/checked).
+`
+          },
+          'unsatisfactory' : {
+              feature : 'Unsatisfactory',
+              category : 'discussion-point',
+              text : `
+The exercise is slightly unsatisfactory in that a 
+performant bulletproof solution (i.e. one that can handle all combinations of inputs) is not possible 
+without changing the signature of \`Sum\`to return a 
+long and a radical change to the algorithm to pre-
+calculate where results would be duplicated.`
           },
       },
       'xxx-general' : {
