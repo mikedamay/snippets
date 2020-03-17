@@ -187,7 +187,7 @@ Two approaches that, whilst being adequate, hide the relationship between color 
 Examples of these 4 contrasting approaches are shown below:
 \`\`\`
 // Explicit mappings
-    static IReadOnlyDictionary<string, int> colorMap = new Dictionary<string, int>{
+    static readonly IReadOnlyDictionary<string, int> colorMap = new Dictionary<string, int>{
         {"black", 0},        
         {"brown",1},
         {"red", 2} // ...
@@ -793,6 +793,18 @@ The following may be useful:
               text: 'The bitwise operator right shift \`<<\` is a performant approach to powers of 2'
           },
       },
+      'isbn-verification' : {
+          'alternatives' : {
+              feature: 'Alternatives',
+              category: 'discussion-point',
+              text: `
+Some alternatives to consider:
+- Validate in one shot with a complex regex
+- use \`string.Replace\` to remove '-'
+- use \`Enumerable.Range\` instead of using loops
+              `
+          },
+      },
       'isogram' : {
           'isletter' : {
               feature: 'Char.IsLetter',
@@ -807,7 +819,7 @@ The following may be useful:
           'immutable' : {
               feature: 'Favour Immutability',
               category: 'mentor-preference',
-              text: 'Give a choice I favour immutable solutions (let me know if you are not comfortable with this concept).  These present less work to the maintainer when reasoning about the code (they don\'t have to keep track of a changing variable).'
+              text: 'Given a choice I favour immutable solutions (let me know if you are not comfortable with this concept).  These present less work to the maintainer when reasoning about the code (they don\'t have to keep track of a changing variable).'
           },
           'group-by' : {
               feature: 'Group By',
@@ -910,6 +922,11 @@ For the anthems \`Parallel.Foreach\` together with a \`ConcurrentDictionary\` co
               feature : 'Regex',
               category : 'discussion-point',
               text : 'Life can be made simple with a regex string  `@"^1?([2-9]\\d\\d[2-9]\\d{6})$"` if you think that is maintainable'
+          },
+          'fun' : {
+              feature : 'Fun with LINQ or Regex',
+              category : 'discussion-point',
+              text : 'You can solve this problem with two statements using regex or LINQ if either of those sound interesting.'
           },
       },
       'pythagorean-triplets' : {

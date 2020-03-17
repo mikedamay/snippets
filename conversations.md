@@ -856,3 +856,77 @@ There are numerous semi-obvious ways in which a programmer could rapidly/spontan
 This has not been done, because there is no genuine real-world need for such a thing. The algorithm doesn't exist. You can't reverse a Unicode string.
 
 A corollary is that Unicode also has no concept of palindromes (strings which read the same after being "reversed"). When encountering programming questions relating to palindromes, it's important to ascertain exactly what a "string" is considered to be, and what "reversed" is considered to mean.
+
+## `const` (ref: resistor-color)
+const](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/const)
+
+[const vs. readonly static ](https://devblogs.microsoft.com/csharpfaq/what-is-the-difference-between-const-and-static-readonly/)
+
+`const`ness is orthogonal to access modifiers (public, private etc).  Oranges and lemons.
+
+A `const` value cannot be changed at run-time.  There is little functional difference between a `const` and a `readonly` variable for a primitive type, an expression containing only primitive types (.e.g added together) or a null reference.  
+- The `readonly`  variable can be assigned to in the constructor whereas the `const` value is set forever by the compiler.  
+- A `const` can be used as a parameter's default value whereas a `readonly` variable cannot.
+- A `readonly` field can be initialised to refer to a non-primitive type whereas a `const` cannot. 
+- You could change the `readonly` variable using reflection if you wanted to.  
+- There may be some minimal performance difference but I think you would have to experiment in any particular case to see whether `const` had an advantage.
+
+My rule is to use a `const` for an initialised primitive field unless it needs to be assigned in the constructor in which case I would use a `const`.  Favouring `const` reduces the cognitive load for the maintainer.  They know that there is only one possible value for the `const` identifier.
+
+
+[access modifiers](https://docs.microsoft.com/en-gb/dotnet/csharp/programming-guide/classes-and-structs/access-modifiers)
+
+
+## Reflections on Reflection (ref: space-age)
+
+> In other languages I might use reflection to dynamically create methods on SpaceAge .... Is this a sensible pattern in C#?
+
+No.  Reflection is available but is not generally used for application code (which I suppose this is a placeholder for).  You will find it in frameworks, such as ASP.NET, tools such as IDEs and some libraries.  Why not?  It is not very performant and it defeats all the static analysis that is such a benefit of a strongly typed system like C#.
+
+## Numeric Overflows (ref: Grains)
+> Would love to read some articles about the differences between data types
+
+Try [http://www.blackwasp.co.uk/CSharpNumericDataTypes.aspx](http://www.blackwasp.co.uk/CSharpNumericDataTypes.aspx) - let me know if it suits your purpose and I will add to our resources
+
+> why a double cast to ulong resulted in an overflow and decimal cast to ulong works fine
+
+In both depends on the contents of the source value.  If the source value lies outside the range of the destination variable then there will be an overflow.  This may be too many digits or the source may be negative and the destination an unsigned variable.
+
+Have a look at the `checked` keyword for a mechanism to stop such an overflow being silently swallowed.
+        
+## Immutability and The Consequences of Bypassing an API (ref: high-scores)
+> I don't understand how class's explicit API can be by-passed
+
+Imagine you have a code base of 250,000 lines of code for a game.  As the lead developer you create a routine to instantiate the high scores object, populate it with the current stars of your game and make it avaiable for use throughout the codebase for display or whatever.  
+
+The new developer on your team comes across this object and thinks "ah - I'll borrow that and change the scores for some purpose of my own".  They get hold of the list of scores by calling `Scores()` and repopulated it with their own set of values.
+
+The upshot is the wrong scores start showing up.  As the lead developer you put a break point in your high scores instantiation routine because you know that's the only place a high scores object can be created.  The break point is never activated (because the new dev. bypassed the normal approach to populating it).  
+
+Disaster.  Best avoided by making a bullet proof API that cannot be circumvented.
+
+I'm happy to keep discussing this.    
+
+## Read-only Dictionaries (ref: resistor-color)
+> Why should one use an IReadOnlyDictionary rather than readonly Dictionary in your suggestion, or ImmutableDictionary for that matter?
+
+- `readonly` My code should include this modifier.  `readonly` protects the field value but not what it refers to.  It prevents a completely different dictionary being assigned to the field but the coder can happily continue to add items to and remove them from the dictionary.
+- `IReadOnlyDictionary` is a strong hint to a maintainer that items cannot be added to or removed from the dictionary.  A variable of this type has no methods for adding or removing.  In order to make such a change the coder will have to downcast to a `Dctionary`.
+- `ReadOnlyDictionary` will prevent a coder from adding items to or removing items from a dictionary (casting will be no help).  It must be initialised in full when it is created.
+- `ImmutableDictionary`. Any changes to an immutable dictionary preoduce a completely new immutable dictionary.  If code takes a reference to an immutable dictionary it is guaranteed the keys and references within the dictionary will not change.  My experience with .NET Core 2 was that this was not very performant (don't know about .NET Core 3).
+
+In none of these cases are the contents of a reference object which is a value in a dictionary protected.  If I have a dictionary mapping names to Person objects then no matter if it is a `ReadOnlyDictionary` or `ImmutableDictionary` I can change the contents of the Person (asuuming non-read-only properties, methods or fields are exposed).
+
+I typically use ImmutableDictionary when I want extremely functionally flavoured code (really only as an experiment given the performance penalty).
+
+I typically use IReadOnlyDictionary to indicate that the contents of the dictionary are set for its lifetime.  If some coder wants to break things by down casting then I can only wish them ill.
+
+I never use `ReadOnlyDictionary` as it seems a bit messed up.  It supports the `IDictionary` interface but not `IReadOnlyDictionary` and requires to the user to call `IsReadOnly`.  Either I have misunderstood or this is weird.
+
+## Localization (ref: resistor-color)
+Perhaps my use of the term "localization" was a bit grandiose.  I was just trying to give an example of the kind of way software requirements can change.  For example suppose we wanted to allow french terms as well as english we could have a dictionary of { "black", 0}, {"noir", 0}...
+
+Of course, [globalization and localization](https://docs.microsoft.com/en-us/dotnet/standard/globalization-localization/) are a big issue in .NET involving Culture, CultureInfo, number and date formatting, resource files etc.  Logistically it's rather difficult to illustrate these issues on the Exercism platform.  
+
+Note that the heavy lifting of translated text tends to be facilitated by frameworks such as [ASP.NET](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/localization?view=aspnetcore-3.1)
+
