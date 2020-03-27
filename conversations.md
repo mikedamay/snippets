@@ -930,3 +930,21 @@ Of course, [globalization and localization](https://docs.microsoft.com/en-us/dot
 
 Note that the heavy lifting of translated text tends to be facilitated by frameworks such as [ASP.NET](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/localization?view=aspnetcore-3.1)
 
+## Justification for Constrained Objects (ref: robot-name)
+You may want to consider how it helps the maintainer for the behaviour of objects to be constrained as much as is compatible with functionality. There is less for the maintainer to think about, less for them to check on when reasoning about the code.
+
+## When to Use Statics (ref: RobotName)
+You must use `static` for `listRobotName` because all instances of `Robot` must register their names with the same hash set and because it is static there is only one hash set (listRobotName) in the program.
+
+You may use `static` for `rd`.  Functionally it makes no difference whether all instances share a `Random` object or if each instance has its own private copy.  However, it often better style (and I would say so in this case) to make an object `static` if that is compatible with its functionality.  There is a slight performance penalty for the non-static of the memory allocation.
+
+One reason to avoid wide use of statics is where multi-threading is in use.  In this case you would have create a static concurrent hash set for the names and give each robot its own copy of `Random`.
+
+## Operations on Indexer Properties (ref: nucleotide-count)
+> `dnaDictionary[array[i]] = occurrence + 1`
+
+`dnaDictionary[array[i]]++` will work.
+
+you would have thought that you would have to do it your way.  dict[x] is a primitive value (an lhs if I recall my C).  How can incrementing this expression have an effect on the contents of a dictionary.
+
+Apparently the C# compiler takes a different view when it comes to indexer properties.  See [here](https://stackoverflow.com/questions/28269825/in-c-why-does-dictionary0-work).  I struggle to be entirely comfortable with this.  I suppose if I accept that this is how it works for normal properties (which I do) then I suppose having the precise same mechanism for indexer properties must be the only way to go.

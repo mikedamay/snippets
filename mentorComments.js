@@ -384,8 +384,8 @@ Have a look at the LINQ methods, \`OrderBy(Descending(), Take(), Last()\` etc.
               feature : 'Performance Comparison',
               category : 'discussion-point',
               text : `
-There are two obvious LINQ approaches - \`IEnumerable.Zip()\` 
-and one based around \`IEnumerble.Select()\` (or one that accesses
+There are two obvious LINQ approaches - \`Enumerable.Zip()\` 
+and one based around \`Enumerable.Select()\` (or one that accesses
 the second strand by index in some other way).  The "Zip" approach takes
 twice as long as the indexed approach.  A typical
 non-LINQ approach is about 3 times the speed of "Zip".  
@@ -397,6 +397,25 @@ Zip is more LINQy than the other approach as it can work entirely with \`IEnumer
               feature : 'LINQ is an option',
               category : 'discussion-point',
               text : 'I\'m happy to discus a LINQ based solution with you if that is of interest.'
+          },
+          'linq-approaches' : {
+              feature : 'LINQ approaches',
+              category : 'discussion-point',
+              text : `
+There are two obvious LINQ approaches - \`Enumerable.Zip()\` 
+and one based around \`Enumerable.Select()\` (or one that accesses
+the second strand by index in some other way).  
+
+The above approaches are a little more complicated than a simple \`collectio.Where(..).Select(...)\` structure which is the basis of LINQ.  If you've used LINQ at all then the \`Enumerable.Select\` approach may be easiest to navigate.  Simply remember that there is an overload of \`Select\` that takes two parameters where the second is an index into the source collection.
+
+If you haven't used LINQ before then I imagine both the \`Enumerable.Select\` and \`Enumerable.Zip\` approaches will be equally challenging.  You may in fact be better off starting with a more straight forward exercise such as high-scores.
+
+The "Zip" approach takes
+twice as long as the indexed approach.  A typical
+non-LINQ approach is about 3 times the speed of "Zip".  
+
+Zip is more LINQy than the other approach as it can work entirely with \`IEnumerable\`.  No indexer required.              
+`
           },
       },
       'circular-buffer' : {
@@ -650,6 +669,11 @@ int Mod(double x, double y) => (int)(((x % y) + y) % y);
               feature : 'Struct',
               category : 'discussion-point',
               text : 'a lot of problems with `Equals()` are solved by making `Clock` a `struct` as equality testing is built in for a simple object like this'
+          },
+          'read-only' : {
+              feature : 'Read-Only',
+              category : 'review-point',
+              text : 'This is a case where it is particularly important to mark fields as `readonly`.  This is generally good discipline but where fields are being used to make a hash code (as they are indirectly, here) it is vital that they cannot change for a given object (otherwise you would lose track of its position in a dictionary or hash set).  There is of course there is no way to stop a future maintainer from messing up the code but you should do your best to remind them of constraints where possible.\n'
           },
           'interpolation-format' : {
               feature : 'Format within Interpolation',
@@ -1054,6 +1078,55 @@ performant bulletproof solution (i.e. one that can handle all combinations of in
 without changing the signature of \`Sum\`to return a 
 long and a radical change to the algorithm to pre-
 calculate where results would be duplicated.`
+          },
+      },
+      'strain' : {
+          'bcl' : {
+              feature : '.NET Base Class Library',
+              category : 'review-point',
+              text : `
+Have a look at the.NET Class Library source (see links below).  There's a bunch of null checking which I don't think we need to bother with for our purposes.  There is some interesting  optimisation to avoid executing the predicate once all items have been skipped/taken.  This is definitely a case if you are MS where you have to worry about performance.
+
+Let me know if you have queries about the source.
+
+see [skip](https://referencesource.microsoft.com/#System.Core/System/Linq/Enumerable.cs,90ccdbd47b57182e) line 647
+
+see [Take](https://referencesource.microsoft.com/#System.Core/System/Linq/Enumerable.cs,28936f7582207b50) line 605              `
+          },
+          'performance-teaser' : {
+              feature: 'Performance Teaser',
+              category: 'review-point',
+              text: `
+I am happy to sign off but you might want to have a go at optimising this assuming in each case that the predicate is an expensive operation I will review your approach.  This sort of library routine is the sort of case where performance is paramount.          },
+`
+          },
+      },
+      'wordy' : {
+          'regex' : {
+              feature: 'Regex',
+              category: 'discussion-point',
+              text: 'Regular expressions are popular amongst the community solutions'
+          },
+          'dictionary' : {
+              feature: 'Dictionary',
+              category: 'discussion-point',
+              text: 'A dictionary mapping strings captured by regex to lambdas is an elegant approach'
+          },
+
+          'state-machine' : {
+              feature: 'State Machine',
+              category: 'mentor-preference',
+              text: `
+My preference is to use split to break up the input string and then a state machine to parse it and take appropriate actions
+
+A state machine may not be the most readable code but maintaining it is a fairly mechanical
+process once you get your head round what's going on.
+
+I am guided partly by certainty that complex regex would be a maintenance night mare for me
+and the suspicion that it would be similarly challenging for all the biggest brains (and they should be working 
+on some4thing more important, anyway.
+
+              `
           },
       },
       'xxx-general' : {
