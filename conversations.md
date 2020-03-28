@@ -948,3 +948,24 @@ One reason to avoid wide use of statics is where multi-threading is in use.  In 
 you would have thought that you would have to do it your way.  dict[x] is a primitive value (an lhs if I recall my C).  How can incrementing this expression have an effect on the contents of a dictionary.
 
 Apparently the C# compiler takes a different view when it comes to indexer properties.  See [here](https://stackoverflow.com/questions/28269825/in-c-why-does-dictionary0-work).  I struggle to be entirely comfortable with this.  I suppose if I accept that this is how it works for normal properties (which I do) then I suppose having the precise same mechanism for indexer properties must be the only way to go.
+
+## Thoughts on Mentoring (ref: QueenAttack)
+
+> since that would minimize the amount of object creation
+
+For me it is less a matter of performance and more a kind of comfort that as a maintainer I can see what is what - hardly a cogent argument.
+
+> I figure the point of these exercises is more to challenge us to develop efficient and interesting algorithms
+
+That's an interesting take on it.  Perhaps it's my perspective and background as an application programmer in business and productivity tools but I have little to say on algorithms - I don't think I'd be any good at code golf or the euler problems.  My role is to make sure
+
+* that the student is aware of the available .NET tools and language features relevant to their problem
+* that the choices they make support principled programming such as SOLID and DRY
+* that the student is aware of trends such as LINQ, the push towards functional programming and immutability
+* that they are aware of any shibboleths (such as being religious about `StringBuilder`) so that they will fit into a C# shop
+
+I don't know what to say about algorithms - take "grains" if you know that 64! is 0xffffffff (or something like that) then that saves you a deal of processing but to comment on it is very much a case of "giving a man a fish".
+
+Some algorithms are easier to understand than others but I don't know how to push a student towards them - or maybe I'm just to lazy.  
+
+I'm looking forward to you tackling "ZebraPuzzle".  I gave it a go  and it defeated me (I will return).  When I raised it with fellow mentors I was told it was dead easy so presumably I am missing something.
