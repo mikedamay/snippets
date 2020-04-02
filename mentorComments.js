@@ -911,7 +911,7 @@ Some possible LINQ approaches are:
               feature: 'Immutable Approach',
               category: 'mentor-preference',
               text: `
-You are using a mutable array - xxxxx.  This makes reasoning about the code more difficult for the maintainer.  They have to keep track of the changing state of the array.  In general (I appreciate the current case is trivial so it does not matter other than for coding discipline) it is beneficial to investigate immutable approaches.  In this case you could try driving the loop from an array of alphabetic ascii characters or you could consider a LINQ approach - for which see the top starred community solution. `
+You are using a mutable collection - \`xxxxx\`.  This makes reasoning about the code more difficult for the maintainer.  They have to keep track of the changing state of the collection.  In general (I appreciate the current case is trivial so it does not matter other than for coding discipline) it is beneficial to investigate immutable approaches.  In this case you could try driving the loop from an array of alphabetic ascii characters or you could consider a LINQ approach - for which see the top starred community solution. `
           },
 
       },

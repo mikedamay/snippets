@@ -969,3 +969,45 @@ I don't know what to say about algorithms - take "grains" if you know that 64! i
 Some algorithms are easier to understand than others but I don't know how to push a student towards them - or maybe I'm just to lazy.  
 
 I'm looking forward to you tackling "ZebraPuzzle".  I gave it a go  and it defeated me (I will return).  When I raised it with fellow mentors I was told it was dead easy so presumably I am missing something.
+
+## Assert.Equals array vs. IEnumerable of string (ref: grade-school)
+> maybe doesn't actually make an array? it just looks like the array syntax:
+
+It does make an array. 
+```
+var arr = new string[]{"ABC", "DEF", "GHI"};
+```
+has exactly the same effect as doing:
+```
+var arr = new string[3];
+arr[0] = "ABC";
+arr[1] = "DEF";
+arr[2] = "GHI";
+```
+> the test case expects an array:
+
+No.
+```
+Assert.Equal(expected, sut.Roster());
+```
+expects `IEnumerable<string>` for both arguments
+
+In play here is method overloading.
+
+`XUnit.Assert.Equals` has many overloads.  The compiler chooses the one the fits best with the arguments passed in:
+```
+XUnit.Assert.Equals(IEnumerable<string> actual, IEnumerable<string> expected);
+```
+The compiler knows that `string[]` implements `IEnumerable<string>`
+
+If you are using an IDE such as Rider or Visual Studio then hovering over the `Equals` or some other gesture should show you what is going on.  I'm not sure about VSCode.  Otherwise you could have a look at the XUnit project - presumably on github.
+
+## Making Robot Simulator immutable (ref: robot-simulator)
+More generally, I found I had to work quite hard to see what was happening.  That is often the case with complex LINQ.  But this isn't complex.  The problem I had was those mutating fields which are "closed on" by `Advance`, `TurnLeft` and `TurnRight`.  The power of LINQ is to have all the logic and data in the pipeline.  At each stage you can look back at the previous one to see what is coming forward.
+
+I thought you should be able to use `Enumerable.Aggregate` or something to keep to the pipeline format using a previous state (X,Y,Direction) and applying a move function to pass to the next move function.
+
+I couldn't get it to work with Aggregate so I started looking at a custom LINQ extension method.
+
+I have to stop (spent far too long on it) but I will return to this.  If you think this is a useful direction then It would be great if you beat me to a solution that avoided the mutating state fields.
+
