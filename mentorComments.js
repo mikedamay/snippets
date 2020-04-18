@@ -211,6 +211,8 @@ Examples of these 4 contrasting approaches are shown below:
 \`\`\`
 Being explicit can be useful for maintainers groking the code; for example in relating the code to a a design document or a spec.
 
+[This](https://blog.rust-lang.org/2017/03/02/lang-ergonomics.html#implicit-vs-explicit) throws some light on the advantages of being explicit.
+
 Perhaps the winning approach is to start with the enum (with specified values) which is simple and concise and refactor code to introduce the dictionary when requirements added complexity - say localisation was required. 
                             
               `
@@ -812,9 +814,9 @@ The following may be useful:
       },
       'grains' : {
           'right-shift' : {
-              feature: 'right shift',
+              feature: 'left shift',
               category: 'discussion-point',
-              text: 'The bitwise operator right shift \`<<\` is a performant approach to powers of 2'
+              text: 'The bitwise operator left shift \`<<\` is a performant approach to powers of 2'
           },
       },
       'isbn-verification' : {

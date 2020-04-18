@@ -1011,3 +1011,110 @@ I couldn't get it to work with Aggregate so I started looking at a custom LINQ e
 
 I have to stop (spent far too long on it) but I will return to this.  If you think this is a useful direction then It would be great if you beat me to a solution that avoided the mutating state fields.
 
+## Bitwise Operators (ref: triangle)
+Python notes - v. thorough https://github.com/milliorn/Codecademy/tree/master/Learn%20Python%202/17%20-%20INTRODUCTION%20TO%20BITWISE%20OPERATORS
+
+## Why `IEnumerable.GetEnumerator()` is required (ref: simple-linked-list)
+Well.  `SingleLinkedList<T>` implements `IEnumerable<T>` which in turn extends `IEnumerable`.
+`IEnumerable<T>` has the method `GetEnumerator()` which returns `IEnumerator<T>`.
+`IEnumerable` has the method `GetEnumerator()` which returns `IEnumerator`.
+Therefore `SingleLimkedList<T>` needs to implement 2 versions of `GetEnumerator()` one
+of which returns `IEnumerator` and the other `IEnumerator<T>`.  C# cannot have 2 methods
+that match on method name, number and type of arguments but have different return types.
+It would be problematic
+
+
+Luckily, C# has the concept of an
+[explicit interface implementation](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/interfaces/explicit-interface-implementation)
+usually for cases where a class implementts two interfaces
+both of which have a method with the same name but different behaviours.  Let's say you
+model a `GardenCentre` (large store that sells plants, flowers, etc.) class that inherits
+both from `IGarden` and `IBusiness`.
+Both interfaces implement `Grow()`.  In the first interface this means
+causing plants to develop, in the second it means expanding the business.
+You can implement `void IGarden.Grow() {}` and `void IBusiness.Grow() {}`
+as methods of `GardenCentre`.  When you want to call the methods, providing you assign a reference
+to the `GardenCentre` object to a variable of type `IGarden` and call through that variable, you will
+get the appropriate horticultural behaviour and similarly calling `Grow()`
+through a variable of type `IBusiness` will cause the garden centre's premises to expand or whatever.
+Note that you would probably drop the interface qualifier for one of them so that it could
+be called through a reference to `GardenCentre` itself thus if plant development was
+ seen as the more significant activity then`void IGarden.Grow()` would become `void Grow()`.
+
+Back to the exercise: although the behaviour of `GetEnumerator()` is the same for both interfaces
+In this case the explicit interface implementation is used
+to get round the problem of the two versions of the method having different
+return types.
+
+``` csharp
+    IEnumerable<T> GetEnumerator() {}
+    IEnumerator IEnumerable.GetEnumerator() {}
+```
+can live side by side in the same class
+
+`IEnumerable` and `IEnumerator` exist for backward compatibility
+with earlier version of .NET before generics were introduced.  The method
+`IEnumerable.GetEnumerator()` is unlikely to be called but must be present
+to fulfill the contract that the class has made through supporting the
+`IEnumerable` interface.  As it happens, this exercise does call
+`IEnumerable.GetEnumerator()` but its presence would still be required
+even if there was no such call.
+
+All tricky stuff.  I'm happy to answer question, elucidate, etc.
+
+
+## How to Improve Granularity of Tests (ref: grains)
+> What method can be used to performance test solutions to accurately find the most performant solution?
+
+I usually increase (often massively) the size of the input or the number of times a test is executed.  Obviously there is the danger that these changes will skew the results e.g. caching in the lower layers or something else.  
+
+Conventional wisdom is that performance considerations can generally be delayed until a bottleneck is found and then a profiler is applied to pinpoint the cause.  This is a decent rule of thumb although it's dangerous to take it too far for instance:
+1. if some unconventional pattern you adopt is pervasive through the code base and proves a drag on performance then it may not be easy to weed that out and 
+2. Your fellow developers will expect you to choose some well-known optimisations irrespective of some marginal effect on readability - an example is use of `StringBuilder` instead of `string +=`.
+
+Delaying optimisation may be easier said than done especially when developing libraries (as opposed to applications) where it's harder to estimate how a feature will be used.
+
+## Explicit Interface Implementation (ref: simple-linked-list)
+I have never rated the explicit interface implementation very highly.  There is too much magic at play.  I think that this because the use case given by the docs `Paint()` in `IDraw` and `IControl` and, in fact, my own example invite the response "why don't you rename your methods?".  
+
+Looking at this soltution was the first time I really "got" why this mechanism was important (although I expect it is pointed out in the docs).  `IEnumerable<T>/IEnumerable` is a far better example although it brings its own baggage regarding backward compatibility.  
+
+I struggle to see any case other than some sort of backward compatibility problem involving interface inheritance as to why this mechanism should exist and even then there must be a case for saying your new method has to be `GetEnumeratorEx()` with apologies all round.
+
+
+## LINQ Readability (ref: dominoes)
+So readability. Speaking as somebody who knows the problem well and came up with a much less elegant solution it was interesting to go through the solution. I don't think LINQ (of which this is a good example) is particularly readable. That is to say I can't look at the code and easily abstract the issue/algorithm in my head. However, it does read like a set of instructions. I have no questions about what is going on and would be able to maintain it easily. The insight I get about LINQ here is that it does not allow you to sum up a problem as you might from a power point slide but it does repay close reading far better than procedural code.
+
+## Exceptions (ref: series)
+> it will be also great to know if my exception handling in that code is fine
+
+It is difficult to say too much in a mickey mouse exercise like this.  If this were production code I would ask you "why are you returning an array from the method as if nothing was wrong when you know that the code has not behaved correctly?  It is better in principle for the program to fail quickly (e.g. abort) rather than that invalid data is passed around thus hiding the error.  You should rethrow the exception or some application specific exception".
+
+My second point applies to this code (production or non-production).  I'm not sure why you are checking for exceptions here.  If you expect the code to fail in some way - say an index is out of bounds then you should guard against that. 
+
+You normally check for exceptions when you know that:
+
+1. A library or 3rd party routine throws an exception.
+2. Your own called code throws an exception
+3. When you are using a scarce or unreliable resource (such as a network or file system) but this is usually wrapped by a library in any case.
+4. You call through a null pointer.
+5. Stack overflow, index out of bounds and other runtime errors.
+5. There are minor cases such as in multi-threading or when using the `checked` keyword.
+
+I'm sure I have missed something.
+
+So let's investigate whether any of these occur in your code (short answer NO).
+
+The only 3rd party call here is to `List.Add()` and looking at the documentation it does not appear to throw any exceptions.
+
+You don't make any calls to your own code.
+
+You can see that `selectedList` is not null (because an exception would have been thrown by `new` if it had failed.  In any case, if you were in any doubt about whether a variable contains a null reference then you should explicitly check on that and guard against calling it.
+
+You are not making recursive calls on the stack and you are not using an array.
+
+You are not using `checked`, multi-threading or other advanced feature.
+
+I missed out number 3 - resources.  You are of course using the resource of memory and it is obviously possible to run out of memory and I suppose an exception would be thrown.  However, the whole system, and probably your machine, would have ground to a halt before that happened.  In the world of C, C++ and, presumably, Rust checking for memory exhaustion is a common practice, especially when working in environments such as embedded programming.  In cases like C#, Javascript and Java which use garbage collectors we tend to ignore the possibility of memory exhaustion.  There is no point as we can't do much about the problem if it occurs.  I imagine if you have to allocate a large block, say in image processing, you put in a check up front and then catch any exception but that is not usual.  Quite what people do in low memory environments such as mobile or raspberry pi I don't know.
+
+
