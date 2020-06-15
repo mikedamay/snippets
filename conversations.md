@@ -1117,4 +1117,15 @@ You are not using `checked`, multi-threading or other advanced feature.
 
 I missed out number 3 - resources.  You are of course using the resource of memory and it is obviously possible to run out of memory and I suppose an exception would be thrown.  However, the whole system, and probably your machine, would have ground to a halt before that happened.  In the world of C, C++ and, presumably, Rust checking for memory exhaustion is a common practice, especially when working in environments such as embedded programming.  In cases like C#, Javascript and Java which use garbage collectors we tend to ignore the possibility of memory exhaustion.  There is no point as we can't do much about the problem if it occurs.  I imagine if you have to allocate a large block, say in image processing, you put in a check up front and then catch any exception but that is not usual.  Quite what people do in low memory environments such as mobile or raspberry pi I don't know.
 
+## Floating point equality
+
+Yes.  It's very much a problem in C# as it is in any language/processor that uses [IEEE 754](https://www3.ntu.edu.sg/home/ehchua/programming/java/datarepresentation.html) floats and doubles. [Arguably](https://stackoverflow.com/questions/2234468/do-any-real-world-cpus-not-use-ieee-754) that means any language-processor combination you are likely to come across.
+
+Exercism points students to [this article](https://docs.microsoft.com/en-us/dotnet/api/system.double.equals#precision-in-comparisons).
+
+More C# related information is [here](https://docs.microsoft.com/en-us/cpp/build/ieee-floating-point-representation?view=vs-2019)
+
+Remember that we have [decimals](https://docs.microsoft.com/en-us/dotnet/api/system.decimal?view=netcore-3.1) in .NET which are a better choice for many use-cases and do not suffer from the equality problem.
+
+If you don't find the links above intuitive come back and I will have a go.
 
