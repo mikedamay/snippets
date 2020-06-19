@@ -1131,3 +1131,79 @@ Because in your solution `a`, `b` and `sum` are all 32 bit integers you can rely
 
 If you don't find the links above intuitive come back and I will have a go.
 
+## Espressive Code (RobotName)
+
+I hold the opinion (I did say the comments were for your consideration - which of course includes ignoring them) that you should favour expressive code over non-expressive code and that this applies at all levels, other things being equal.
+
+Expressiveness:
+
+One aspect of expression is the relationship of the code to the business rules.  In this case we have been told to generate 2 letters and 3 numbers. If the maintainer sees 2 lines of code relating to letters followed by 3 lines of code relating to numbers they won’t even stop to consider it.  With your (perfectly good - but not meeting my expressiveness criterion - solution) the number 5 is involved which is good but then there is some question of a special condition of less than 2 that they will have to stop and parse.  They also have to recollect their ascii codes to parse the rest of it.
+
+Something like:
+```
+  newName += (char)rnd.Next(‘A’, ‘Z’);
+  newName += (char)rnd.Next(‘A’, ‘Z’);
+  newName += (char)rnd.Next(‘0’, ‘9’);
+  newName += (char)rnd.Next(‘0’, ‘9’);
+  newName += (char)rnd.Next(‘0’, ‘9’);
+```
+is worth considering.
+
+At all Levels:
+
+Conventional wisdom is that variable and member names should be expressive and that operations can be abstracted in a well named method.  This is, of course, true but I see no reason not to extend this to implementation details. 
+
+Other Things Being Equal:
+
+On the other side of the equation is the amount of reading and (to a lesser extent) writing that coders have to do.  If the code becomes too verbose or noisy then it ceases to be expressive and can become burdensome.
+
+Interesting code is written once but read many times.
+
+## Explanation of the IEnumerable mechanism
+
+IEnumerable<T>
+
+The LINQ pipeline is made up of an object (the source) that implements an `IEnumerable<T>` and extension methods that each return a new instance of an object implementing `IEnumerable<T>` and a final extension method that returns a collection, a scalar or an arbitrary object.
+
+An `IEnumereable<T>` has one role: to make available an `IEnumerator<T>`.
+
+An `IEnumerator<T>` has members `MoveNext()` and `Current`.  These allow a user of the enumerator to iterate over a collection.
+
+Let’s look at a simple example:
+
+```
+int[] arr = {1, 2, 3, 4};
+var evens = arr.Where( i => i % 2 == 0).ToArray();
+```
+Let’s make the extension methods explicit:
+```
+var evens = Enumerable.ToArray(Enumerable.Where(arr, i => i % 2 == 0));
+```
+`ToArray()` will get hold of the `IEnumerator` from the `IEnumerable` returned by `Where()` and call `MoveNext()` and `Current` on it.  Usually this is done with the syntactic sugar of `foreach`.   `Where()` will create an object which exposes the `Enumerator` which operate on the `IEnumerator` provided by the array.
+
+ https://go.microsoft.com/fwlink/?linkid=851728
+
+I'm sorry to say I have not found any good learning materials for LINQ and LINQ related topics despite appeals to my fellow mentors.
+
+In this exercise `fun` is a delegate.  A delegate is a reference to a method that can be assigned to variables and invoked by using the function syntax or calling `Invoike()`.  Have a look at lambda, closure, function literal, delegate.
+
+To understand `yield return` first have a look at `IEnumerable<T>` and `IEnumerator<T>`.  These are fairly straightforward classes.  The magic happens when the compiler and the CLR combine to sprinkle syntatic sugar over these concepts and come up with `yield return`.
+
+If the compiler and runtime encounter a method containing a `yield return` statement they change their approach to it from that towards ordinary methods.
+
+1. If `yield return` takes a type T then the return type in the method signature must be `IEnumerable<T>`.  e.g.
+```
+IEnumerable<int> MyYielder(int ii) { yield return ii;}
+```
+2. Conecptually, the first time the method is called the system creates an `IEnumerator<T>` correspoinding to the `IEnumerable<T>` (Remember that `IEnumerable<T>`'s only role is to provide an `IEnuerator<T>`).  Often in LINQ pipelines the `IEnumerator<T>` will be set up to iterate over a source collection such as a list or dictionary.  In this exercise it will iterate over `collection`.
+3. The caller will call `MoveNext()` and `Current` on the "conceptual" IEnumerator which behind the scenes will call `MoveNext()` and `Current` on `collection`'s own (possibly also conceptual) IEnumerator.
+
+It is a useful exercise to implement an IEnumerator explicitly.  Not only does it bring home the concepts but also demostrates how the syntatic suguar of `yield return` considerably reduces the complexity and improves the readability of the code.
+
+Tuples are favoured because they are lighter weight for the coder, somehow more natural.  What could be simpler to express a the idea of a pair of values than simply having them comma separated in parentheses?  There is no need for `new` or naming the fields.
+
+Do they perform better?  I don't know but I suppose that the compiler has more latitude as it can deviate from the normal "new" process - maybe - who knows.
+
+Sometimes in LINQ pipelines anonuymous classes work better because it is easier to name fields and refer to those fields by their meaningful name.
+
+In general I would favour tuples where the elements are not tightly related e.g. returning a value plus a success indicator from some function and ananomymous classes where the elements are closely related e.g. projecting a subset of the values of some object.
