@@ -1075,12 +1075,16 @@ Conventional wisdom is that performance considerations can generally be delayed 
 Delaying optimisation may be easier said than done especially when developing libraries (as opposed to applications) where it's harder to estimate how a feature will be used.
 
 ## Explicit Interface Implementation (ref: simple-linked-list)
+
+See also [this][Why `IEnumerable.GetEnumerator()` is required (ref: simple-linked-list)].
+
 I have never rated the explicit interface implementation very highly.  There is too much magic at play.  I think that this because the use case given by the docs `Paint()` in `IDraw` and `IControl` and, in fact, my own example invite the response "why don't you rename your methods?".  
 
 Looking at this soltution was the first time I really "got" why this mechanism was important (although I expect it is pointed out in the docs).  `IEnumerable<T>/IEnumerable` is a far better example although it brings its own baggage regarding backward compatibility.  
 
 I struggle to see any case other than some sort of backward compatibility problem involving interface inheritance as to why this mechanism should exist and even then there must be a case for saying your new method has to be `GetEnumeratorEx()` with apologies all round.
 
+One reason is that if you want to include some members of an interface but exclude others (because they will necessarily fail at runtime).  By making the interface explicit you draw a developers attention to it.  Match, Capture and Group collections are a good example in `System.RegularExpressions`.
 
 ## LINQ Readability (ref: dominoes)
 So readability. Speaking as somebody who knows the problem well and came up with a much less elegant solution it was interesting to go through the solution. I don't think LINQ (of which this is a good example) is particularly readable. That is to say I can't look at the code and easily abstract the issue/algorithm in my head. However, it does read like a set of instructions. I have no questions about what is going on and would be able to maintain it easily. The insight I get about LINQ here is that it does not allow you to sum up a problem as you might from a power point slide but it does repay close reading far better than procedural code.
