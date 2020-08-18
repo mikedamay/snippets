@@ -734,6 +734,26 @@ Let me know if you have any points to discuss on this.
               
               `
           },
+          'equality2' : {
+              feature : 'Equality (value equality present)',
+              category : 'discussion-point',
+              text : `
+Equality of clocks works well for your solution.
+
+You have correctly chosen to compare values rather than relying on \`object.Equals()\`.
+
+However C# coders (like Java developers) implementing \`Equals()\` are strongly encouraged to add 2 methods [for the sake of future maintainers](https://stackoverflow.com/questions/371328/why-is-it-important-to-override-gethashcode-when-equals-method-is-overridden).  
+
+- [override \`object.Equals\`](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/statements-expressions-operators/equality-comparisons), typically calling into your typed version of \`Equals()\` but possibly checking for null arguments, type mismatches, and short-circuiting where the 2 arguments point at the same instance.
+- override [\`object.GetHashCode()\`](https://docs.microsoft.com/en-us/dotnet/api/system.object.gethashcode?view=netcore-3.1).
+
+IDEs like Visual Studio and Rider will generate the members for you.
+
+The need for this boilerplate can be avoided by making \`Clock\` a \`struct\` as equality testing is built-in for a simple object like this
+
+If you need further details on the _how_ or _why_ of the above drop a note here.              
+              `
+          },
 
       },
       bob : {
